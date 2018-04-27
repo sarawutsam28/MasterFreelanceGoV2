@@ -1,0 +1,618 @@
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<style>
+.containerRegis{
+	margin-top: 5rem;
+}
+input:hover{
+}
+.panel-login {
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+}
+.panel-login>.panel-heading {
+	color: #00415d;
+	background-color: #fff;
+	border-color: #fff;
+	text-align:center;
+}
+.panel-login>.panel-heading a{
+	text-decoration: none;
+	color: #666;
+	font-weight: bold;
+	font-size: 15px;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+.panel-login>.panel-heading a.active{
+	color: #029f5b;
+	font-size: 18px;
+}
+.panel-login>.panel-heading hr{
+	margin-top: 10px;
+	margin-bottom: 0px;
+	clear: both;
+	border: 0;
+	height: 1px;
+	background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+	background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+	background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+	background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+}
+.panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"],.panel-login input[type="button"]  {
+	height: 45px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+.panel-login input:hover,
+.panel-login input:focus {
+	outline:none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	border-color: #ccc;
+}
+.btn-login {
+	background-color: #59B2E0;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color: #59B2E6;
+}
+.btn-login:hover,
+.btn-login:focus {
+	color: #fff;
+	background-color: #53A3CD;
+	border-color: #53A3CD;
+}
+.forgot-password {
+	text-decoration: underline;
+	color: #888;
+}
+.forgot-password:hover,
+.forgot-password:focus {
+	text-decoration: underline;
+	color: #666;
+}
+
+.btn-register {
+	background-color: #1CB94E;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color: #1CB94A;
+}
+.btn-com {
+	background-color: rgb(185, 28, 140);
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color:rgb(185, 28, 140);
+}
+.btn-register:hover,
+.btn-register:focus {
+	color: #fff;
+	background-color: #1CA347;
+	border-color: #1CA347;
+}
+</style>
+
+<div>
+    <div class="container containerRegis">
+        	<div class="row">
+    			<div class="col-md-6 col-md-offset-3">
+    				<div class="panel panel-login">
+    					<div class="panel-heading">
+    						<div class="row">
+    							<div class="col-xs-4">
+    								<a href="#" class="active" id="login-form-link">ฟรีแลนซ์</a>
+    							</div>
+    							<div class="col-xs-4">
+    								<a href="#" id="register-form-link">ผู้จ้าง</a>
+    							</div>
+								<div class="col-xs-4">
+    								<a href="#" id="registerCompany-form-link">บริษัท</a>
+    							</div>
+    						</div>
+    						<hr>
+    					</div>
+    					<div class="panel-body">
+    						<div class="row">
+    							<div class="col-lg-12">
+    								<form id="login-form" role="form" style="display: block;">
+    									<div class="form-group">
+											<label >ชื่อผู้ใช้</label>
+    										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
+    									</div>
+    									<div class="form-group">
+											<label >Password</label>
+    										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+    									</div>
+										<div class="form-group">
+											<label >ชื่อ-นามสกุล</label>
+    										<input type="text" name="FullName" id="FullName" tabindex="2" class="form-control" placeholder="ชื่อ-นามสกุล">
+    									</div>
+										<div class="form-group">
+											<label >เลขบัตรประชาชน</label>
+    										<input type="text" name="ID_Card" id="ID_Card" tabindex="2" class="form-control" placeholder="เลขบัตรประชาชน">
+    									</div>
+										<div class="form-group">
+											<label >อีเมล</label>
+    										<input type="email" name="Email" id="Email" tabindex="2" class="form-control" placeholder="FreelanceG0@gmail.com">
+    									</div>
+										<div class="form-group">
+											<label >เบอร์โทร</label>
+    										<input type="text" name="TelephoneNumber" id="TelephoneNumber" tabindex="2" class="form-control" placeholder="เบอร์โทร">
+    									</div>
+										<div class="form-group">
+											<label >Facebook</label>
+    										<input type="text" name="Facebook" id="Facebook" tabindex="2" class="form-control" placeholder="Facebook">
+    									</div>
+										<div class="form-group">
+											<label >Line</label>
+    										<input type="text" name="Line" id="Line" tabindex="2" class="form-control" placeholder="Line">
+    									</div>
+										<!-- <div class="form-group">
+											<label >ทักษะ/ความสามารถ</label>
+    										<input type="button" name="Skill" id="Skill" tabindex="2" style="margin-bottom: 10px;" class="form-control" placeholder="Password" value="เลือกทักษะ/ความสามารถ">
+											<div class="row skill" style="display: none;">
+												<div class="col-sm-12">        
+													<div class="row col-sm-6">
+														<div class="panel panel-default">
+															<div class="panel-body">
+																<small class="text-uppercase text-muted"><b>Default Checked</b></small>
+																<div class="form-group">
+																	<div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+																		<label>
+																			<input type="checkbox" name="" />
+																			<span></span>
+																			Checkbox Label
+																		</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row col-sm-6">
+														<div class="panel panel-default" style="margin-left: 5px;">
+															<div class="panel-body">
+																<small class="text-uppercase text-muted"><b>Default Checked</b></small>
+																<div class="form-group">
+																	<div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+																		<label>
+																			<input type="checkbox" name="" />
+																			<span></span>
+																			Checkbox Label
+																		</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row col-sm-6">
+														<div class="panel panel-default" style="">
+															<div class="panel-body">
+																<small class="text-uppercase text-muted"><b>Default Checked</b></small>
+																<div class="form-group">
+																	<div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+																		<label>
+																			<input type="checkbox" name="" />
+																			<span></span>
+																			Checkbox Label
+																		</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row col-sm-6">
+														<div class="panel panel-default" style="margin-left: 5px;">
+															<div class="panel-body">
+																<small class="text-uppercase text-muted"><b>Default Checked</b></small>
+																<div class="form-group">
+																	<div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+																		<label>
+																			<input type="checkbox" name="" />
+																			<span></span>
+																			Checkbox Label
+																		</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+    									</div> -->
+										<div class="form-group">
+											<label >ที่อยู่</label>
+    										<input type="text" name="Address" id="Address" tabindex="2" class="form-control" placeholder="ที่อยู่">
+    									</div>
+    									<div class="form-group">
+    										<div class="row">
+    											<div class="col-sm-6 col-sm-offset-3">
+    												<input type="button" name="login-submit" id="Freelance-submit" tabindex="4" class="form-control btn btn-login" value="สมัคร">
+    											</div>
+    										</div>
+    									</div>
+    								</form>
+    								<form id="register-form"  role="form" style="display: none;">
+    									<div class="form-group">
+											<label >ชื่อผู้ใช้</label>
+    										<input type="text" name="usernameEmployer" id="usernameEmployer" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
+    									</div>
+    									<div class="form-group">
+											<label >Password</label>
+    										<input type="password" name="passwordEmployer" id="passwordEmployer" tabindex="2" class="form-control" placeholder="Password">
+    									</div>
+										<div class="form-group">
+											<label >ชื่อ-นามสกุล</label>
+    										<input type="text" name="FullNameEmployer" id="FullNameEmployer" tabindex="2" class="form-control" placeholder="ชื่อ-นามสกุล">
+    									</div>
+										<div class="form-group">
+											<label >เลขบัตรประชาชน</label>
+    										<input type="text" name="ID_CardEmployer" id="ID_CardEmployer" tabindex="2" class="form-control" placeholder="เลขบัตรประชาชน">
+    									</div>
+										<div class="form-group">
+											<label >อีเมล</label>
+    										<input type="text" name="EmailEmployer" id="EmailEmployer" tabindex="2" class="form-control" placeholder="FreelanceG0@gmail.com">
+    									</div>
+										<div class="form-group">
+											<label >เบอร์โทร</label>
+    										<input type="text" name="TelephoneNumberEmployer" id="TelephoneNumberEmployer" tabindex="2" class="form-control" placeholder="เบอร์โทร">
+    									</div>
+										<div class="form-group">
+											<label >Facebook</label>
+    										<input type="text" name="" id="FacebookEmployer" tabindex="2" class="form-control" placeholder="Facebook">
+    									</div>
+										<div class="form-group">
+											<label >Line</label>
+    										<input type="text" name="LineEmployer" id="LineEmployer" tabindex="2" class="form-control" placeholder="Line">
+    									</div>
+										<div class="form-group">
+											<label >ที่อยู่</label>
+    										<input type="text" name="AddressEmployer" id="AddressEmployer" tabindex="2" class="form-control" placeholder="ที่อยู่">
+    									</div>
+    									<div class="form-group">
+    										<div class="row">
+    											<div class="col-sm-6 col-sm-offset-3">
+    												<input type="button" name="Employer-submit" id="Employer-submit" tabindex="4" class="form-control btn btn-register" value="สมัคร">
+    											</div>
+    										</div>
+    									</div>
+    								</form>
+									<form id="registerCompany-form"  role="form" style="display: none;">
+    									<div class="form-group">
+											<label >ชื่อผู้ใช้</label>
+    										<input type="text" name="usernameCompany" id="usernameCompany" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
+    									</div>
+    									<div class="form-group">
+											<label >Password</label>
+    										<input type="password" name="passwordCompany" id="passwordCompany" tabindex="2" class="form-control" placeholder="Password">
+    									</div>
+										<div class="form-group">
+											<label >ชื่อบริษัท</label>
+    										<input type="text" name="FullNameCompany" id="FullNameCompany" tabindex="2" class="form-control" placeholder="ชื่อบริษัท">
+    									</div>
+										<div class="form-group">
+											<label >เบอร์ FAX</label>
+    										<input type="text" name="Company_TaxID" id="Company_TaxID" tabindex="2" class="form-control" placeholder="เบอร์ FAX">
+    									</div>
+										<div class="form-group">
+											<label >เลขผู้เสียภาษีบริษัท</label>
+    										<input type="text" name="Fax" id="Fax" tabindex="2" class="form-control" placeholder="เลขผู้เสียภาษีบริษัท">
+    									</div>
+										<div class="form-group">
+											<label >อีเมล</label>
+    										<input type="text" name="EmailCompany" id="EmailCompany" tabindex="2" class="form-control" placeholder="FreelanceG0@gmail.com">
+    									</div>
+										<div class="form-group">
+											<label >เบอร์โทร</label>
+    										<input type="text" name="TelephoneNumberCompany" id="TelephoneNumberCompany" tabindex="2" class="form-control" placeholder="เบอร์โทร">
+    									</div>
+										<div class="form-group">
+											<label >Facebook</label>
+    										<input type="text" name="FacebookCompany" id="FacebookCompany" tabindex="2" class="form-control" placeholder="Facebook">
+    									</div>
+										<div class="form-group">
+											<label >Line</label>
+    										<input type="text" name="LineCompany" id="LineCompany" tabindex="2" class="form-control" placeholder="Line">
+    									</div>
+										<div class="form-group">
+											<label >ที่อยู่</label>
+    										<input type="text" name="AddressCompany" id="AddressCompany" tabindex="2" class="form-control" placeholder="ที่อยู่">
+    									</div>
+    									<div class="form-group">
+    										<div class="row">
+    											<div class="col-sm-6 col-sm-offset-3">
+    												<input type="button" name="Company-submit" id="Company-submit" tabindex="4" class="form-control btn btn-com" value="สมัคร">
+    											</div>
+    										</div>
+    									</div>
+    								</form>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    </div>
+</div>
+
+
+<script>
+	$(document).ready(function () {
+		//refisterFreelance
+		var Freelance = {
+			UserName: '',
+			Password: '',
+			FullName: '',
+			ID_Card: 0,
+			Email: '',
+			TelephoneNumber: 0,
+			Facebook: '',
+			Line: '',
+			Address: '',
+		};
+		$("#username").change(function () {
+			Freelance.UserName = $("#username").val();
+		});
+		$("#password").change(function () {
+			Freelance.Password = $("#password").val();
+		});
+		$("#FullName").change(function () {
+			Freelance.FullName = $("#FullName").val();
+		});
+		$("#ID_Card").change(function () {
+			Freelance.ID_Card = $("#ID_Card").val();
+			console.log(Freelance);
+		});
+		$("#Email").change(function () {
+			Freelance.Email = $("#Email").val();
+			console.log(Freelance);
+		});
+		$("#TelephoneNumber").change(function () {
+			Freelance.TelephoneNumber = $("#TelephoneNumber").val();
+			console.log(Freelance);
+		});
+		$("#Facebook").change(function () {
+			Freelance.Facebook = $("#Facebook").val();
+			console.log(Freelance);
+		});
+		$("#Line").change(function () {
+			Freelance.Line = $("#Line").val();
+			console.log(Freelance);
+		});
+		$("#Address").change(function () {
+			Freelance.Address = $("#Address").val();
+			console.log(Freelance);
+		});
+		$("#Freelance-submit").click(function () {
+			jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Home/FreelanceRegister",
+				data: {
+					UserName: Freelance.UserName,
+					Password: Freelance.Password,
+					FullName: Freelance.FullName,
+					ID_Card: Freelance.ID_Card,
+					Email: Freelance.Email,
+					TelephoneNumber: Freelance.TelephoneNumber,
+					Facebook: Freelance.Facebook,
+					Line: Freelance.Line,
+					Address: Freelance.Address,
+				},
+				success: function (data) {
+					console.log(data);
+					location.replace("http://localhost:5000/Home/UpdateSkill/");
+				},
+				error: function (data) {
+					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+					location.replace("http://localhost:5000/Home/Register");
+				},
+			});
+		});
+		//refisterEmployer
+		var Employer = {
+			UserName: '',
+			Password: '',
+			FullName: '',
+			ID_Card: 0,
+			Email: '',
+			TelephoneNumber: 0,
+			Facebook: '',
+			Line: '',
+			Address: '',
+		};
+		$("#usernameEmployer").change(function () {
+			Employer.UserName = $("#usernameEmployer").val();
+		});
+		$("#passwordEmployer").change(function () {
+			Employer.Password = $("#passwordEmployer").val();
+		});
+		$("#FullNameEmployer").change(function () {
+			Employer.FullName = $("#FullNameEmployer").val();
+		});
+		$("#ID_CardEmployer").change(function () {
+			Employer.ID_Card = $("#ID_CardEmployer").val();
+			console.log(Employer);
+		});
+		$("#EmailEmployer").change(function () {
+			Employer.Email = $("#EmailEmployer").val();
+			console.log(Employer);
+		});
+		$("#TelephoneNumberEmployer").change(function () {
+			Employer.TelephoneNumber = $("#TelephoneNumberEmployer").val();
+			console.log(Employer);
+		});
+		$("#FacebookEmployer").change(function () {
+			Employer.Facebook = $("#FacebookEmployer").val();
+			console.log(Employer);
+		});
+		$("#LineEmployer").change(function () {
+			Employer.Line = $("#LineEmployer").val();
+			console.log(Employer);
+		});
+		$("#AddressEmployer").change(function () {
+			Employer.Address = $("#AddressEmployer").val();
+			console.log(Employer);
+		});
+		$("#Employer-submit").click(function () {
+			jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Home/EmployerRegister",
+				data: {
+					UserName: Employer.UserName,
+					Password: Employer.Password,
+					FullName: Employer.FullName,
+					ID_Card: Employer.ID_Card,
+					Email: Employer.Email,
+					TelephoneNumber: Employer.TelephoneNumber,
+					Facebook: Employer.Facebook,
+					Line: Employer.Line,
+					Address: Employer.Address,
+				},
+				success: function (data) {
+					console.log(data);
+					location.replace("http://localhost:5000/Home/Login/");
+				},
+				error: function (data) {
+					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+					location.replace("http://localhost:5000/Home/Register");
+				},
+			});
+		});
+		//refisterCompany
+		var Company = {
+			UserName: '',
+			Password: '',
+			FullName: '',
+			Company_TaxID:0,
+			Fax:0,
+			Email: '',
+			TelephoneNumber: 0,
+			Facebook: '',
+			Line: '',
+			Address: '',
+		};
+		$("#usernameCompany").change(function () {
+			Company.UserName = $("#usernameCompany").val();
+		});
+		$("#passwordCompany").change(function () {
+			Company.Password = $("#passwordCompany").val();
+		});
+		$("#FullNameCompany").change(function () {
+			Company.FullName = $("#FullNameCompany").val();
+		});
+		$("#Fax").change(function () {
+			Company.Fax = $("#Fax").val();
+		});
+		$("#Company_TaxID").change(function () {
+			Company.Company_TaxID = $("#Company_TaxID").val();
+		});
+		$("#EmailCompany").change(function () {
+			Company.Email = $("#EmailCompany").val();
+			console.log(Company);
+		});
+		$("#TelephoneNumberCompany").change(function () {
+			Company.TelephoneNumber = $("#TelephoneNumberCompany").val();
+			console.log(Company);
+		});
+		$("#FacebookCompany").change(function () {
+			Company.Facebook = $("#FacebookCompany").val();
+			console.log(Company);
+		});
+		$("#LineCompany").change(function () {
+			Company.Line = $("#LineCompany").val();
+			console.log(Company);
+		});
+		$("#AddressCompany").change(function () {
+			Company.Address = $("#AddressCompany").val();
+			console.log(Company);
+		});
+		$("#Company-submit").click(function () {
+			jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Home/CompanyRegister",
+				data: {
+					UserName: Company.UserName,
+					Password: Company.Password,
+					Company_Name: Company.FullName,
+					Company_TaxID: Company.Company_TaxID,
+					Fax: Company.Fax,
+					Email: Company.Email,
+					Company_Tel: Company.TelephoneNumber,
+					Facebook: Company.Facebook,
+					Line: Company.Line,
+					Company_Address: Company.Address,
+				},
+				success: function (data) {
+					console.log(data);
+					location.replace("http://localhost:5000/Home/Login/");
+				},
+				error: function (data) {
+					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+					location.replace("http://localhost:5000/Home/Register");
+				},
+			});
+		});
+		//css
+		$('#login-form-link').click(function(e) {
+			$("#login-form").delay(100).fadeIn(100);
+			$("#register-form").fadeOut(100);
+			$("#registerCompany-form").fadeOut(100);
+			$('#register-form-link').removeClass('active');
+			$('#registerCompany-form-link').removeClass('active');
+			$(this).addClass('active');
+		e.preventDefault();
+		});
+		$('#register-form-link').click(function(e) {
+			$("#register-form").delay(100).fadeIn(100);
+			$("#login-form").fadeOut(100)
+			$("#registerCompany-form").fadeOut(100);;
+			$('#login-form-link').removeClass('active');
+			$('#registerCompany-form-link').removeClass('active');
+			$(this).addClass('active');
+			e.preventDefault();
+		});
+		$('#registerCompany-form-link').click(function(e) {
+			$("#registerCompany-form").delay(100).fadeIn(100);
+			$("#login-form").fadeOut(100);
+			$("#register-form").fadeOut(100);
+			$('#login-form-link').removeClass('active');
+			$('#register-form-link').removeClass('active');
+			$(this).addClass('active');
+			e.preventDefault();
+		});
+		// end tab
+		$("#Skill").click(function(){
+        $(".skill").slideToggle("slow");
+    });
+
+	});
+</script>
