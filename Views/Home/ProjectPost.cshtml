@@ -1,0 +1,219 @@
+ @{ 
+     Layout = "_NewLayuot"; 
+     ViewData["Title"] = "ProjectPost"; 
+}
+
+
+
+
+<style>
+    .sestion1 {
+        margin: 20rem;
+        margin-top: 2rem;
+        border: 1px  solid red;
+        border-color: #ccc;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .SubSestion1 {
+        margin: 2rem;
+        padding: 2rem;
+    }
+
+    .hrcss {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        clear: both;
+        border: 0;
+        height: 1px;
+        background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    }
+</style>
+
+
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="formPost">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="sestion1">
+                            <div class="SubSestion1" tyle="border-color: #ccc;">
+                                <div class="row" style="margin-bottom:2rem">
+                                    <div class="col-sm-12 text-center">
+                                        <h1>ประกาศงาน</h1>
+                                        <hr class="hrcss">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">ชื่องาน</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="ProjectName" name="ProjectName" type="text" class="form-control" placeholder="ชื่องาน" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">รายละเอียด</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="Description" name="Description" type="text" class="form-control" placeholder="รายละเอียด"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">งบประมาณ</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="Budget" name="Budget" type="text" class="form-control" placeholder="งบประมาณ / บาท" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">ระยะเวลาการทำงาน</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="Timelength" name="Timelength" type="text" class="form-control" placeholder="ระยะเวลาการทำงาน / วัน" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">วันเริ่มประมูล</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="StartingDate" name="StartingDate" type="date" class="form-control" placeholder=""
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">วันสิ้นสุดการประมูล</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="EndDate" name="EndDate" type="date" class="form-control" placeholder="ความสามารถที่ต้องใช้ในการทำงาน" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>ทักษะ/ความสามารถ</label>
+                                    <input type="button" name="Skill" id="Skill" tabindex="2" style="margin-bottom: 10px;" class="form-control" placeholder="Password"
+                                        value="เลือกทักษะ/ความสามารถ">
+                                    <div class="row skill" style="display: none;">
+                                        <div class="col-sm-12">
+                                            <div class="row col-sm-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <small class="text-uppercase text-muted">
+                                                            <b>Default Checked</b>
+                                                        </small>
+                                                        <div class="form-group">
+                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+                                                                <label>
+                                                                    <input type="checkbox" name="" />
+                                                                    <span></span>
+                                                                    Checkbox Label
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row col-sm-6">
+                                                <div class="panel panel-default" style="margin-left: 5px;">
+                                                    <div class="panel-body">
+                                                        <small class="text-uppercase text-muted">
+                                                            <b>Default Checked</b>
+                                                        </small>
+                                                        <div class="form-group">
+                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+                                                                <label>
+                                                                    <input type="checkbox" name="" />
+                                                                    <span></span>
+                                                                    Checkbox Label
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row col-sm-6">
+                                                <div class="panel panel-default" style="">
+                                                    <div class="panel-body">
+                                                        <small class="text-uppercase text-muted">
+                                                            <b>Default Checked</b>
+                                                        </small>
+                                                        <div class="form-group">
+                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+                                                                <label>
+                                                                    <input type="checkbox" name="" />
+                                                                    <span></span>
+                                                                    Checkbox Label
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row col-sm-6">
+                                                <div class="panel panel-default" style="margin-left: 5px;">
+                                                    <div class="panel-body">
+                                                        <small class="text-uppercase text-muted">
+                                                            <b>Default Checked</b>
+                                                        </small>
+                                                        <div class="form-group">
+                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
+                                                                <label>
+                                                                    <input type="checkbox" name="" />
+                                                                    <span></span>
+                                                                    Checkbox Label
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <button type="button" class="btn btn-success">ประกาศ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- end row-->
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Skill").click(function(){
+        $(".skill").slideToggle("slow");
+        });
+    });
+</script>

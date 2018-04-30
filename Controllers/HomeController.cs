@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using FreelanceGo_MasterV2.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace FreelanceGo_MasterV2.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly dDbContext _context;
         private readonly IHostingEnvironment _env;
         public HomeController(dDbContext context, IHostingEnvironment env)
@@ -21,6 +23,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult Index()
         {
+            //   SaveProject();
             return View();
         }
         public IActionResult About()
@@ -38,6 +41,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult Register()
         {
+            SaveSkill();
 
             return View();
         }
@@ -58,6 +62,10 @@ namespace FreelanceGo_MasterV2.Controllers
             return View();
         }
         public IActionResult UpdateSkill()
+        {
+            return View();
+        }
+        public IActionResult ProjectPost()
         {
             return View();
         }
@@ -112,6 +120,7 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.SaveChanges();
             return Json(new { Result = _Freelance });
         }
+        [HttpPost]
         public IActionResult LoginFreelance(Freelance Freelance)
         {
             var loginde = _context.Freelance
@@ -120,6 +129,7 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["Freelance_ID"] = loginde.Freelance_ID;
             return Json(new { Result = loginde });
         }
+        [HttpPost]
         public IActionResult LoginEmployer(Employer Employer)
         {
             var loginde = _context.Employer
@@ -128,6 +138,7 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["Employer_ID"] = loginde.Employer_ID;
             return Json(new { Result = loginde });
         }
+        [HttpPost]
         public IActionResult LoginCompany(Company Company)
         {
             var loginde = _context.Company
@@ -135,6 +146,94 @@ namespace FreelanceGo_MasterV2.Controllers
             HttpContext.Session.SetInt32("Employer_ID", loginde.Company_ID);
             ViewData["Company_ID"] = loginde.Company_ID;
             return Json(new { Result = loginde });
+        }
+        [HttpPost]
+        public async Task<IActionResult> SaveProject()
+        {
+            var _Project = new Project
+            {
+                Employer_ID = 1,
+                Company_ID = 2,
+                Freelance_ID = 6,
+                ProjectName = "สร้างเว็บ",
+                Description = "สร้างเว็บ สร้างเว็บ สร้างเว็บ",
+                Budget = 1000,
+                Timelength = 10,
+                StartingDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                ProjectPrice = 9000,
+                ProjectStatus = true,
+                Date_Create = DateTime.Now,
+                Date_Update = DateTime.Now,
+                DelStatus = false,
+                ProjectSkill = new List<ProjectSkill>
+                {
+                    new ProjectSkill{
+                        Project_ID = 1,
+                        Skill_ID = 1,
+                        Date_Create = DateTime.Now,
+                        Date_Update = DateTime.Now,
+                        DelStatus = false,
+                    },
+                     new ProjectSkill{
+                        Project_ID = 1,
+                        Skill_ID = 1,
+                        Date_Create = DateTime.Now,
+                        Date_Update = DateTime.Now,
+                        DelStatus = false,
+                    },
+                     new ProjectSkill{
+                        Project_ID = 1,
+                        Skill_ID = 1,
+                        Date_Create = DateTime.Now,
+                        Date_Update = DateTime.Now,
+                        DelStatus = false,
+                    }
+                }
+            };
+            _context.Project.Add(_Project);
+            await _context.SaveChangesAsync();
+            return Json(new { Result = "OK" });
+        }
+        public JsonResult ProjectLisr()
+        {
+            try
+            {
+                List<Project> project = _context.Project.ToList();
+                return Json(new { Result = "OK", Records = project });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        public async Task<IActionResult> SaveSkill()
+        {
+            var skil = new Skill
+            {
+                Name = "PHP",
+                Skill_Description = "PHPNaja",
+                Date_Create = DateTime.Now,
+                Date_Update = DateTime.Now,
+                DelStatus = false,
+            };
+            _context.Skill.Add(skil);
+            await _context.SaveChangesAsync();
+            return Json(new { Result = "OK" });
+        }
+        public async Task<IActionResult> GetProject()
+        {
+            var _Project = _context.Project
+           .Include(Project => Project.Employer)
+           .Include(Project => Project.Company)
+           .Include(Project => Project.Freelance)
+           .Include(Project => Project.Employer)
+           .Include(Project => Project.ProjectSkill).ToList()
+           .ToList();
+            var ProjectSkill = _context.Project.Select(f => new { d = f.ProjectSkill }).ToList();
+            var results = new { _Project = _Project, ProjectSkill = ProjectSkill };
+
+            return Json(new { Result = results });
         }
         public IActionResult Error()
         {

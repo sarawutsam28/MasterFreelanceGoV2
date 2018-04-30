@@ -11,9 +11,10 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    partial class dDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180428175043_InitialCreateV10")]
+    partial class InitialCreateV10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,76 +164,6 @@ namespace FreelanceGoMasterV2.Migrations
                     b.ToTable("FreelanceSkill");
                 });
 
-            modelBuilder.Entity("FreelanceGo_MasterV2.Models.Project", b =>
-                {
-                    b.Property<int>("Project_ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Budget");
-
-                    b.Property<int>("Company_ID");
-
-                    b.Property<DateTime>("Date_Create");
-
-                    b.Property<DateTime>("Date_Update");
-
-                    b.Property<bool>("DelStatus");
-
-                    b.Property<string>("Description")
-                        .IsRequired();
-
-                    b.Property<int>("Employer_ID");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<int>("Freelance_ID");
-
-                    b.Property<string>("ProjectName")
-                        .IsRequired();
-
-                    b.Property<int>("ProjectPrice");
-
-                    b.Property<bool>("ProjectStatus");
-
-                    b.Property<DateTime>("StartingDate");
-
-                    b.Property<int>("Timelength");
-
-                    b.HasKey("Project_ID");
-
-                    b.HasIndex("Company_ID");
-
-                    b.HasIndex("Employer_ID");
-
-                    b.HasIndex("Freelance_ID");
-
-                    b.ToTable("Project");
-                });
-
-            modelBuilder.Entity("FreelanceGo_MasterV2.Models.ProjectSkill", b =>
-                {
-                    b.Property<int>("ProjectSkill_ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date_Create");
-
-                    b.Property<DateTime>("Date_Update");
-
-                    b.Property<bool>("DelStatus");
-
-                    b.Property<int>("Project_ID");
-
-                    b.Property<int>("Skill_ID");
-
-                    b.HasKey("ProjectSkill_ID");
-
-                    b.HasIndex("Project_ID");
-
-                    b.HasIndex("Skill_ID");
-
-                    b.ToTable("ProjectSkill");
-                });
-
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.Skill", b =>
                 {
                     b.Property<int>("Skill_ID")
@@ -258,37 +189,6 @@ namespace FreelanceGoMasterV2.Migrations
                     b.HasOne("FreelanceGo_MasterV2.Models.Freelance", "Freelance")
                         .WithMany("FreelanceSkill")
                         .HasForeignKey("Freelance_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FreelanceGo_MasterV2.Models.Skill", "Skill")
-                        .WithMany()
-                        .HasForeignKey("Skill_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FreelanceGo_MasterV2.Models.Project", b =>
-                {
-                    b.HasOne("FreelanceGo_MasterV2.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("Company_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FreelanceGo_MasterV2.Models.Employer", "Employer")
-                        .WithMany()
-                        .HasForeignKey("Employer_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FreelanceGo_MasterV2.Models.Freelance", "Freelance")
-                        .WithMany()
-                        .HasForeignKey("Freelance_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FreelanceGo_MasterV2.Models.ProjectSkill", b =>
-                {
-                    b.HasOne("FreelanceGo_MasterV2.Models.Project", "Project")
-                        .WithMany("ProjectSkill")
-                        .HasForeignKey("Project_ID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FreelanceGo_MasterV2.Models.Skill", "Skill")
