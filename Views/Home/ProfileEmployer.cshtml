@@ -1,88 +1,265 @@
-
-@{
-    Layout = "_NewLayuot";
-    ViewData["Title"] = "Empolyer";
-}
+ @{ Layout = "_NewLayuot"; ViewData["Title"] = "Empolyer"; }
 
 
 <style>
-    .sestion1{
-      margin-top: 3rem;
-    }
-    .profile{
-        border: 1px  solid red;
-        border-color: #ccc;
-        -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-    }
-    .project{
-        margin-left: 2rem;
-        border: 1px  solid red;
-        border-color: #ccc;
-        -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-    }
+	.sestion1 {
+		margin-top: 3rem;
+	}
+
+	.profile {
+		border: 1px solid red;
+		border-color: #ccc;
+		-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+	}
+
+	.project {
+		margin-left: 2rem;
+		border: 1px solid red;
+		border-color: #ccc;
+		-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+	}
+
+
+	.nav-pills>li.active>a,
+	.nav-pills>li.active>a:focus,
+	.nav-pills>li.active>a:hover {
+		color: #fff;
+		background-color: #ff0909;
+	}
 </style>
 
 <div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-               <div class="sestion1">
-                   <div class="row">
-                       <div class="col-sm-3">
-                           <div class="row profile">
-                               <div class="col-sm-12">
-                                <label for="">xxxxx</label>
-                               </div>
-                           </div>
-                       </div>
-                        <div class="col-sm-9">
-                            <div class="row project">
-                               <div class="col-sm-12">
-                                   <div class="tableProject">
-                                        <div id="EmployerTableContainer"></div>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="sestion1">
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="row profile">
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-12"style="padding-right: 0px;padding-left: 0px;">
+											<img  src="~/images/adult-business-businessman-428339.jpg" style="width: 100rem; height: 20rem;"  class="img-responsive" alt="">
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-sm-12">
+											<a href="">xxxx</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-9">
+							<div class="row project">
+								<div class="col-sm-12">
+									<div class="tableProject">
+										<div id="EmployerTableContainer" style="margin:  3rem;">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="row">
+														<div class="col-sm-12 text-center">
+															<h3>MY PROJECT</h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="wizard-navigation">
+																<ul class="nav nav-pills">
+																	<li style="width: 32.3333%;" class="active">
+																		<a href="#details" data-toggle="tab" aria-expanded="true">ปัจจุบัน</a>
+																	</li>
+																	<li style="width: 33.3333%;">
+																		<a href="#captain" data-toggle="tab">ได้ผู้รับงาน</a>
+																	</li>
+																	<li style="width: 33.3333%;">
+																		<a href="#description" data-toggle="tab">หมดเวลา</a>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												<div class="tab-content">
+														<div class="tab-pane active" id="details">
+															<div class="row">
+																<div class="col-sm-12">
+																	<h4>ประกาศงาน</h4>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-12">
+																	<form class="tableProject">
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<table class="points_table">
+																					<thead>
+																						<tr>
+																							<th class="col-xs-7">Team</th>
+																							<th class="col-xs-1">S</th>
+																							<th class="col-xs-1">M</th>
+																							<th class="col-xs-1">L</th>
+																							<th class="col-xs-1">O</th>
+																						</tr>
+																					</thead>
+		
+																					<tbody class="points_table_scrollbar">
+																						<tr class="odd">
+																							<td class="col-xs-7">Test Points</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+		
+																						<tr class="even">
+																							<td class="col-xs-7">Test Points 2</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+		
+																						<tr class="odd">
+																							<td class="col-xs-7">Test Points 3</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+														<div class="tab-pane" id="captain">
+															<div class="row">
+																<div class="col-sm-12">
+																	<h4>ประกาศงานcaptain</h4>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-12">
+																	<form class="tableProject">
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<table class="points_table">
+																					<thead>
+																						<tr>
+																							<th class="col-xs-7">Team</th>
+																							<th class="col-xs-1">S</th>
+																							<th class="col-xs-1">M</th>
+																							<th class="col-xs-1">L</th>
+																							<th class="col-xs-1">O</th>
+																						</tr>
+																					</thead>
+		
+																					<tbody class="points_table_scrollbar">
+																						<tr class="odd">
+																							<td class="col-xs-7">Test Points</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+		
+																						<tr class="even">
+																							<td class="col-xs-7">Test Points 2</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+		
+																						<tr class="odd">
+																							<td class="col-xs-7">Test Points 3</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+														<div class="tab-pane" id="description">
+															<div class="row">
+																<div class="col-sm-12">
+																	<h4>ประกาศงานdescription</h4>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-12">
+																	<form class="tableProject">
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<table class="points_table">
+																					<thead>
+																						<tr>
+																							<th class="col-xs-7">Team</th>
+																							<th class="col-xs-1">S</th>
+																							<th class="col-xs-1">M</th>
+																							<th class="col-xs-1">L</th>
+																							<th class="col-xs-1">O</th>
+																						</tr>
+																					</thead>
+		
+																					<tbody class="points_table_scrollbar">
+																						<tr class="odd">
+																							<td class="col-xs-7">Test Points</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+		
+																						<tr class="even">
+																							<td class="col-xs-7">Test Points 2</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+		
+																						<tr class="odd">
+																							<td class="col-xs-7">Test Points 3</td>
+																							<td class="col-xs-1">10</td>
+																							<td class="col-xs-1">0</td>
+																							<td class="col-xs-1">5</td>
+																							<td class="col-xs-1">1</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+												</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#EmployerTableContainer').jtable({
-            title: 'Table of people',
-            actions: {
-                listAction: '/Home/ProjectLisr',
-           //     createAction: '/GettingStarted/CreatePerson',
-            //    updateAction: '/GettingStarted/UpdatePerson',
-            //    deleteAction: '/GettingStarted/DeletePerson'
-            },
-            fields: {
-                PersonId: {
-                    key: true,
-                    list: false
-                },
-                Name: {
-                    title: 'Author Name',
-                    width: '40%'
-                },
-                Age: {
-                    title: 'Age',
-                    width: '20%'
-                },
-                RecordDate: {
-                    title: 'Record date',
-                    width: '30%',
-                    type: 'date',
-                    create: false,
-                    edit: false
-                }
-            }
-        });
-    });
-</script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+		});
+	</script>

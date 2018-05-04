@@ -221,19 +221,49 @@ namespace FreelanceGo_MasterV2.Controllers
             await _context.SaveChangesAsync();
             return Json(new { Result = "OK" });
         }
+        // public async Task<IActionResult> GetProject()
+        // {
+        //     var _Project = _context.Project
+        //    .Include(Project => Project.Employer)
+        //    .Include(Project => Project.Company)
+        //    .Include(Project => Project.Freelance)
+        //    .Include(Project => Project.Employer)
+        //    .Include(Project => Project.ProjectSkill).ToList()
+        //    .ToList();
+        //     var ProjectSkill = _context.Project.Select(f => new { d = f.ProjectSkill }).ToList();
+        //     var results = new { _Project = _Project, ProjectSkill = ProjectSkill };
+
+        //     return Json(new { Result = results });
+        // }
         public async Task<IActionResult> GetProject()
         {
             var _Project = _context.Project
-           .Include(Project => Project.Employer)
-           .Include(Project => Project.Company)
-           .Include(Project => Project.Freelance)
-           .Include(Project => Project.Employer)
-           .Include(Project => Project.ProjectSkill).ToList()
-           .ToList();
-            var ProjectSkill = _context.Project.Select(f => new { d = f.ProjectSkill }).ToList();
-            var results = new { _Project = _Project, ProjectSkill = ProjectSkill };
+            .Select(d =>
+            new
+            {
+                project = d.Freelance,
+                ProjectName = d.ProjectName,
+                ProjectSkill = d.ProjectSkill.Select(g => g.Skill.Name).ToList()
+            }
+            ).ToList();
+            var results = _Project;
 
             return Json(new { Result = results });
+        }
+        public async Task<IActionResult> GetProjectById(int id)
+        {
+            var _Project = _context.Project
+            .Select(d =>
+            new
+            {
+                _Project = d.Project_ID,
+                Freelance = d.Freelance,
+                ProjectSkill = d.ProjectSkill.Select(g => g.Skill.Name).ToList()
+            }
+            );
+            var results = _Project;
+
+            return Json(new { Result = _Project });
         }
         public IActionResult Error()
         {
