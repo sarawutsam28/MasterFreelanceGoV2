@@ -59,12 +59,10 @@
                                 <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">รายละเอียด</label>
                                     <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fas fa-tasks"></i>
-                                            </span>
-                                            <input id="Description" name="Description" type="text" class="form-control" placeholder="รายละเอียด"
-                                            />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                    <textarea id="Description" name="Description" class="form-control" rows="5"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +73,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-tasks"></i>
                                             </span>
-                                            <input id="Budget" name="Budget" type="text" class="form-control" placeholder="งบประมาณ / บาท" />
+                                            <input id="Budget" name="Budget" type="number" class="form-control" placeholder="งบประมาณ / บาท" />
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +84,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-tasks"></i>
                                             </span>
-                                            <input id="Timelength" name="Timelength" type="text" class="form-control" placeholder="ระยะเวลาการทำงาน / วัน" />
+                                            <input id="Timelength" name="Timelength" type="number" class="form-control" placeholder="ระยะเวลาการทำงาน / วัน" />
                                         </div>
                                     </div>
                                 </div>
@@ -113,90 +111,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>ทักษะ/ความสามารถ</label>
-                                    <input type="button" name="Skill" id="Skill" tabindex="2" style="margin-bottom: 10px;" class="form-control" placeholder="Password"
-                                        value="เลือกทักษะ/ความสามารถ">
-                                    <div class="row skill" style="display: none;">
-                                        <div class="col-sm-12">
-                                            <div class="row col-sm-6">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">
-                                                        <small class="text-uppercase text-muted">
-                                                            <b>Default Checked</b>
-                                                        </small>
-                                                        <div class="form-group">
-                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
-                                                                <label>
-                                                                    <input type="checkbox" name="" />
-                                                                    <span></span>
-                                                                    Checkbox Label
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row col-sm-6">
-                                                <div class="panel panel-default" style="margin-left: 5px;">
-                                                    <div class="panel-body">
-                                                        <small class="text-uppercase text-muted">
-                                                            <b>Default Checked</b>
-                                                        </small>
-                                                        <div class="form-group">
-                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
-                                                                <label>
-                                                                    <input type="checkbox" name="" />
-                                                                    <span></span>
-                                                                    Checkbox Label
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row col-sm-6">
-                                                <div class="panel panel-default" style="">
-                                                    <div class="panel-body">
-                                                        <small class="text-uppercase text-muted">
-                                                            <b>Default Checked</b>
-                                                        </small>
-                                                        <div class="form-group">
-                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
-                                                                <label>
-                                                                    <input type="checkbox" name="" />
-                                                                    <span></span>
-                                                                    Checkbox Label
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row col-sm-6">
-                                                <div class="panel panel-default" style="margin-left: 5px;">
-                                                    <div class="panel-body">
-                                                        <small class="text-uppercase text-muted">
-                                                            <b>Default Checked</b>
-                                                        </small>
-                                                        <div class="form-group">
-                                                            <div class="checkbox checbox-switch switch-primary" style="border: 1px solid transparent;">
-                                                                <label>
-                                                                    <input type="checkbox" name="" />
-                                                                    <span></span>
-                                                                    Checkbox Label
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" class="btn btn-success">ประกาศ</button>
+                                       <a asp-controller="Home" asp-action="UpdateSkill"> <button  type="button" class="btn btn-success">ถัดไป</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -212,8 +129,55 @@
 
 <script>
     $(document).ready(function () {
-        $("#Skill").click(function(){
-        $(".skill").slideToggle("slow");
+        var Project = {
+            ProjectName: "",
+            Description: "",
+            Budget: 0,
+            Timelength: 0,
+            StartingDate: null,
+            EndDate: null,
+        };
+        $("#ProjectName").change(function() {
+            Project.ProjectName = $("#ProjectName").val();
         });
+        $("#Description").change(function() {
+            Project.Description = $("#Description").val();
+        });
+        $("#Budget").change(function() {
+            Project.Budget = $("#Budget").val();
+        });
+        $("#Timelength").change(function() {
+            Project.Timelength = $("#Timelength").val();
+        });
+        $("#StartingDate").change(function() {
+            Project.StartingDate = $("#StartingDate").val();
+        });
+        $("#EndDate").change(function() {
+            Project.EndDate = $("#EndDate").val();
+            console.log(Project);
+        });
+        $("#Project-submit").click(function () {
+			jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Home/SaveProject",
+				data: {
+					ProjectName: Project.ProjectName,
+					Description: Project.Description,
+                    Budget:Project.Budget,
+                    Timelength:Project.Timelength,
+                    StartingDate:Project.StartingDate,
+                    EndDate:Project.EndDate,
+				},
+				success: function (data) {
+					console.log(data);
+					location.replace("http://localhost:5000/Home/ProfileEmployer"+ localStorage['Employer_ID']);
+				},
+				error: function (data) {
+					alert("เกิดข้อผิดพลาด");
+					location.replace("http://localhost:5000/Home/ProjectPost");
+				},
+			});
+			});
     });
 </script>

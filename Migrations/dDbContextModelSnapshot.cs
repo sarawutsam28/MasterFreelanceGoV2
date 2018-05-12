@@ -170,7 +170,7 @@ namespace FreelanceGoMasterV2.Migrations
 
                     b.Property<int>("Budget");
 
-                    b.Property<int>("Company_ID");
+                    b.Property<int?>("Company_ID");
 
                     b.Property<DateTime>("Date_Create");
 
@@ -181,11 +181,11 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int>("Employer_ID");
+                    b.Property<int?>("Employer_ID");
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int>("Freelance_ID");
+                    b.Property<int?>("Freelance_ID");
 
                     b.Property<string>("ProjectName")
                         .IsRequired();
@@ -193,6 +193,8 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<int>("ProjectPrice");
 
                     b.Property<bool>("ProjectStatus");
+
+                    b.Property<DateTime>("ProjectTimeOut");
 
                     b.Property<DateTime>("StartingDate");
 
@@ -270,18 +272,15 @@ namespace FreelanceGoMasterV2.Migrations
                 {
                     b.HasOne("FreelanceGo_MasterV2.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("Company_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Company_ID");
 
                     b.HasOne("FreelanceGo_MasterV2.Models.Employer", "Employer")
                         .WithMany()
-                        .HasForeignKey("Employer_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Employer_ID");
 
                     b.HasOne("FreelanceGo_MasterV2.Models.Freelance", "Freelance")
                         .WithMany()
-                        .HasForeignKey("Freelance_ID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Freelance_ID");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.ProjectSkill", b =>

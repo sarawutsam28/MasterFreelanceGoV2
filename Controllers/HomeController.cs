@@ -53,12 +53,46 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             return View();
         }
-        public IActionResult ProfileEmployer()
+        public IActionResult ProfileEmployer(int id)
+        {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            if (Employer_ID == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            var ProfileEmployer = _context.Employer.SingleOrDefault(e => e.Employer_ID == id);
+            var ProjectEmployer = _context.Project.Where(p => p.Employer_ID == id && p.DelStatus == false);
+            ViewData["ProfileEmployer"] = ProfileEmployer;
+            ViewData["ProjectEmployer"] = ProjectEmployer;
+            return View();
+        }
+        public IActionResult ProfileDetails()
         {
             return View();
         }
         public IActionResult ProfileCompany()
         {
+            return View();
+        }
+        public IActionResult ProjectDetails(int id)
+        {
+            var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            /* var x1 = _context.Project
+             .Select(m => new
+             {
+                 Employerx1 = m.Employer,
+             });*/
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Employer)
+            .Load();
+
+
+            // var xxxxx = _context.Project.SingleOrDefault(p => p.Employer.Employer_ID == ProjectDetails.Employer_ID);
+            /* var Employer = _context.Project.Select(p => new
+             {
+                 EmployerName = p.Employer,
+             }).ToList();*/
+            ViewData["ProjectDetails"] = ProjectDetails;
             return View();
         }
         public IActionResult UpdateSkill()
@@ -148,52 +182,50 @@ namespace FreelanceGo_MasterV2.Controllers
             return Json(new { Result = loginde });
         }
         [HttpPost]
-        public async Task<IActionResult> SaveProject()
+        public async Task<IActionResult> SaveProject(Project Project)
         {
             var _Project = new Project
             {
-                Employer_ID = 1,
-                Company_ID = 2,
-                Freelance_ID = 6,
-                ProjectName = "สร้างเว็บ",
-                Description = "สร้างเว็บ สร้างเว็บ สร้างเว็บ",
-                Budget = 1000,
-                Timelength = 10,
-                StartingDate = DateTime.Now,
-                EndDate = DateTime.Now,
-                ProjectPrice = 9000,
+                Employer_ID = (int)HttpContext.Session.GetInt32("Employer_ID"),
+                ProjectName = Project.ProjectName,
+                Description = Project.Description,
+                Budget = Project.Budget,
+                Timelength = Project.Timelength,
+                StartingDate = Project.StartingDate,
+                EndDate = Project.EndDate,
                 ProjectStatus = true,
+                ProjectTimeOut = DateTime.Now.AddDays(15),
                 Date_Create = DateTime.Now,
                 Date_Update = DateTime.Now,
                 DelStatus = false,
-                ProjectSkill = new List<ProjectSkill>
-                {
-                    new ProjectSkill{
-                        Project_ID = 1,
-                        Skill_ID = 1,
-                        Date_Create = DateTime.Now,
-                        Date_Update = DateTime.Now,
-                        DelStatus = false,
-                    },
+                /* ProjectSkill = new List<ProjectSkill>
+                 {
                      new ProjectSkill{
-                        Project_ID = 1,
-                        Skill_ID = 1,
-                        Date_Create = DateTime.Now,
-                        Date_Update = DateTime.Now,
-                        DelStatus = false,
-                    },
-                     new ProjectSkill{
-                        Project_ID = 1,
-                        Skill_ID = 1,
-                        Date_Create = DateTime.Now,
-                        Date_Update = DateTime.Now,
-                        DelStatus = false,
-                    }
-                }
+                         Project_ID = 1,
+                         Skill_ID = 1,
+                         Date_Create = DateTime.Now,
+                         Date_Update = DateTime.Now,
+                         DelStatus = false,
+                     },
+                      new ProjectSkill{
+                         Project_ID = 1,
+                         Skill_ID = 1,
+                         Date_Create = DateTime.Now,
+                         Date_Update = DateTime.Now,
+                         DelStatus = false,
+                     },
+                      new ProjectSkill{
+                         Project_ID = 1,
+                         Skill_ID = 1,
+                         Date_Create = DateTime.Now,
+                         Date_Update = DateTime.Now,
+                         DelStatus = false,
+                     }
+                 }*/
             };
             _context.Project.Add(_Project);
             await _context.SaveChangesAsync();
-            return Json(new { Result = "OK" });
+            return Json(new { Result = _Project });
         }
         public JsonResult ProjectLisr()
         {
@@ -241,11 +273,13 @@ namespace FreelanceGo_MasterV2.Controllers
             .Select(d =>
             new
             {
+                // pppp = Project.Select(p => d.Project_ID == 1),
                 project = d.Freelance,
                 ProjectName = d.ProjectName,
                 ProjectSkill = d.ProjectSkill.Select(g => g.Skill.Name).ToList()
             }
             ).ToList();
+            //    var a = _context.Project.Select(p => p.Project_ID == 1)
             var results = _Project;
 
             return Json(new { Result = results });

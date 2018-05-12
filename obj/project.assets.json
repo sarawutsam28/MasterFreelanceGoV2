@@ -12783,30 +12783,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sarawut.klu\\.nuget\\packages\\": {},
+    "C:\\Users\\CharKo\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ProjectCS\\MasterFreelanceGo\\FreelanceGo-MasterV2\\FreelanceGo-MasterV2.csproj",
+      "projectUniqueName": "D:\\ProjectCS\\MasterFreelanceGo\\MasterFreelanceGoV2\\FreelanceGo-MasterV2.csproj",
       "projectName": "FreelanceGo-MasterV2",
-      "projectPath": "D:\\ProjectCS\\MasterFreelanceGo\\FreelanceGo-MasterV2\\FreelanceGo-MasterV2.csproj",
-      "packagesPath": "C:\\Users\\sarawut.klu\\.nuget\\packages\\",
-      "outputPath": "D:\\ProjectCS\\MasterFreelanceGo\\FreelanceGo-MasterV2\\obj\\",
+      "projectPath": "D:\\ProjectCS\\MasterFreelanceGo\\MasterFreelanceGoV2\\FreelanceGo-MasterV2.csproj",
+      "packagesPath": "C:\\Users\\CharKo\\.nuget\\packages\\",
+      "outputPath": "D:\\ProjectCS\\MasterFreelanceGo\\MasterFreelanceGoV2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\sarawut.klu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\CharKo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -12823,26 +12821,26 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.All": {
-            "target": "Package",
-            "version": "[2.0.3, )"
-          },
-          "Microsoft.EntityFrameworkCore.Design": {
-            "target": "Package",
-            "version": "[2.0.2, )"
-          },
-          "Microsoft.EntityFrameworkCore.SqlServer": {
-            "target": "Package",
-            "version": "[2.0.2, )"
-          },
           "Microsoft.NETCore.App": {
             "target": "Package",
-            "version": "[2.0.0, )",
+            "version": "2.0.0",
             "autoReferenced": true
           },
           "jTable": {
             "target": "Package",
-            "version": "[2.4.0, )"
+            "version": "2.4.0"
+          },
+          "Microsoft.AspNetCore.All": {
+            "target": "Package",
+            "version": "2.0.3"
+          },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "target": "Package",
+            "version": "2.0.2"
+          },
+          "Microsoft.EntityFrameworkCore.SqlServer": {
+            "target": "Package",
+            "version": "2.0.2"
           }
         },
         "imports": [

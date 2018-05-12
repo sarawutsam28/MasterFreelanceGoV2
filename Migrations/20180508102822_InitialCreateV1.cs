@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FreelanceGoMasterV2.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreateV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

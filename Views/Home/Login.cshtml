@@ -154,7 +154,7 @@ input:hover{
     									<div class="form-group">
     										<div class="row">
     											<div class="col-sm-6 col-sm-offset-3">
-    												<input type="button" name="login-submit" id="Freelance-submit" tabindex="4" class="form-control btn btn-login" value="สมัคร">
+    												<input type="button" name="login-submit" id="Freelance-submit" tabindex="4" class="form-control btn btn-login" value="Login">
     											</div>
     										</div>
     									</div>
@@ -171,7 +171,7 @@ input:hover{
     									<div class="form-group">
     										<div class="row">
     											<div class="col-sm-6 col-sm-offset-3">
-    												<input type="button" name="Employer-submit" id="Employer-submit" tabindex="4" class="form-control btn btn-register" value="สมัคร">
+    												<input type="button" name="Employer-submit" id="Employer-submit" tabindex="4" class="form-control btn btn-register" value="Login">
     											</div>
     										</div>
     									</div>
@@ -188,7 +188,7 @@ input:hover{
     									<div class="form-group">
     										<div class="row">
     											<div class="col-sm-6 col-sm-offset-3">
-    												<input type="button" name="register-submit" id="Company-submit" tabindex="4" class="form-control btn btn-com" value="สมัคร">
+    												<input type="button" name="register-submit" id="Company-submit" tabindex="4" class="form-control btn btn-com" value="Login">
     											</div>
     										</div>
     									</div>
@@ -228,7 +228,8 @@ input:hover{
 				},
 				success: function (data) {
 					console.log(data);
-					location.replace("http://localhost:5000/Home/UpdateSkill/");
+				//	localStorage['userId'] = data.id;
+				//	location.replace("http://localhost:5000/Home/UpdateSkill/");
 				},
 				error: function (data) {
 					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
@@ -259,7 +260,9 @@ input:hover{
 				},
 				success: function (data) {
 					console.log(data);
-					location.replace("http://localhost:5000/Home/ProfileEmployer/");
+				    localStorage['Employer_ID'] = data.result.employer_ID;
+					console.log(data.result.employer_ID);
+					location.replace("http://localhost:5000/Home/ProfileEmployer/"+ localStorage['Employer_ID']);
 				},
 				error: function (data) {
 					alert("กรุณากรอกข้อมูลให้ถูกต้อง");

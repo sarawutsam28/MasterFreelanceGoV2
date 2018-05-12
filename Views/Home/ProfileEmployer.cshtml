@@ -1,6 +1,11 @@
- @{ Layout = "_NewLayuot"; ViewData["Title"] = "Empolyer"; }
+@using FreelanceGo_MasterV2.Models;
+@{ Layout = "_NewLayuot"; ViewData["Title"] = "Empolyer"; }
 
 
+@{  
+   var ProfileEmployer = ViewData["ProfileEmployer"] as Employer; 
+   IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+}
 <style>
 	.sestion1 {
 		margin-top: 3rem;
@@ -34,6 +39,11 @@
 			<div class="col-sm-12">
 				<div class="sestion1">
 					<div class="row">
+						<div class="col-sm-12">
+							<a class="pull-right" href="/Home/ProjectPost" type="button">ประกาศงาน</a>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-sm-3">
 							<div class="row profile">
 								<div class="col-sm-12">
@@ -44,8 +54,38 @@
 									</div>
 									<hr>
 									<div class="row">
+										<div class="col-sm-12 text-center">
+											<a>@ProfileEmployer.FullName</a>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col-sm-12">
-											<a href="">xxxx</a>
+											<label>@ProfileEmployer.Email</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<label>@ProfileEmployer.TelephoneNumber</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<label>@ProfileEmployer.Facebook</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<label>@ProfileEmployer.Line</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<label>@ProfileEmployer.Address</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 text-center">
+											<a style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
 										</div>
 									</div>
 								</div>
@@ -66,7 +106,7 @@
 													<div class="row">
 														<div class="col-sm-12">
 															<div class="wizard-navigation">
-																<ul class="nav nav-pills">
+																<ul class="nav nav-pills" style="background-color: #f1eeee;">
 																	<li style="width: 32.3333%;" class="active">
 																		<a href="#details" data-toggle="tab" aria-expanded="true">ปัจจุบัน</a>
 																	</li>
@@ -92,41 +132,34 @@
 																	<form class="tableProject">
 																		<div class="row">
 																			<div class="col-sm-12">
-																				<table class="points_table">
+																				<table >
 																					<thead>
-																						<tr>
-																							<th class="col-xs-7">Team</th>
-																							<th class="col-xs-1">S</th>
-																							<th class="col-xs-1">M</th>
-																							<th class="col-xs-1">L</th>
-																							<th class="col-xs-1">O</th>
+																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+																							<th class="col-xs-4">ชื่องาน</th>
+																							<th class="col-xs-2">ราคา</th>
+																							<th class="col-xs-3">สถานะ</th>
+																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-1"></th>
 																						</tr>
 																					</thead>
 		
 																					<tbody class="points_table_scrollbar">
-																						<tr class="odd">
-																							<td class="col-xs-7">Test Points</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
-		
-																						<tr class="even">
-																							<td class="col-xs-7">Test Points 2</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
-		
-																						<tr class="odd">
-																							<td class="col-xs-7">Test Points 3</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
+																						@foreach (Project Project in ProjectEmployers) 
+																						{
+																							<div>
+																								@if (Project.Freelance_ID == null && Project.ProjectStatus == true)
+																								{
+																									<tr class="odd" style="height:5rem;">
+																										<td class="col-xs-4"><a asp-controller="Home" asp-action="ProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-2">@Project.Budget บาท</td>
+																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
+																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
+																										</td>
+																									</tr>
+																								}
+																							</div>
+																						}
 																					</tbody>
 																				</table>
 																			</div>
@@ -138,7 +171,7 @@
 														<div class="tab-pane" id="captain">
 															<div class="row">
 																<div class="col-sm-12">
-																	<h4>ประกาศงานcaptain</h4>
+																	<h4>ประกาศงาน</h4>
 																</div>
 															</div>
 															<div class="row">
@@ -148,39 +181,31 @@
 																			<div class="col-sm-12">
 																				<table class="points_table">
 																					<thead>
-																						<tr>
-																							<th class="col-xs-7">Team</th>
-																							<th class="col-xs-1">S</th>
-																							<th class="col-xs-1">M</th>
-																							<th class="col-xs-1">L</th>
-																							<th class="col-xs-1">O</th>
+																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+																							<th class="col-xs-4">ชื่องาน</th>
+																							<th class="col-xs-2">ราคา</th>
+																							<th class="col-xs-3">สถานะ</th>
+																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-1"></th>
 																						</tr>
 																					</thead>
-		
 																					<tbody class="points_table_scrollbar">
-																						<tr class="odd">
-																							<td class="col-xs-7">Test Points</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
-		
-																						<tr class="even">
-																							<td class="col-xs-7">Test Points 2</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
-		
-																						<tr class="odd">
-																							<td class="col-xs-7">Test Points 3</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
+																						@foreach (Project Project in ProjectEmployers) 
+																						{
+																							<div>
+																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true)
+																								{
+																									<tr class="odd" style="height:5rem;">
+																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
+																										<td class="col-xs-2">@Project.Budget บาท</td>
+																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
+																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
+																										</td>
+																									</tr>
+																								}
+																							</div>
+																						}
 																					</tbody>
 																				</table>
 																			</div>
@@ -192,7 +217,7 @@
 														<div class="tab-pane" id="description">
 															<div class="row">
 																<div class="col-sm-12">
-																	<h4>ประกาศงานdescription</h4>
+																	<h4>ประกาศงาน</h4>
 																</div>
 															</div>
 															<div class="row">
@@ -202,39 +227,32 @@
 																			<div class="col-sm-12">
 																				<table class="points_table">
 																					<thead>
-																						<tr>
-																							<th class="col-xs-7">Team</th>
-																							<th class="col-xs-1">S</th>
-																							<th class="col-xs-1">M</th>
-																							<th class="col-xs-1">L</th>
-																							<th class="col-xs-1">O</th>
+																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+																							<th class="col-xs-4">ชื่องาน</th>
+																							<th class="col-xs-2">ราคา</th>
+																							<th class="col-xs-3">สถานะ</th>
+																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-1"></th>
 																						</tr>
 																					</thead>
 		
 																					<tbody class="points_table_scrollbar">
-																						<tr class="odd">
-																							<td class="col-xs-7">Test Points</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
-		
-																						<tr class="even">
-																							<td class="col-xs-7">Test Points 2</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
-		
-																						<tr class="odd">
-																							<td class="col-xs-7">Test Points 3</td>
-																							<td class="col-xs-1">10</td>
-																							<td class="col-xs-1">0</td>
-																							<td class="col-xs-1">5</td>
-																							<td class="col-xs-1">1</td>
-																						</tr>
+																						@foreach (Project Project in ProjectEmployers) 
+																						{
+																							<div>
+																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true)
+																								{
+																									<tr class="odd" style="height:5rem;">
+																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
+																										<td class="col-xs-2">@Project.Budget บาท</td>
+																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
+																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
+																										</td>
+																									</tr>
+																								}
+																							</div>
+																						}
 																					</tbody>
 																				</table>
 																			</div>

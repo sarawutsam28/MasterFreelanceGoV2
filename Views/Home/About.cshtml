@@ -1,7 +1,62 @@
 ﻿@{
     ViewData["Title"] = "About";
 }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
 <p>Use this area to provide additional information.</p>
+
+<select id="test"  class="js-example-basic-multiple" name="states[]" multiple="multiple">
+ 
+</select>
+
+<p>Selected IDs: <span id="selectedIDs"></span></p>
+<p>Selected Options: <span id="selectedText"></span></p>
+
+
+
+<script>
+  $(document).ready(function() {
+    var test = $('#test');
+$(test).select2({
+    data:[
+        {id:0,text:"enhancement"},
+        {id:1,text:"bug"},
+        {id:2,text:"duplicate"},
+        {id:3,text:"invalid"},
+        {id:4,text:"wontfix"}
+    ],
+    multiple: true,
+    width: "300px"
+});
+
+$(test).change(function() {
+    //var ids = $(test).val(); // works
+    //var selections = $(test).filter('option:selected').text(); // doesn't work
+    //var ids = $(test).select2('data').id; // doesn't work (returns 'undefined')
+    //var selections = $(test).select2('data').text; // doesn't work (returns 'undefined')
+    //var selections = $(test).select2('data');
+    var selections = ( JSON.stringify($(test).select2('data')));
+    //console.log('Selected IDs: ' + ids);
+    console.log('Selected options: ' + selections);
+    //$('#selectedIDs').text(ids);
+       $('#selectedText').text(selections);
+ 
+   
+});
+$(test).ready(function() {
+    //var ids = $(test).val(); // works
+    //var selections = $(test).filter('option:selected').text(); // doesn't work
+    //var ids = $(test).select2('data').id; // doesn't work (returns 'undefined')
+    //var selections = $(test).select2('data').text; // doesn't work (returns 'undefined')
+    //var selections = $(test).select2('data');
+    var selections = ( JSON.stringify($(test).select2('data')) );
+    //console.log('Selected IDs: ' + ids);
+    console.log('Selected options: ' + selections);
+    //$('#selectedIDs').text(ids);
+    $('#selectedText').text(selections);
+});
+});
+</script>
