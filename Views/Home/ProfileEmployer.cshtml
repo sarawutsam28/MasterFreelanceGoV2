@@ -55,7 +55,7 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a>@ProfileEmployer.FullName</a>
+											<a asp-controller="Home" asp-action="ProfileDetailsEmployer" asp-route-id=@ProfileEmployer.Employer_ID >@ProfileEmployer.FullName</a>
 										</div>
 									</div>
 									<div class="row">
@@ -85,7 +85,7 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
+											<a asp-controller="Home" asp-action="UpdateProfileEmployer" asp-route-id=@ProfileEmployer.Employer_ID style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
 										</div>
 									</div>
 								</div>
@@ -132,7 +132,7 @@
 																	<form class="tableProject">
 																		<div class="row">
 																			<div class="col-sm-12">
-																				<table >
+																				<table style="width: 100%;">
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
@@ -154,7 +154,7 @@
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
 																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-																										<td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
+																										<td class="col-xs-1"><a asp-controller="Home" asp-action="UpdateProject" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success pull-right">แก้ไข</a>
 																										</td>
 																									</tr>
 																								}
@@ -179,14 +179,13 @@
 																	<form class="tableProject">
 																		<div class="row">
 																			<div class="col-sm-12">
-																				<table class="points_table">
+																				<table style="width: 100%;">
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
 																							<th class="col-xs-2">ราคา</th>
 																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
-																							<th class="col-xs-1"></th>
+																							<th class="col-xs-4">ระยะเวลาสิ้นสุด</th>
 																						</tr>
 																					</thead>
 																					<tbody class="points_table_scrollbar">
@@ -199,9 +198,7 @@
 																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-																										<td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
-																										</td>
+																										<td class="col-xs-4">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
 																									</tr>
 																								}
 																							</div>
@@ -225,14 +222,13 @@
 																	<form class="tableProject">
 																		<div class="row">
 																			<div class="col-sm-12">
-																				<table class="points_table">
+																				<table class="points_table" style="width: 100%;">
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
 																							<th class="col-xs-2">ราคา</th>
 																							<th class="col-xs-3">สถานะ</th>
 																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
-																							<th class="col-xs-1"></th>
 																						</tr>
 																					</thead>
 		
@@ -247,8 +243,6 @@
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
 																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-																										<td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
-																										</td>
 																									</tr>
 																								}
 																							</div>

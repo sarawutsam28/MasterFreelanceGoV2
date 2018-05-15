@@ -1,10 +1,90 @@
+@using FreelanceGo_MasterV2.Models; 
+@{ Layout = "_NewLayuot"; ViewData["Title"] = "UpdateProject"; } 
+@{ 
+    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+}
 @{
     ViewData["Title"] = "UpdateSkill";
 }
 
 
+<style>
+.skillForm{
+    margin: 10rem;
+    margin-top: 1rem;
+    padding: 20rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-top: 3rem;
+}
+.select2-selection__rendered{
+    height: 40px;
+}
+#save{
+    height: 48px;
+}
+</style>
+
+
+
+
 <div>
     <div class="container">
-        <label for="">Update</label>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="skillForm">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>เลือกทักษะที่ต้องใช้ในการทำงาน</label>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <select id="skills"  class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+                                    @foreach (Skill Skill in Skills) 
+                                    {
+                                        <option value=@Skill.Skill_ID>@Skill.Name</option>
+                                    }
+                                </select>
+                                <span class="input-group-btn">
+                                   <a id="saveSkill"> <button type="button" id="save" class="btn btn-default">บันทึก</button></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<script>
+$().ready(function () {
+    var Skill = [];
+    $("#skills").select2();
+        $("#skills").change(function() {
+        Skill = $("#skills").val();
+        console.log(Skill);
+    });
+    $("#saveSkill").click(function() {
+        jQuery.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/Home/UpdateProjectSkill",
+                    data:  {
+                      skillList: Skill,
+                    },
+                    success: function (data) {
+                      alert("ประกาศสำเร็จ");
+                      console.log(data);
+                    //location.replace("http://localhost:5000/Home/Profile/"+localStorage['userId']);
+                    },
+                    error: function (data) {
+                      alert("กรอกข้อมูลไม่ถูกต้อง");
+                    },
+          }); //end ajax
+    });
+});
+</script>

@@ -1,73 +1,40 @@
-{
-    "result": [
-        {
-            "d": [
-                {
-                    "projectSkill_ID": 2,
-                    "project_ID": 5,
-                    "project": {
-                        "project_ID": 5,
-                        "employer_ID": 1,
-                        "employer": {
-                            "employer_ID": 1,
-                            "userName": "sarawute",
-                            "password": "123456",
-                            "fullName": "sarawut employer",
-                            "iD_Card": 0,
-                            "email": "sarawut@gamil.com",
-                            "telephoneNumber": 823716301,
-                            "facebook": "sarawut",
-                            "line": "@sarawut",
-                            "address": "bru",
-                            "imgName": "defaultImg.jpg",
-                            "date_Create": "2018-04-28T00:47:10.4836118",
-                            "date_Update": "2018-04-28T00:47:10.4843299",
-                            "delStatus": false
-                        },
-                        "company_ID": 2,
-                        "company": {
-                            "company_ID": 2,
-                            "userName": "1",
-                            "password": "2",
-                            "company_Name": "3",
-                            "fax": 5,
-                            "email": "6",
-                            "company_Tel": 7,
-                            "facebook": "8",
-                            "line": "9",
-                            "company_Address": "10",
-                            "imgName": "defaultImg.jpg",
-                            "company_TaxID": 4,
-                            "date_Create": "2018-04-28T01:19:50.1299258",
-                            "date_Update": "2018-04-28T01:19:50.1300492",
-                            "delStatus": false
-                        },
-                        "freelance_ID": 6,
-                        "freelance": {
-                            "freelance_ID": 6,
-                            "userName": "sarawutem",
-                            "password": "123456",
-                            "fullName": "sarawut emlopyer",
-                            "iD_Card": 0,
-                            "email": "test@gmail.com",
-                            "telephoneNumber": 823145879,
-                            "facebook": "sarawut",
-                            "line": "@sa",
-                            "address": "Bur",
-                            "imgName": "defaultImg.jpg",
-                            "date_Create": "2018-04-28T00:13:51.9870639",
-                            "date_Update": "2018-04-28T00:13:51.9877559",
-                            "delStatus": false,
-                            "freelanceSkill": null
-                        },
-                        "projectName": "สร้างเว็บ",
-                        "description": "สร้างเว็บ สร้างเว็บ สร้างเว็บ",
-                        "budget": 1000,
-                        "timelength": 10,
-                        "startingDate": "2018-04-29T12:03:03.6021964",
-                        "endDate": "2018-04-29T12:03:03.6024056",
-                        "projectPrice": 9000,
-                        "projectStatus": true,
-                        "date_Create": "2018-04-29T12:03:03.6028816",
-                        "date_Update": "2018-04-29T12:03:03.6029782",
-                        "delStatus": false
+[
+    {
+        "skill_ID": 15,
+        "name": "PHP",
+        "skill_Description": "programing language",
+        "date_Create": "2018-05-14T11:30:13.5083056",
+        "date_Update": "2018-05-14T11:30:13.5099392",
+        "delStatus": false
+    },
+    {
+        "skill_ID": 17,
+        "name": "HTML",
+        "skill_Description": "programing language",
+        "date_Create": "2018-05-14T11:37:03.4892722",
+        "date_Update": "2018-05-14T11:37:03.4899322",
+        "delStatus": false
+    }
+]
+
+
+
+
+[
+    {
+        "skill_ID": 15,
+        "name": "PHP",
+        "skill_Description": "programing language",
+        "date_Create": "2018-05-14T11:30:13.5083056",
+        "date_Update": "2018-05-14T11:30:13.5099392",
+        "delStatus": false
+    },
+    {
+        "skill_ID": 17,
+        "name": "HTML",
+        "skill_Description": "programing language",
+        "date_Create": "2018-05-14T11:37:03.4892722",
+        "date_Update": "2018-05-14T11:37:03.4899322",
+        "delStatus": false
+    }
+]

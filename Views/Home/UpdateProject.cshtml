@@ -1,0 +1,240 @@
+@using FreelanceGo_MasterV2.Models; 
+@{ Layout = "_NewLayuot"; ViewData["Title"] = "UpdateProject"; } 
+@{ 
+    var UpdateProject = ViewData["UpdateProject"] as Project; 
+    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+   // IEnumerable<Skill> SkillProject = ViewData["SkillProject"] as IEnumerable<Skill>; 
+}
+<style>
+.SubSestion1{
+    margin: 25rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+.select2-selection{
+    width: 60rem;
+}
+</style>
+
+
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="formPost">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="sestion1">
+                            <div class="SubSestion1" tyle="border-color: #ccc;">
+                                <div class="row" style="margin-bottom:2rem">
+                                    <div class="col-sm-12 text-center">
+                                        <h1>แก้ไขประกาศงาน</h1>
+                                        <hr class="hrcss">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">ชื่องาน</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="ProjectName" name="ProjectName" value="@UpdateProject.ProjectName" type="text" class="form-control" placeholder="ชื่องาน" /> 
+                                             <input id="Project_ID" name="Project_ID" value="@UpdateProject.Project_ID" type="hidden" class="form-control" placeholder="ชื่องาน" /> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">รายละเอียด</label>
+                                    <div class="cols-sm-10">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <textarea id="Description" name="Description" class="form-control" rows="5">@UpdateProject.Description</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">งบประมาณ</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="Budget" name="Budget" type="number" value="@UpdateProject.Budget"  class="form-control" placeholder="งบประมาณ / บาท" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">ระยะเวลาการทำงาน</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="Timelength" name="Timelength" type="number" value=@UpdateProject.Timelength class="form-control" placeholder="ระยะเวลาการทำงาน / วัน" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">วันเริ่มประมูล @UpdateProject.StartingDate.ToString("dd/MM/yyyy")</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="StartingDate" value="@UpdateProject.EndDate.ToString("yyyy-MM-dd")" name="StartingDate" type="date" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">วันสิ้นสุดการประมูล</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <input id="EndDate" name="EndDate" type="date" value="@UpdateProject.StartingDate.ToString("yyyy-MM-dd")" class="form-control" placeholder="ความสามารถที่ต้องใช้ในการทำงาน" />
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="name" class="cols-sm-2 control-label">ทักษะที่ต้องการในการทำงาน</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <select id="skills"  class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+                                                @foreach (Skill Skill in Skills) 
+                                                {
+                                                    <option value=@Skill.Skill_ID>@Skill.Name</option>
+                                                }
+                                                <option  value=null><h1>สกิวของฉัน</h1></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                       <a id="submid"> <button  type="button" class="btn btn-success">บันทึก</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- end row-->
+        </div>
+    </div>
+</div>
+
+
+<script>
+$().ready(function () {
+    var Project = {
+        Project_ID: 0,
+        ProjectName: "",
+        Description: "",
+        Budget: 0,
+        Timelength: 0,
+        StartingDate: null,
+        EndDate: null,
+        ProjectSkill: [],
+    }
+    
+    var Skill = [];
+    Project.Project_ID = $("#Project_ID").val();
+    Project.ProjectName = $("#ProjectName").val();
+    Project.Description = $("#Description").val();
+    Project.Budget = $("#Budget").val();
+    Project.StartingDate = $("#StartingDate").val();
+    Project.EndDate = $("#EndDate").val();
+    console.log(Project);
+    $("#ProjectName").change(function() {
+        Project.ProjectName = $("#ProjectName").val();
+    });
+     $("#Description").change(function() {
+        Project.Description = $("#Description").val();
+    });
+     $("#Budget").change(function() {
+        Project.Budget = $("#Budget").val();
+    });
+     $("#Timelength").change(function() {
+        Project.Timelength = $("#Timelength").val();
+    });
+    $("#EndDate").change(function() {
+        Project.EndDate = $("#EndDate").val();
+        console.log(Project);
+    });
+
+    //select2
+    $("#skills").select2({
+        placeholder: "กรุณาเลือกทักษะที่ต้องใช้"
+    });
+    $("#skills").change(function() {
+    Skill = $("#skills").val();
+    console.log(Skill);
+    });
+    Skill = $("#skills").val();
+    console.log(Skill);
+    jQuery.ajax({
+        type: "get",
+        dataType: "json",
+        url: "/Home/GetProjectSkill/"+ Project.Project_ID,
+        success: function (data) {
+            console.log(data);
+            $.each(data, function(key, data) {   
+               var newOption = new Option(data.text = data.name, data.id = data.skill_ID, false, true);
+               $('#skills').append(newOption).trigger('change');
+            });
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
+     $("#submid").click(function() {
+            jQuery.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/Home/UpdateProjectSave",
+                    data:  {
+                      Project_ID: Project.Project_ID,
+                      ProjectName: Project.ProjectName,
+                      Description: Project.Description,
+                      Budget: Project.Budget,
+                      Timelength: Project.Timelength,
+                      StartingDate: Project.StartingDate,
+                      EndDate: Project.EndDate,
+                    },
+                    success: function (data) {
+                      console.log(data);
+                    },
+                    error: function (data) {
+                      alert("กรอกข้อมูลไม่ถูกต้อง");
+                    },
+          }); //end ajax
+            jQuery.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "/Home/UpdateSkillProject",
+                        data:  {
+                            id: Project.Project_ID,
+                            skills: Skill
+                        },
+                        success: function (data) {
+                        alert("ประกาศสำเร็จ");
+                        console.log(data);
+                        location.replace("http://localhost:5000/Home/ProfileEmployer/"+localStorage['Employer_ID']);
+                        },
+                        error: function (data) {
+                        alert("กรอกข้อมูลไม่ถูกต้อง");
+                        },
+            }); //end ajax 
+      });
+});
+</script>

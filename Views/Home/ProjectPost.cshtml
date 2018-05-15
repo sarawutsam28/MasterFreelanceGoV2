@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 text-center">
-                                       <a asp-controller="Home" asp-action="UpdateSkill"> <button  type="button" class="btn btn-success">ถัดไป</button></a>
+                                       <a id="Project-submit"> <button  type="button" class="btn btn-success">ถัดไป</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +160,7 @@
 			jQuery.ajax({
 				type: "post",
 				dataType: "json",
-				url: "/Home/SaveProject",
+				url: "/Home/SaveProjectCompany",
 				data: {
 					ProjectName: Project.ProjectName,
 					Description: Project.Description,
@@ -171,7 +171,7 @@
 				},
 				success: function (data) {
 					console.log(data);
-					location.replace("http://localhost:5000/Home/ProfileEmployer"+ localStorage['Employer_ID']);
+					location.replace("http://localhost:5000/Home/UpdateSkill");
 				},
 				error: function (data) {
 					alert("เกิดข้อผิดพลาด");
