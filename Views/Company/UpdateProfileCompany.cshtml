@@ -1,0 +1,236 @@
+@using FreelanceGo_MasterV2.Models; 
+@{ Layout = "_CompanyLayout"; ViewData["Title"] = "UpdateProfileCompany"; } 
+@{ 
+    var UpdateProfileCompany = ViewData["UpdateProfileCompany"] as Company; 
+    //IEnumerable<Project> ProjectCompanys = ViewData["ProjectCompany"] as IEnumerable<Project>; 
+}
+
+
+
+    <style>
+    </style>
+
+<div>
+      <form class="center" style="background-color: #fff; padding: 20px; box-shadow: 0px 2px 6px rgba(50, 50, 50, 0.42); margin: 30rem; margin-top: 3rem; margin-bottom: 3rem;">
+        <div class="row" style="padding:  2rem;">
+          <div class="col-sm-12 text-center">
+              <h3>อัพเดทข้อมูลส่วนตัว</h3>
+        </div>
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">ชื่อ-นามสกุล</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa" aria-hidden="true"></i>
+              </span>
+              <input id="FullName" value="@UpdateProfileCompany.Company_Name" type="text" class="form-control" placeholder="ชื่อ-นามสกุล" />
+              <input id="imgName" value="@UpdateProfileCompany.imgName" type="hidden" class="form-control" />
+              <input id="Company_ID" value=@UpdateProfileCompany.Company_ID type="hidden" class="form-control" />
+            </div>
+            <span id="error_fullName" class="text-danger"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="cols-sm-2 control-label">อีเมล</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </span>
+              <input id="Email" type="email" value="@UpdateProfileCompany.Email" class="form-control" placeholder="อีเมล" />
+            </div>
+            <span id="error_email" class="text-danger"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="cols-sm-2 control-label"> เบอร์โทร</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input id="Company_Tel"  value="@UpdateProfileCompany.Company_Tel" type="text" class="form-control" placeholder="เบอร์โทร" />
+            </div>
+            <span id="error_password" class="text-danger"></span>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="cols-sm-2 control-label"> เลขผู้เสียภาษีบริษัท</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input id="Company_TaxID"  value="@UpdateProfileCompany.Company_TaxID" type="text" class="form-control" placeholder="เบอร์โทร" />
+            </div>
+            <span id="error_password" class="text-danger"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="cols-sm-2 control-label">เบอร์ Fax</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input id="Fax"  value="@UpdateProfileCompany.Fax" type="text" class="form-control" placeholder="เบอร์ Fax" />
+            </div>
+            <span id="error_password" class="text-danger"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="cols-sm-2 control-label">Facebook</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input type="text" id="Facebook" value="@UpdateProfileCompany.Facebook" class="form-control" placeholder="Facebook" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="cols-sm-2 control-label">Line</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input type="text" id="Line" value="@UpdateProfileCompany.Line" class="form-control" placeholder="Line" />
+            </div>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="cols-sm-2 control-label">Address</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input type="text" id="Address" value="@UpdateProfileCompany.Company_Address" class="form-control" placeholder="Address" />
+            </div>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="cols-sm-2 control-label">รูปโปรไฟล์</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fas fa-lock-open" aria-hidden="true"></i>
+              </span>
+              <input type="file" id="uploadFile"  class="form-control" placeholder="Line" />
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button id="submid" type="button" class="btn btn-danger">UPDATE</button>
+        </div>
+      </form>
+</div>
+
+<script>
+$().ready(function () {
+  var Company = {
+    Company_ID: 0,
+    FullName: '',
+    Email: '',
+    Company_Tel: '',
+    Facebook: '',
+    Line: '',
+    Address: '',
+    Company_TaxID: 0,
+    Fax: 0,
+  }
+  var imgName = '';
+       Company.FullName = $("#FullName").val();
+       Company.Email = $("#Email").val();
+       Company.Company_Tel = $("#Company_Tel").val();
+       Company.Facebook = $("#Facebook").val();
+       Company.Line = $("#Line").val();
+       Company.Address = $("#Address").val();
+       Company.Company_ID = $("#Company_ID").val();
+       Company.Company_TaxID = $("#Company_TaxID").val();
+       Company.Fax = $("#Fax").val();
+       imgName = $("#imgName").val();
+       console.log(Company);
+       console.log(imgName);
+      $("#FullName").change(function () {
+        Company.FullName = $("#FullName").val();
+      });
+       $("#Email").change(function () {
+        Company.Email = $("#Email").val();
+      });
+        $("#Company_Tel").change(function () {
+        Company.Company_Tel = $("#Company_Tel").val();
+        console.log(Company);
+      });
+       $("#Facebook").change(function () {
+        Company.Facebook = $("#Facebook").val();
+      });
+       $("#Line").change(function () {
+        Company.Line = $("#Line").val();
+      });
+        $("#Address").change(function () {
+        Company.Address = $("#Address").val();
+        console.log(Company);
+      });
+      $("#Company_TaxID").change(function () {
+        Company.Company_TaxID = $("#Company_TaxID").val();
+        console.log(Company);
+      });
+      $("#Fax").change(function () {
+        Company.Fax = $("#Fax").val();
+        console.log(Company);
+      });
+      var f =  new FormData();
+      console.log(f);
+      var _fileName = new FormData();
+       let onchange = function () {
+              let _this = $(this)[0];
+              f.append('File', _this.files[0]);
+              _fileName = f.getAll('File', _this.files[0].name);
+              imgName = _fileName[0].name;
+              console.log(imgName);
+              console.log(f);
+        };
+        var onSuccess = function (model) {
+         // imgName = model.file.fileName;
+                console.log(model)
+        }
+         $(document).on('change', 'input[type=file]', onchange);
+      $("#submid").click(function() {
+            jQuery.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/Company/UpdateCompany",
+                    data:  {
+                      Company_ID: Company.Company_ID,
+                      Company_Name: Company.FullName,
+                      Email: Company.Email,
+                      Company_Tel: Company.Company_Tel,
+                      Fax: Company.Fax,
+                      Company_TaxID: Company.Company_TaxID,
+                      Facebook: Company.Facebook,
+                      Line: Company.Line,
+                      Company_Address: Company.Address,
+                      imgName: imgName
+                    },
+                    success: function (data) {
+                      alert("ประกาศสำเร็จ");
+                      console.log(data);
+                    //location.replace("http://localhost:5000/Home/Profile/"+localStorage['userId']);
+                    },
+                    error: function (data) {
+                      alert("กรอกข้อมูลไม่ถูกต้อง");
+                    },
+          }); //end ajax
+          $.ajax({
+                method: 'POST',
+                url: '/Home/Upload',
+                data: f,
+                processData: false,
+                contentType: false,
+              }).done(onSuccess);
+      });
+});
+</script>

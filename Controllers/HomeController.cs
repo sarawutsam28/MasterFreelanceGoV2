@@ -89,6 +89,7 @@ namespace FreelanceGo_MasterV2.Controllers
             _Employer.Line = Employer.Line;
             _Employer.Address = Employer.Address;
             _Employer.imgName = Employer.imgName;
+            _Employer.Date_Update = DateTime.Now;
             _context.Update(_Employer);
             await _context.SaveChangesAsync();
             return Json(new { Result = "OK" });
@@ -327,6 +328,7 @@ namespace FreelanceGo_MasterV2.Controllers
             _Project.Timelength = Project.Timelength;
             _Project.StartingDate = Project.StartingDate;
             _Project.EndDate = Project.EndDate;
+            _Project.Date_Update = DateTime.Now;
             _context.Update(_Project);
             _context.SaveChanges();
             return Json(new { Result = _Project });

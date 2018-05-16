@@ -21,13 +21,13 @@ namespace FreelanceGo_MasterV2.Models
         public string FullName { get; set; }
 
         [Required]
-        public int ID_Card { get; set; }
+        public string ID_Card { get; set; }
 
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-        public int TelephoneNumber { get; set; }
+        public string TelephoneNumber { get; set; }
         public string Facebook { get; set; }
         public string Line { get; set; }
         public string Address { get; set; }

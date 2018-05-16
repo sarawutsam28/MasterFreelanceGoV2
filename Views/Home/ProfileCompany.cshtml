@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models;
-@{ Layout = "_NewLayuot"; ViewData["Title"] = "Empolyer"; }
+@{ Layout = "_CompanyLayout"; ViewData["Title"] = "Company"; }
 
 
 @{  
@@ -49,13 +49,13 @@
 								<div class="col-sm-12">
 									<div class="row">
 										<div class="col-sm-12"style="padding-right: 0px;padding-left: 0px;">
-											<img  src="~/images/adult-business-businessman-428339.jpg" style="width: 100rem; height: 20rem;"  class="img-responsive" alt="">
+											<img  src="~/images/@ProfileCompany.imgName" style="width: 100rem; height: 20rem;"  class="img-responsive" alt="">
 										</div>
 									</div>
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="" asp-action="" asp-route-id=@ProfileCompany.Company_ID >@ProfileCompany.Company_Name</a>
+											<a asp-controller="Company" asp-action="" asp-route-id=@ProfileCompany.Company_ID >@ProfileCompany.Company_Name</a>
 										</div>
 									</div>
 									<div class="row">
@@ -90,7 +90,7 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="" asp-action="" asp-route-id=@ProfileCompany.Company_ID style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
+											<a asp-controller="Company" asp-action="UpdateProfileCompany" asp-route-id=@ProfileCompany.Company_ID style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
 										</div>
 									</div>
 								</div>
@@ -159,7 +159,7 @@
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
 																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-																										<td class="col-xs-1"><a asp-controller="Home" asp-action="UpdateProject" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success pull-right">แก้ไข</a>
+																										<td class="col-xs-1"><a asp-controller="Company" asp-action="UpdateProject" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success pull-right">แก้ไข</a>
 																										</td>
 																									</tr>
 																								}

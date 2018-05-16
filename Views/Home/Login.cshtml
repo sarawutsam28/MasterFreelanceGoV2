@@ -293,8 +293,8 @@ input:hover{
 				},
 				success: function (data) {
 					console.log(data);
-					localStorage['Employer_ID'] = data.result.company_ID;
-					location.replace("http://localhost:5000/Home/ProfileCompany/"+localStorage['Employer_ID']);
+					localStorage['Company_ID'] = data.result.company_ID;
+					location.replace("http://localhost:5000/Home/ProfileCompany/"+localStorage['Company_ID']);
 				},
 				error: function (data) {
 					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
