@@ -228,12 +228,13 @@ input:hover{
 				},
 				success: function (data) {
 					console.log(data);
-				//	localStorage['userId'] = data.id;
-				//	location.replace("http://localhost:5000/Home/UpdateSkill/");
+			     	localStorage['Freelance_ID'] = data.result.freelance_ID;
+					//location.replace("http://localhost:5000/Home/ProfileFreelance/");
+					location.replace("http://localhost:5000/Home/ProfileFreelance/"+ localStorage['Freelance_ID']);
 				},
 				error: function (data) {
 					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-					location.replace("http://localhost:5000/Home/Login");
+					//location.replace("http://localhost:5000/Home/Login");
 				},
 			});
 			});

@@ -1,0 +1,130 @@
+@using FreelanceGo_MasterV2.Models;
+@{ Layout = "_CompanyLayout"; ViewData["Title"] = "ProjectDetails"; }
+
+
+@{  
+   var ProjectDetails = ViewData["ProjectDetails"] as Project; 
+   //IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<style>
+.project{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+.Auction{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="project"> 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>ชื่องาน: @ProjectDetails.ProjectName</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>รายละเอียด @ProjectDetails.Description</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>ราคาเริ่มต้น: @ProjectDetails.Budget</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>ระยะเวลาในการทำงาน: @ProjectDetails.Timelength วัน</h3>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12">
+                        <h3>วันที่เริ่มประมูล: @Html.DisplayFor(modelItem => ProjectDetails.StartingDate)</h3>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12">
+                        <h3>วันที่สิ้นสุดการประมูล: @Html.DisplayFor(modelItem => ProjectDetails.EndDate)</h3>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12">
+                        <h3>วันที่หมดเวลาประกาศงาน: @Html.DisplayFor(modelItem => ProjectDetails.ProjectTimeOut)</h3>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Skill</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>ประกาศโดย: @ProjectDetails.Company.Company_Name</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="Auction"> 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table style="width:100%;">
+							<thead>
+                                <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+                                <th class="col-xs-5">ชื่อ</th>
+                                <th class="col-xs-3">ราคา</th>
+                                <th class="col-xs-3">ระยะเวลาในการทำงาน/วัน</th>
+                                <th class="col-xs-1"></th>
+                                </tr>
+							</thead>
+							<tbody class="points_table_scrollbar">
+                                <!-- @@foreach (Project Project in ProjectEmployers) 
+                                {
+                                    <div>
+                                    @@if (Project.Freelance_ID == null && Project.ProjectStatus == true)
+                                    {
+                                        <tr class="odd" style="height:5rem;">
+                                        <td class="col-xs-4"><a asp-controller="Home" asp-action="ProfileDetails" asp-route-id=@@Project.Project_ID>@@Project.ProjectName</a></td>
+                                        <td class="col-xs-2">@@Project.Budget บาท</td>
+                                        <td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
+                                        <td class="col-xs-3">@@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+                                        <td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
+                                        </td>
+                                        </tr>
+                                    }
+                                    </div>
+                                } -->
+                                <tr class="odd" style="height:5rem;">
+                                    <td class="col-xs-2">sarawut freelance</td>
+                                    <td class="col-xs-3">10000 บาท</td>
+                                    <td class="col-xs-3">10 วัน</td>
+                                    <td class="col-xs-1"><a class="btn btn-xs btn-success pull-right"><i class="fas fa-check"></i></a>
+                                    </td>
+                                </tr>
+							</tbody>
+							</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+   
+</script>

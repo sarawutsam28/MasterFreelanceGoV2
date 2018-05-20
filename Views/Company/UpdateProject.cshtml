@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models; 
-@{ Layout = "_NewLayuot"; ViewData["Title"] = "UpdateProject"; } 
+@{ Layout = "_CompanyLayout"; ViewData["Title"] = "UpdateProject"; } 
 @{ 
     var UpdateProject = ViewData["UpdateProject"] as Project; 
     IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
@@ -229,7 +229,7 @@ $().ready(function () {
                         success: function (data) {
                         alert("ประกาศสำเร็จ");
                         console.log(data);
-                        location.replace("http://localhost:5000/Home/ProfileCompany/"+localStorage['Employer_ID']);
+                        location.replace("http://localhost:5000/Home/ProfileCompany/"+localStorage['Company_ID']);
                         },
                         error: function (data) {
                         alert("กรอกข้อมูลไม่ถูกต้อง");

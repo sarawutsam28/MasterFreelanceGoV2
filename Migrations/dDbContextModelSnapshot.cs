@@ -30,9 +30,9 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("Company_Name")
                         .IsRequired();
 
-                    b.Property<int>("Company_TaxID");
+                    b.Property<string>("Company_TaxID");
 
-                    b.Property<int>("Company_Tel");
+                    b.Property<string>("Company_Tel");
 
                     b.Property<DateTime>("Date_Create");
 
@@ -45,7 +45,7 @@ namespace FreelanceGoMasterV2.Migrations
 
                     b.Property<string>("Facebook");
 
-                    b.Property<int>("Fax");
+                    b.Property<string>("Fax");
 
                     b.Property<string>("Line");
 
@@ -83,14 +83,15 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("FullName")
                         .IsRequired();
 
-                    b.Property<int>("ID_Card");
+                    b.Property<string>("ID_Card")
+                        .IsRequired();
 
                     b.Property<string>("Line");
 
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<int>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber");
 
                     b.Property<string>("UserName")
                         .IsRequired();
@@ -123,7 +124,8 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("FullName")
                         .IsRequired();
 
-                    b.Property<int>("ID_Card");
+                    b.Property<string>("ID_Card")
+                        .IsRequired();
 
                     b.Property<string>("ImgName");
 
@@ -132,7 +134,7 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<int>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber");
 
                     b.Property<string>("UserName")
                         .IsRequired();

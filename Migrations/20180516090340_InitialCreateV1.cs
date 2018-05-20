@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FreelanceGoMasterV2.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreateV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,8 +17,8 @@ namespace FreelanceGoMasterV2.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Company_Address = table.Column<string>(nullable: true),
                     Company_Name = table.Column<string>(nullable: false),
-                    Company_TaxID = table.Column<int>(nullable: false),
-                    Company_Tel = table.Column<int>(nullable: false),
+                    Company_TaxID = table.Column<string>(nullable: true),
+                    Company_Tel = table.Column<string>(nullable: true),
                     Date_Create = table.Column<DateTime>(nullable: false),
                     Date_Update = table.Column<DateTime>(nullable: false),
                     DelStatus = table.Column<bool>(nullable: false),
@@ -48,10 +48,10 @@ namespace FreelanceGoMasterV2.Migrations
                     Email = table.Column<string>(nullable: false),
                     Facebook = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: false),
-                    ID_Card = table.Column<int>(nullable: false),
+                    ID_Card = table.Column<string>(nullable: false),
                     Line = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
-                    TelephoneNumber = table.Column<int>(nullable: false),
+                    TelephoneNumber = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: false),
                     imgName = table.Column<string>(nullable: true)
                 },
@@ -73,11 +73,11 @@ namespace FreelanceGoMasterV2.Migrations
                     Email = table.Column<string>(nullable: false),
                     Facebook = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: false),
-                    ID_Card = table.Column<int>(nullable: false),
+                    ID_Card = table.Column<string>(nullable: false),
                     ImgName = table.Column<string>(nullable: true),
                     Line = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
-                    TelephoneNumber = table.Column<int>(nullable: false),
+                    TelephoneNumber = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -109,17 +109,18 @@ namespace FreelanceGoMasterV2.Migrations
                     Project_ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Budget = table.Column<int>(nullable: false),
-                    Company_ID = table.Column<int>(nullable: false),
+                    Company_ID = table.Column<int>(nullable: true),
                     Date_Create = table.Column<DateTime>(nullable: false),
                     Date_Update = table.Column<DateTime>(nullable: false),
                     DelStatus = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Employer_ID = table.Column<int>(nullable: false),
+                    Employer_ID = table.Column<int>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    Freelance_ID = table.Column<int>(nullable: false),
+                    Freelance_ID = table.Column<int>(nullable: true),
                     ProjectName = table.Column<string>(nullable: false),
                     ProjectPrice = table.Column<int>(nullable: false),
                     ProjectStatus = table.Column<bool>(nullable: false),
+                    ProjectTimeOut = table.Column<DateTime>(nullable: false),
                     StartingDate = table.Column<DateTime>(nullable: false),
                     Timelength = table.Column<int>(nullable: false)
                 },
@@ -131,19 +132,19 @@ namespace FreelanceGoMasterV2.Migrations
                         column: x => x.Company_ID,
                         principalTable: "Company",
                         principalColumn: "Company_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Project_Employer_Employer_ID",
                         column: x => x.Employer_ID,
                         principalTable: "Employer",
                         principalColumn: "Employer_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Project_Freelance_Freelance_ID",
                         column: x => x.Freelance_ID,
                         principalTable: "Freelance",
                         principalColumn: "Freelance_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

@@ -1,0 +1,141 @@
+@using FreelanceGo_MasterV2.Models; 
+@{ Layout = "_FreelnaceLayout"; 
+ViewData["Title"] = "Search"; } 
+@{ 
+    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+    IEnumerable<Project> _Project = ViewData["_Project"] as IEnumerable <Project>; 
+}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
+
+
+<style>
+    .Search {
+        border: 1px solid red;
+         border-color: #ccc;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+        margin-top: 3rem;
+        padding: 5rem;
+        padding-top: 1rem;
+    }
+    .tableSearch{
+        border: 1px solid red;
+         border-color: #ccc;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+        margin-top: 3rem;
+        padding: 5rem;
+    }
+    th{
+        text-align: center;
+    }
+    .center-td{
+        text-align: center;
+    }
+</style>
+
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="Search">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3> ค้นหา</h3>
+                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group" style="margin-top: 3rem;">
+                                    <select type="text" id="SelectSearch" class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+                                        @foreach (Skill Skill in Skills) 
+                                    {
+                                        <option value=@Skill.Skill_ID>@Skill.Name</option>
+                                    }
+                                    </select>
+                                <span class="input-group-btn">
+                                        <button type="button" id="buttonSearch" class="btn btn-default">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                     <table style="width:100%;" id="tableSearch" class="tableSearch">
+							<thead>
+                                <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+                                <th class="col-xs-5">ชื่อ/รายละอียด</th>
+                                <th class="col-xs-2">ระยะเวลา</th>
+                                <th class="col-xs-3">ประมูลถึง</th>
+                                <th class="col-xs-2 ">ราคา</th>
+                                </tr>
+							</thead>
+							<tbody class="points_table_scrollbar">
+                                <tr class="odd" style="height:5rem;">
+                                    <td class="col-xs-5">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a>sarawut freelance</a>
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label>สร้างเว็บสร้างเว็บสร้างเว็บสร้างเว็บสร้างเว็บสร้างเว็บสร้างเว็บสร้างเว็บ</label>
+                                            </div>
+                                        </div> 
+                                    </td>
+                                    <td class="col-xs-2 center-td">10 วัน</td>
+                                    <td class="col-xs-3 center-td">30-5-2018</td>
+                                    <td class="col-xs-2 center-td">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                90000 บาท 
+                                            </div>
+                                        </div> 
+                                         <div class="row">
+                                            <div class="col-sm-12 ">
+                                               <a class="btn btn-xs btn-success text-center"><i class="fas fa-check"></i></a>
+                                            </div>
+                                        </div> 
+                                    </td>
+                                </tr>
+							</tbody>
+							</table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function () {
+    $("#SelectSearch").select2({
+        placeholder: "ค้นหาด้วย ทักษะ"
+    });
+    $("#buttonSearch").click(function () {
+			jQuery.ajax({
+				type: "get",
+				dataType: "json",
+				url: "/Freelnace/SearchString",
+				success: function (data) {
+					console.log(data);
+                    jQuery.each( data, function( i, data ) {
+                        $("#tableSearch").find('tbody')
+                    var date = new Date(data.endDate);
+                    var day = date.getDate();
+                    var month = date.getMonth();
+                    var year = date.getFullYear();
+                    $(".projectName").text(data.projectName)
+                    $(".Description").text(data.description)
+                    $(".Timelength").text(data.timelength)
+                    $(".EndDate").text(day+ '-' + month + '-' + year)
+                    $(".Budget").text(data.budget)
+                    });
+				},
+				error: function (data) {
+					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+				},
+		    });
+	});
+});
+</script>

@@ -1,5 +1,5 @@
  @{ 
-     Layout = "_NewLayuot"; 
+     Layout = "_CompanyLayout"; 
      ViewData["Title"] = "ProjectPost"; 
 }
 
@@ -160,7 +160,7 @@
 			jQuery.ajax({
 				type: "post",
 				dataType: "json",
-				url: "/Home/SaveProject",
+				url: "/Company/SaveProject",
 				data: {
 					ProjectName: Project.ProjectName,
 					Description: Project.Description,
@@ -171,11 +171,11 @@
 				},
 				success: function (data) {
 					console.log(data);
-					location.replace("http://localhost:5000/Home/UpdateSkill");
+					location.replace("http://localhost:5000/Company/UpdateSkill");
 				},
 				error: function (data) {
 					alert("เกิดข้อผิดพลาด");
-					location.replace("http://localhost:5000/Home/ProjectPost");
+					location.replace("http://localhost:5000/Company/ProjectPost");
 				},
 			});
 			});

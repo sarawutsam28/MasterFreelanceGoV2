@@ -25,7 +25,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult Index()
         {
-            //   SaveProject();
+            HttpContext.Session.Clear();
             return View();
         }
         public IActionResult About()
@@ -50,8 +50,17 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             return View();
         }
-        public IActionResult ProfileFreelance()
+        public IActionResult ProfileFreelance(int id)
         {
+            var Employer_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            if (Employer_ID == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            var ProfileFreelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == id);
+            var ProjectFreelance = _context.Project.Where(p => p.Freelance_ID == id && p.DelStatus == false);
+            ViewData["ProfileFreelance"] = ProfileFreelance;
+            ViewData["ProjectFreelance"] = ProjectFreelance;
             return View();
         }
         public IActionResult ProfileEmployer(int id)
@@ -208,7 +217,7 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             var loginde = _context.Freelance
                 .Single(f => f.UserName == Freelance.UserName && f.Password == Freelance.Password);
-            HttpContext.Session.SetInt32("ID", loginde.Freelance_ID);
+            HttpContext.Session.SetInt32("Freelance_ID", loginde.Freelance_ID);
             ViewData["Freelance_ID"] = loginde.Freelance_ID;
             return Json(new { Result = loginde });
         }
@@ -236,7 +245,6 @@ namespace FreelanceGo_MasterV2.Controllers
             var _Project = new Project
             {
                 Employer_ID = (int)HttpContext.Session.GetInt32("Employer_ID"),
-                Company_ID = (int)HttpContext.Session.GetInt32("Company_ID"),
                 ProjectName = Project.ProjectName,
                 Description = Project.Description,
                 Budget = Project.Budget,

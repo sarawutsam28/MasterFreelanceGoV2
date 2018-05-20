@@ -40,7 +40,7 @@
 				<div class="sestion1">
 					<div class="row">
 						<div class="col-sm-12">
-							<a class="pull-right" href="/Home/ProjectPost" type="button">ประกาศงาน</a>
+							<a class="btn btn-xs btn-success pull-right" style="padding: 0.5rem; margin: 1rem; margin-right: 0rem; background-color: red; border-color: red;" href="/Company/ProjectPost" type="button">ประกาศงาน</a>
 						</div>
 					</div>
 					<div class="row">
@@ -55,7 +55,7 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Company" asp-action="" asp-route-id=@ProfileCompany.Company_ID >@ProfileCompany.Company_Name</a>
+											<a asp-controller="Company" asp-action="ProfileDetailsCompany" asp-route-id=@ProfileCompany.Company_ID >@ProfileCompany.Company_Name</a>
 										</div>
 									</div>
 									<div class="row">
@@ -155,7 +155,7 @@
 																								@if (Project.Freelance_ID == null && Project.ProjectStatus == true)
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a asp-controller="Home" asp-action="ProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-4"><a asp-controller="Company" asp-action="ProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
 																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>

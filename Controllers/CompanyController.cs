@@ -27,6 +27,55 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             return View();
         }
+        public IActionResult ProjectPost()
+        {
+            return View();
+        }
+        public IActionResult ProfileDetailsCompany(int id)
+        {
+            var ProfileDetailsCompany = _context.Company.SingleOrDefault(e => e.Company_ID == id);
+            ViewData["ProfileDetailsCompany"] = ProfileDetailsCompany;
+            return View();
+        }
+        public IActionResult ProjectDetails(int id)
+        {
+            var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Company)
+            .Load();
+            ViewData["ProjectDetails"] = ProjectDetails;
+            return View();
+        }
+        public async Task<IActionResult> SaveProject(Project Project)
+        {
+            var _Project = new Project
+            {
+                Company_ID = (int)HttpContext.Session.GetInt32("Company_ID"),
+                ProjectName = Project.ProjectName,
+                Description = Project.Description,
+                Budget = Project.Budget,
+                Timelength = Project.Timelength,
+                StartingDate = Project.StartingDate,
+                EndDate = Project.EndDate,
+                ProjectStatus = true,
+                ProjectTimeOut = DateTime.Now.AddDays(15),
+                Date_Create = DateTime.Now,
+                Date_Update = DateTime.Now,
+                DelStatus = false,
+            };
+            _context.Project.Add(_Project);
+            await _context.SaveChangesAsync();
+            int id = _Project.Project_ID;
+            HttpContext.Session.SetInt32("Project_ID", id);
+            return Json(new { Result = id });
+        }
+        public IActionResult UpdateSkill()
+        {
+            var Skill = _context.Skill.ToList();
+            ViewData["Skill"] = Skill;
+            return View();
+        }
         public async Task<IActionResult> UpdateCompany(Company Company)
         {
             var _Company = _context.Company.SingleOrDefault(e => e.Company_ID == Company.Company_ID);
@@ -48,6 +97,28 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             var UpdateProfileCompany = _context.Company.SingleOrDefault(e => e.Company_ID == id);
             ViewData["UpdateProfileCompany"] = UpdateProfileCompany;
+            return View();
+        }
+        public IActionResult UpdateProject(int id)
+        {
+            var UpdateProject = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            var SkillProject = _context.Entry(UpdateProject)
+                .Collection(b => b.ProjectSkill)
+                .Query()
+                .Select(d => new
+                {
+                    Skill_ID = d.Skill_ID,
+                    Name = d.Skill.Name,
+                    Skill_Description = d.Skill.Skill_Description,
+                    Date_Create = d.Skill.Date_Create,
+                    Date_Update = d.Skill.Date_Update,
+                    DelStatus = d.Skill.DelStatus,
+                })
+                .ToList();
+            var Skill = _context.Skill.ToList();
+            ViewData["UpdateProject"] = UpdateProject;
+            ViewData["Skill"] = Skill;
+            ViewData["SkillProject"] = SkillProject;
             return View();
         }
         public IActionResult UpdateProjectSave(Project Project)

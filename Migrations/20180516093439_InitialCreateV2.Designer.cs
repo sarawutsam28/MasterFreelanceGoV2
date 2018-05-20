@@ -11,8 +11,8 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    [Migration("20180516084243_InitialCreateV4")]
-    partial class InitialCreateV4
+    [Migration("20180516093439_InitialCreateV2")]
+    partial class InitialCreateV2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,9 +31,9 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("Company_Name")
                         .IsRequired();
 
-                    b.Property<int>("Company_TaxID");
+                    b.Property<string>("Company_TaxID");
 
-                    b.Property<int>("Company_Tel");
+                    b.Property<string>("Company_Tel");
 
                     b.Property<DateTime>("Date_Create");
 
@@ -46,7 +46,7 @@ namespace FreelanceGoMasterV2.Migrations
 
                     b.Property<string>("Facebook");
 
-                    b.Property<int>("Fax");
+                    b.Property<string>("Fax");
 
                     b.Property<string>("Line");
 
@@ -84,14 +84,15 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("FullName")
                         .IsRequired();
 
-                    b.Property<int>("ID_Card");
+                    b.Property<string>("ID_Card")
+                        .IsRequired();
 
                     b.Property<string>("Line");
 
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<int>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber");
 
                     b.Property<string>("UserName")
                         .IsRequired();
@@ -124,7 +125,8 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("FullName")
                         .IsRequired();
 
-                    b.Property<int>("ID_Card");
+                    b.Property<string>("ID_Card")
+                        .IsRequired();
 
                     b.Property<string>("ImgName");
 
@@ -133,7 +135,7 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<int>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber");
 
                     b.Property<string>("UserName")
                         .IsRequired();

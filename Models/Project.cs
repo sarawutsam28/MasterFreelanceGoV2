@@ -35,6 +35,7 @@ namespace FreelanceGo_MasterV2.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime StartingDate { get; set; }
         [Required]
+        [Display(Name = "EndDate")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime EndDate { get; set; }
