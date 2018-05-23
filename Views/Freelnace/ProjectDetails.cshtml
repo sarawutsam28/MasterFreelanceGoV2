@@ -1,10 +1,10 @@
 @using FreelanceGo_MasterV2.Models;
-@{ Layout = "_NewLayuot"; ViewData["Title"] = "ProjectDetails"; }
+@{ Layout = "_FreelnaceLayout"; ViewData["Title"] = "ProjectDetails"; }
 
 
 @{  
    var ProjectDetails = ViewData["ProjectDetails"] as Project; 
-   //IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+   IEnumerable<Auction> Auction = ViewData["Auction"] as IEnumerable<Auction>; 
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style>
@@ -33,7 +33,6 @@
                     <div class="col-sm-12">
                         <h3>ชื่องาน: @ProjectDetails.ProjectName</h3>
                         <input type="hidden" id="Project_ID" value=@ProjectDetails.Project_ID />
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -67,14 +66,24 @@
                 </div>
                  <div class="row">
                     <div class="col-sm-12">
-                        <h3>Skill</h3>
+                        <h3 id="Project_IDText">ความสามารถที่ต้องการ: </h3>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>ประกาศโดย: @ProjectDetails.Employer.FullName</h3>
+                @if (@ProjectDetails.Employer != null) {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ประกาศโดย: @ProjectDetails.Employer.FullName</h3>
+                        </div>
                     </div>
-                </div>
+                }
+                else if (@ProjectDetails.Company != null) 
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ประกาศโดย: @ProjectDetails.Company.Company_Name</h3>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -83,52 +92,69 @@
             <div class="Auction"> 
                 <div class="row">
                     <div class="col-sm-12">
-                        <table style="width:100%;">
+                        <table id="AuctionTable" style="width:100%;">
 							<thead>
                                 <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
                                 <th class="col-xs-5">ชื่อ</th>
-                                <th class="col-xs-3">ราคา</th>
-                                <th class="col-xs-3">ระยะเวลาในการทำงาน/วัน</th>
-                                <th class="col-xs-1"></th>
+                                <th class="col-xs-3 text-center">ราคา</th>
+                                <th class="col-xs-3 text-center">ระยะเวลาในการทำงาน/วัน</th>
                                 </tr>
 							</thead>
-							<tbody id="AuctionTable" class="points_table_scrollbar">
-                                <!-- @@foreach (Project Project in ProjectEmployers) 
-                                {
-                                    <div>
-                                    @@if (Project.Freelance_ID == null && Project.ProjectStatus == true)
-                                    {
-                                        <tr class="odd" style="height:5rem;">
-                                        <td class="col-xs-4"><a asp-controller="Home" asp-action="ProfileDetails" asp-route-id=@@Project.Project_ID>@@Project.ProjectName</a></td>
-                                        <td class="col-xs-2">@@Project.Budget บาท</td>
-                                        <td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-                                        <td class="col-xs-3">@@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-                                        <td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
-                                        </td>
-                                        </tr>
-                                    }
-                                    </div>
-                                } -->
-                                <tr class="odd" style="height:5rem;">
-                                    <td class="col-xs-2">sarawut freelance</td>
-                                    <td class="col-xs-3">10000 บาท</td>
-                                    <td class="col-xs-3">10 วัน</td>
-                                    <td class="col-xs-1"><a class="btn btn-xs btn-success pull-right"><i class="fas fa-check"></i></a>
-                                    </td>
-                                </tr>
+							<tbody class="points_table_scrollbar">
 							</tbody>
 							</table>
                     </div>
                 </div>
+                <hr>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label for="inputEmail4">ราคา</label>
+                        <input type="number" class="form-control" id="Price" placeholder="ราคา">
+                        </div>
+                        <div class="form-group col-md-6">
+                        <label for="inputPassword4">ระยะเวลาในการทำงาน/วัน</label>
+                        <input type="number" class="form-control" id="AuctionTime" placeholder="ระยะเวลาในการทำงาน/วัน">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <button id="btnAuctionTime" type="button" class="btn btn-primary">ประมูล</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-
 <script>
 $().ready(function() {
-        var Project_ID = $("#Project_ID").val();
+    var Project_ID = $("#Project_ID").val();
+    var Price = 0;
+    var AuctionTime = 0;
+    $("#Price").change(function() {
+        Price = $("#Price").val();
+    });
+     $("#AuctionTime").change(function() {
+        AuctionTime = $("#AuctionTime").val();
+    });
+    jQuery.ajax({
+        type: "get",
+        dataType: "json",
+        url: "/Home/GetProjectSkill/"+ Project_ID,
+        success: function (data) {
+            console.log(data);
+            $.each(data, function(key, data) {   
+               /*var newOption = new Option(data.text = data.name, data.id = data.skill_ID, false, true);
+               $('#skills').append(newOption).trigger('change');*/
+               $("#Project_IDText").append(data.name + " | ");
+            });
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
         jQuery.ajax({
         type: "get",
         dataType: "json",
@@ -148,5 +174,25 @@ $().ready(function() {
             alert("กรอกข้อมูลไม่ถูกต้อง");
         },
         }); //end ajax
+    
+    $("#btnAuctionTime").click(function() {
+        jQuery.ajax({
+        type: "post",
+        dataType: "json",
+        url: "/Freelnace/SaveAuction/",
+        data: {
+            Price: Price,
+            AuctionTime: AuctionTime,
+            Project_ID: Project_ID,
+        },
+        success: function (data) {
+            console.log(data);
+            location.replace("http://localhost:5000/Freelnace/ProjectDetails/"+Project_ID);
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
+    });
 });
 </script>

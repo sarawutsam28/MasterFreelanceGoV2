@@ -56,7 +56,10 @@ namespace FreelanceGo_MasterV2.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
         public bool DelStatus { get; set; }
+        [Required]
+        public bool SuccessStatus { get; set; }
         public List<ProjectSkill> ProjectSkill { get; set; }
+        public List<Auction> Auction { get; set; }
 
     }
 }

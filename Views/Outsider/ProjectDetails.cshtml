@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models;
-@{ Layout = "_NewLayuot"; ViewData["Title"] = "ProjectDetails"; }
+@{ Layout = "_Layout"; ViewData["Title"] = "ProjectDetails"; }
 
 
 @{  
@@ -67,14 +67,24 @@
                 </div>
                  <div class="row">
                     <div class="col-sm-12">
-                        <h3>Skill</h3>
+                        <h3 id="Project_IDText">ความสามารถที่ต้องการ: </h3>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>ประกาศโดย: @ProjectDetails.Employer.FullName</h3>
+                @if (@ProjectDetails.Employer != null) {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ประกาศโดย: <a asp-controller="Outsider" asp-action="ProfileDetailsEmployer" asp-route-id=@ProjectDetails.Employer.Employer_ID>@ProjectDetails.Employer.FullName</a></h3>
+                        </div>
                     </div>
-                </div>
+                }
+                else if (@ProjectDetails.Company != null) 
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ประกาศโดย: <a asp-controller="Outsider" asp-action="ProfileDetailsCompany" asp-route-id=@ProjectDetails.Company.Company_ID>@ProjectDetails.Company.Company_Name</a></h3>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -87,39 +97,16 @@
 							<thead>
                                 <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
                                 <th class="col-xs-5">ชื่อ</th>
-                                <th class="col-xs-3">ราคา</th>
-                                <th class="col-xs-3">ระยะเวลาในการทำงาน/วัน</th>
-                                <th class="col-xs-1"></th>
+                                <th class="col-xs-3 text-center">ราคา</th>
+                                <th class="col-xs-3 text-center">ระยะเวลาในการทำงาน/วัน</th>
                                 </tr>
 							</thead>
 							<tbody id="AuctionTable" class="points_table_scrollbar">
-                                <!-- @@foreach (Project Project in ProjectEmployers) 
-                                {
-                                    <div>
-                                    @@if (Project.Freelance_ID == null && Project.ProjectStatus == true)
-                                    {
-                                        <tr class="odd" style="height:5rem;">
-                                        <td class="col-xs-4"><a asp-controller="Home" asp-action="ProfileDetails" asp-route-id=@@Project.Project_ID>@@Project.ProjectName</a></td>
-                                        <td class="col-xs-2">@@Project.Budget บาท</td>
-                                        <td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-                                        <td class="col-xs-3">@@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-                                        <td class="col-xs-1"><a class="btn btn-xs btn-success pull-right">แก้ไข</a>
-                                        </td>
-                                        </tr>
-                                    }
-                                    </div>
-                                } -->
-                                <tr class="odd" style="height:5rem;">
-                                    <td class="col-xs-2">sarawut freelance</td>
-                                    <td class="col-xs-3">10000 บาท</td>
-                                    <td class="col-xs-3">10 วัน</td>
-                                    <td class="col-xs-1"><a class="btn btn-xs btn-success pull-right"><i class="fas fa-check"></i></a>
-                                    </td>
-                                </tr>
 							</tbody>
 							</table>
                     </div>
                 </div>
+                <hr>
             </div>
         </div>
     </div>
@@ -142,6 +129,22 @@ $().ready(function() {
                                     '<td class="col-xs-3 text-center">'+ data.auctionTime +' วัน</td>'+
                             '</tr>');
                $("#AuctionTable").append(row1);
+            });
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
+            jQuery.ajax({
+        type: "get",
+        dataType: "json",
+        url: "/Home/GetProjectSkill/"+ Project_ID,
+        success: function (data) {
+            console.log(data);
+            $.each(data, function(key, data) {   
+               /*var newOption = new Option(data.text = data.name, data.id = data.skill_ID, false, true);
+               $('#skills').append(newOption).trigger('change');*/
+               $("#Project_IDText").append(data.name + " | ");
             });
         },
         error: function (data) {

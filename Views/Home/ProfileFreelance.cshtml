@@ -50,7 +50,9 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="" asp-action="" >@ProfileFreelance.FullName</a>
+											<a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProfileFreelance.Freelance_ID >@ProfileFreelance.FullName</a>
+											<input type="hidden" name="" id="Freelance_ID" class="form-control" value=@ProfileFreelance.Freelance_ID>
+											
 										</div>
 									</div>
 									<div class="row">
@@ -80,7 +82,7 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="" asp-action=""  style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
+											<a  style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
 										</div>
 									</div>
 								</div>
@@ -102,11 +104,14 @@
 														<div class="col-sm-12">
 															<div class="wizard-navigation">
 																<ul class="nav nav-pills" style="background-color: #f1eeee;">
-																	<li style="width: 49%;" class="active">
+																	<li style="width: 33.3333%;" class="active">
 																		<a href="#details" data-toggle="tab" aria-expanded="true">กำลังประมูล</a>
 																	</li>
-																	<li style="width: 50.5%;">
+																	<li style="width: 33.3333%;">
 																		<a href="#captain" data-toggle="tab">งานที่ได้รับ</a>
+																	</li>
+																	<li style="width: 32.3333%;">
+																		<a href="#success" data-toggle="tab">เสร็จสิ้นการทำงาน</a>
 																	</li>
 																</ul>
 															</div>
@@ -128,26 +133,54 @@
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคา</th>
+																							<th class="col-xs-2">ราคาเสนอ</th>
 																							<th class="col-xs-3">สถานะ</th>
 																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
 																							<th class="col-xs-1"></th>
 																						</tr>
 																					</thead>
 		
+																					<tbody id="ProjectName" class="points_table_scrollbar">
+																						
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+														<div class="tab-pane" id="captain">
+															<div class="row">
+																<div class="col-sm-12">
+																	<h4>ประกาศงาน</h4>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-12">
+																	<form class="tableProject">
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<table style="width: 100%;">
+																					<thead>
+																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+																							<th class="col-xs-4">ชื่องาน</th>
+																							<th class="col-xs-2">ราคา</th>
+																							<th class="col-xs-3">สถานะ</th>
+																							<th class="col-xs-4">ระยะเวลาสิ้นสุด</th>
+																						</tr>
+																					</thead>
 																					<tbody class="points_table_scrollbar">
 																						@foreach (Project Project in ProjectFreelance) 
 																						{
 																							<div>
-																								@if (Project.Freelance_ID == null && Project.ProjectStatus == true)
+																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true)
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a asp-controller="Home" asp-action="ProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-																										<td class="col-xs-1"><a asp-controller="Home" asp-action="UpdateProject" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success pull-right">แก้ไข</a>
-																										</td>
+																										<td class="col-xs-4">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
 																									</tr>
 																								}
 																							</div>
@@ -160,7 +193,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="tab-pane" id="captain">
+														<div class="tab-pane" id="success">
 															<div class="row">
 																<div class="col-sm-12">
 																	<h4>ประกาศงาน</h4>
@@ -220,6 +253,33 @@
 
 
 	<script type="text/javascript">
-		$(document).ready(function () {
-		});
+	$(document).ready(function () {
+		var Freelance_ID  = $("#Freelance_ID").val();
+		jQuery.ajax({
+				type: "get",
+				dataType: "json",
+				url: "/Freelnace/GetAuctionFreelance/"+Freelance_ID,
+				success: function (data) {
+					console.log(data);
+                    jQuery.each( data, function( i, data ) {
+                        $("#tableSearch").find('tbody')
+                    var date = new Date(data.endDate);
+                    var day = date.getDate();
+                    var month = date.getMonth();
+                    var year = date.getFullYear();
+                    var row1 = $('<tr class="odd" style="height:5rem;">'+
+										'<td class="col-xs-4"><a href="/Freelnace/ProjectDetails/'+data.project_ID+'">'+data.projectName+'</a></td>'+
+										'<td class="col-xs-2">'+data.price+' บาท</td>'+
+										'<td class="col-xs-3">รอการตอบรับ</td>'+
+										'<td class="col-xs-4">'+day +'/'+month+'/'+year+'</td>'+
+								  '</tr>'
+								);
+                    $("#ProjectName").append(row1);
+                    });
+				},
+				error: function (data) {
+					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+				},
+		    });
+	});
 	</script>

@@ -24,7 +24,7 @@ namespace FreelanceGoMasterV2.Migrations
                     DelStatus = table.Column<bool>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Facebook = table.Column<string>(nullable: true),
-                    Fax = table.Column<int>(nullable: false),
+                    Fax = table.Column<string>(nullable: true),
                     Line = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(nullable: false),
@@ -174,6 +174,35 @@ namespace FreelanceGoMasterV2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Auction",
+                columns: table => new
+                {
+                    Auction_ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AuctionTime = table.Column<int>(nullable: false),
+                    Date_Create = table.Column<DateTime>(nullable: false),
+                    Freelance_ID = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
+                    Project_ID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Auction", x => x.Auction_ID);
+                    table.ForeignKey(
+                        name: "FK_Auction_Freelance_Freelance_ID",
+                        column: x => x.Freelance_ID,
+                        principalTable: "Freelance",
+                        principalColumn: "Freelance_ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Auction_Project_Project_ID",
+                        column: x => x.Project_ID,
+                        principalTable: "Project",
+                        principalColumn: "Project_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProjectSkill",
                 columns: table => new
                 {
@@ -201,6 +230,16 @@ namespace FreelanceGoMasterV2.Migrations
                         principalColumn: "Skill_ID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auction_Freelance_ID",
+                table: "Auction",
+                column: "Freelance_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auction_Project_ID",
+                table: "Auction",
+                column: "Project_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Freelance_UserName_Email",
@@ -246,6 +285,9 @@ namespace FreelanceGoMasterV2.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Auction");
+
             migrationBuilder.DropTable(
                 name: "FreelanceSkill");
 

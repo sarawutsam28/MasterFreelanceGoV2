@@ -41,5 +41,6 @@ namespace FreelanceGo_MasterV2.Models
         [Required]
         public bool DelStatus { get; set; }
         public List<FreelanceSkill> FreelanceSkill { get; set; }
+        public List<Auction> Auction { get; set; }
     }
 }

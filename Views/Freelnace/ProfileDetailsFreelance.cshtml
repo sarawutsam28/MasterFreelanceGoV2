@@ -1,0 +1,126 @@
+@using FreelanceGo_MasterV2.Models;
+@{ Layout = "_FreelnaceLayout"; ViewData["Title"] = "ProfileDetailsFreelance"; }
+
+
+@{  
+   var ProfileDetailsFreelance = ViewData["ProfileDetailsFreelance"] as Freelance; 
+   //IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+}
+
+
+
+<style>
+.profile{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+.feedback{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+dd{
+    margin: 1rem;
+}
+</style>
+
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                 <input type="hidden" name="" id="Freelnace_ID" class="form-control" value=@ProfileDetailsFreelance.Freelance_ID>
+                <div class="profile">
+                     <div class="row">
+                         <div class="col-sm-7">
+                             <dl class="dl-horizontal">
+                                <dt>
+                                    ชื่อ
+                                </dt>
+                                <dd>
+                                   @ProfileDetailsFreelance.FullName
+                                </dd>   
+                                <dt>
+                                    อีเมล
+                                </dt>
+                                <dd>
+                                    @ProfileDetailsFreelance.Email
+                                </dd> 
+                                 <dt>
+                                    เบอร์โทร
+                                </dt>
+                                <dd>
+                                    @ProfileDetailsFreelance.TelephoneNumber
+                                </dd> 
+                                 <dt>
+                                    Facebook
+                                </dt>
+                                <dd>
+                                    @ProfileDetailsFreelance.Facebook
+                                </dd> 
+                                 <dt>
+                                    Line
+                                </dt>
+                                <dd>
+                                    @ProfileDetailsFreelance.Line
+                                </dd> 
+                                 <dt>
+                                    ที่อยู่
+                                </dt>
+                                <dd>
+                                    @ProfileDetailsFreelance.Address
+                                </dd>                  
+                            </dl>
+                         </div>
+                         <div class="col-sm-5 ">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <img  src="~/images/@ProfileDetailsFreelance.ImgName" style="width: 30rem; height: 20rem;"  class="img-rounded" alt="">
+                                </div>
+                            </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="feedback">
+                    <h2>ประวัติการงาน</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function () {
+    var Freelnace_ID = $("#Freelnace_ID").val();
+     jQuery.ajax({
+        type: "get",
+        dataType: "json",
+        url: "/Freelnace/GetSkillsFreelance/"+ Freelnace_ID,
+        success: function (data) {
+            console.log(data);
+            $.each(data, function(key, data) {   
+               /*var row1 = $('<tr class="odd" style="height:5rem;">'+
+                                    '<td class="col-xs-2"><a href="/Freelnace/ProfileDetailsFreelance/'+data.freelance_ID+'">'+data.fullName+'</a></td>'+
+                                    '<td class="col-xs-3 text-center">'+ data.price +' บาท</td>'+
+                                    '<td class="col-xs-3 text-center">'+ data.auctionTime +' วัน</td>'+
+                            '</tr>');
+               $("#AuctionTable").append(row1);*/
+            });
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
+});
+</script>

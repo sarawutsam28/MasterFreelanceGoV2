@@ -26,6 +26,10 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult Index()
         {
             HttpContext.Session.Clear();
+            var Skill = _context.Skill.ToList();
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true);
+            ViewData["Skill"] = Skill;
+            ViewData["ProjectList"] = ProjectList;
             return View();
         }
         public IActionResult About()

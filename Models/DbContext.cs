@@ -21,5 +21,6 @@ namespace FreelanceGo_MasterV2.Models
         public DbSet<ProjectSkill> ProjectSkill { get; set; }
         public DbSet<FreelanceSkill> FreelanceSkill { get; set; }
         public DbSet<Skill> Skill { get; set; }
+        public DbSet<Auction> Auction { get; set; }
     }
 }
