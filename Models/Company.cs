@@ -20,6 +20,7 @@ namespace FreelanceGo_MasterV2.Models
         [Required]
         public string Company_Name { get; set; }
         public string Fax { get; set; }
+        public int Rating { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

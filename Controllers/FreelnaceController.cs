@@ -124,6 +124,11 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult ProfileDetailsFreelance(int id)
         {
             var ProfileDetailsFreelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == id);
+            var ProjectFreelance = _context.FreelanceRating.Where(p => p.Employer_ID == id)
+            .Include(p => p.Project)
+            .Include(p => p.Project.Freelance)
+            .ToList();
+            ViewData["ProjectFreelance"] = ProjectFreelance;
             ViewData["ProfileDetailsFreelance"] = ProfileDetailsFreelance;
             return View();
         }
@@ -133,15 +138,157 @@ namespace FreelanceGo_MasterV2.Controllers
             var GetProjectAuction = _context.Entry(Freelance)
                 .Collection(b => b.Auction)
                 .Query()
+                .Where(l => l.Project.Freelance == null)
                 .Select(d => new
                 {
                     Project_ID = d.Project_ID,
                     ProjectName = d.Project.ProjectName,
-                    Price = d.AuctionTime,
+                    Price = d.Price,
+                    AuctionTime = d.AuctionTime,
                     EndDate = d.Project.EndDate,
                 })
                 .ToList();
+            /* var xxx = _context.Project.Where(p => p.Freelance_ID == id)
+             .Include(a => a.Freelance)
+             .ToList();*/
             return Json(GetProjectAuction);
+        }
+        public IActionResult UpdateProfileFreelance(int id)
+        {
+            var UpdateProfileFreelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == id);
+            var Skill = _context.Skill.ToList();
+            ViewData["Skill"] = Skill;
+            ViewData["UpdateProfileFreelance"] = UpdateProfileFreelance;
+            return View();
+        }
+        public async Task<IActionResult> UpdateFreelance(Freelance Freelance)
+        {
+            var _Freelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == Freelance.Freelance_ID);
+            _Freelance.FullName = Freelance.FullName;
+            _Freelance.Email = Freelance.Email;
+            _Freelance.TelephoneNumber = Freelance.TelephoneNumber;
+            _Freelance.Facebook = Freelance.Facebook;
+            _Freelance.Line = Freelance.Line;
+            _Freelance.Address = Freelance.Address;
+            _Freelance.ImgName = Freelance.ImgName;
+            _Freelance.Date_Update = DateTime.Now;
+            _context.Update(_Freelance);
+            await _context.SaveChangesAsync();
+            return Json(new { result = _Freelance });
+        }
+        public IActionResult UpdateSkillFreelance(int id, int[] skills)
+        {
+            var _FreelanceSkill = _context.FreelanceSkill.Where(p => p.Freelance_ID == id).ToArray();
+            if (_FreelanceSkill.Length == 0)
+            {
+                foreach (var skillLists in skills)
+                {
+                    var _Skill = new FreelanceSkill
+                    {
+                        Skill_ID = skillLists,
+                        Freelance_ID = id,
+                        Date_Create = DateTime.Now,
+                        Date_Update = DateTime.Now,
+                        DelStatus = false,
+                    };
+                    _context.FreelanceSkill.Add(_Skill);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                foreach (var _SkillFreelance in _FreelanceSkill)
+                {
+                    _context.FreelanceSkill.Remove(_SkillFreelance);
+                    _context.SaveChanges();
+                }
+                foreach (var skillLists in skills)
+                {
+                    var _FreelanceSkillList = new FreelanceSkill
+                    {
+                        Skill_ID = skillLists,
+                        Freelance_ID = id,
+                        Date_Create = DateTime.Now,
+                        Date_Update = DateTime.Now,
+                        DelStatus = false,
+                    };
+                    _context.FreelanceSkill.Add(_FreelanceSkillList);
+                    _context.SaveChanges();
+                }
+
+            }
+            var Results = new { id, skills };
+            return Json(new { Result = "OK" });
+        }
+        public IActionResult GetFreelanceSkill(int id)
+        {
+            var _Freelance = _context.Freelance.SingleOrDefault(p => p.Freelance_ID == id);
+            var SkillFreelance = _context.Entry(_Freelance)
+                .Collection(b => b.FreelanceSkill)
+                .Query()
+                .Select(d => new
+                {
+                    Skill_ID = d.Skill_ID,
+                    Name = d.Skill.Name,
+                    Skill_Description = d.Skill.Skill_Description,
+                    Date_Create = d.Skill.Date_Create,
+                    Date_Update = d.Skill.Date_Update,
+                    DelStatus = d.Skill.DelStatus,
+                })
+                .ToList();
+            return Json(SkillFreelance);
+        }
+        public IActionResult HistoryProjectDetails(int id)
+        {
+            var Project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            _context.Entry(Project)
+            .Reference(b => b.Employer)
+            .Load();
+            _context.Entry(Project)
+            .Reference(b => b.Freelance)
+            .Load();
+            _context.Entry(Project)
+            .Reference(b => b.Company)
+            .Load();
+            ViewData["Project"] = Project;
+            return View();
+        }
+        public IActionResult Rating(int id)
+        {
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            if (Freelance_ID == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            ViewData["_Project"] = _Project;
+            return View();
+        }
+        public async Task<IActionResult> SaveEmployerRating(EmployerRating EmployerRating)
+        {
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == EmployerRating.Project_ID);
+            _Project.FreelanceSuccessStatus = true;
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            EmployerRating.Freelance_ID = Freelance_ID;
+            EmployerRating.Date_Create = DateTime.Now;
+            _context.Update(_Project);
+            _context.EmployerRating.Add(EmployerRating);
+            await _context.SaveChangesAsync();
+            return Json(new { result = EmployerRating });
+        }
+        public IActionResult ProjectDetailsWorking(int id)
+        {
+            var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Employer)
+            .Load();
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Freelance)
+            .Load();
+            HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
+            ViewData["ProjectDetails"] = ProjectDetails;
+            return View();
         }
         public IActionResult Error()
         {

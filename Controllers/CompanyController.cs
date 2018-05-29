@@ -34,6 +34,11 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult ProfileDetailsCompany(int id)
         {
             var ProfileDetailsCompany = _context.Company.SingleOrDefault(e => e.Company_ID == id);
+            var ProjectEmployer = _context.EmployerRating.Where(p => p.Company_ID == id)
+            .Include(p => p.Project)
+            .Include(p => p.Project.Freelance)
+            .ToList();
+            ViewData["ProjectEmployer"] = ProjectEmployer;
             ViewData["ProfileDetailsCompany"] = ProfileDetailsCompany;
             return View();
         }
@@ -44,6 +49,7 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
             .Reference(b => b.Company)
             .Load();
+            HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
             ViewData["ProjectDetails"] = ProjectDetails;
             return View();
         }
@@ -178,6 +184,70 @@ namespace FreelanceGo_MasterV2.Controllers
             }
             var Results = new { id, skills };
             return Json(new { Result = _Project });
+        }
+        public IActionResult AcceptFreelance(int id, int ProjectPrice, int ProjectTimelength)
+        {
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var ProjectAcceptFreelanceId = HttpContext.Session.GetInt32("ProjectAcceptFreelanceId");
+            var _ProjectAcceptFreelance = _context.Project.SingleOrDefault(p => p.Project_ID == ProjectAcceptFreelanceId);
+            _ProjectAcceptFreelance.Freelance_ID = id;
+            _ProjectAcceptFreelance.ProjectPrice = ProjectPrice;
+            _ProjectAcceptFreelance.ProjectTimelength = ProjectTimelength;
+            _context.Update(_ProjectAcceptFreelance);
+            _context.SaveChanges();
+            return RedirectToAction("ProfileCompany", "Home", new { id = Company_ID });
+        }
+        public IActionResult HistoryProjectDetails(int id)
+        {
+            var Project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            _context.Entry(Project)
+            .Reference(b => b.Employer)
+            .Load();
+            _context.Entry(Project)
+            .Reference(b => b.Freelance)
+            .Load();
+            _context.Entry(Project)
+            .Reference(b => b.Company)
+            .Load();
+            ViewData["Project"] = Project;
+            return View();
+        }
+        public IActionResult ProjectDetailsWorking(int id)
+        {
+            var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Company)
+            .Load();
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Freelance)
+            .Load();
+            HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
+            ViewData["ProjectDetails"] = ProjectDetails;
+            return View();
+        }
+        public IActionResult Rating(int id)
+        {
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            if (Company_ID == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            ViewData["_Project"] = _Project;
+            return View();
+        }
+        public async Task<IActionResult> SaveEmployerRating(EmployerRating EmployerRating)
+        {
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == EmployerRating.Project_ID);
+            _Project.SuccessStatus = true;
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            EmployerRating.Company_ID = Company_ID;
+            EmployerRating.Date_Create = DateTime.Now;
+            _context.Update(_Project);
+            _context.EmployerRating.Add(EmployerRating);
+            await _context.SaveChangesAsync();
+            return Json(new { result = EmployerRating });
         }
         public IActionResult Error()
         {

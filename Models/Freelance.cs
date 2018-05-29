@@ -23,6 +23,7 @@ namespace FreelanceGo_MasterV2.Models
 
         [Required]
         public string ID_Card { get; set; }
+        public int Rating { get; set; }
 
         [Required]
         [EmailAddress]

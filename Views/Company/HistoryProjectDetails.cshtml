@@ -1,0 +1,89 @@
+@using FreelanceGo_MasterV2.Models;
+@{ Layout = "_NewLayuot"; ViewData["Title"] = "HistoryProjectDetails"; }
+
+
+@{  
+   var Project = ViewData["Project"] as Project; 
+  // var FreelanceRating = ViewData["FreelanceRating"] as FreelanceRating; 
+  // IEnumerable<FreelanceRating> ProjectEmployer = ViewData["ProjectEmployer"] as IEnumerable<FreelanceRating>; */
+}
+
+
+
+<style>
+.profile{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+.feedback{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+dd{
+    margin: 1rem;
+}
+</style>
+
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="profile">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ชื่อ: @Project.ProjectName</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>รายละเอียด: @Project.Description</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ราคา: @Project.ProjectPrice บาท</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ระยะเวลาในการทำงาน: @Project.ProjectTimelength วัน</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ประกาศโดย: @Project.Company.Company_Name</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>คะแนนผู้จ้าง: @Project.Company.Rating</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ผู้รับทำงาน: @Project.Freelance.FullName</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>คะแนนผู้รับทำงาน: @Project.Freelance.Rating</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+</script>

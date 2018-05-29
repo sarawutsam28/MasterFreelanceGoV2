@@ -43,13 +43,34 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult ProfileDetailsEmployer(int id)
         {
             var ProfileDetailsEmployer = _context.Employer.SingleOrDefault(e => e.Employer_ID == id);
+            var ProjectEmployer = _context.EmployerRating.Where(p => p.Employer_ID == id)
+            .Include(p => p.Project)
+            .Include(p => p.Project.Freelance)
+            .ToList();
             ViewData["ProfileDetailsEmployer"] = ProfileDetailsEmployer;
+            ViewData["ProjectEmployer"] = ProjectEmployer;
             return View();
         }
         public IActionResult ProfileDetailsCompany(int id)
         {
             var ProfileDetailsCompany = _context.Company.SingleOrDefault(e => e.Company_ID == id);
+            var ProjectEmployer = _context.EmployerRating.Where(p => p.Company_ID == id)
+            .Include(p => p.Project)
+            .Include(p => p.Project.Freelance)
+            .ToList();
+            ViewData["ProjectEmployer"] = ProjectEmployer;
             ViewData["ProfileDetailsCompany"] = ProfileDetailsCompany;
+            return View();
+        }
+        public IActionResult ProfileDetailsFreelance(int id)
+        {
+            var ProfileDetailsFreelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == id);
+            var ProjectFreelance = _context.FreelanceRating.Where(p => p.Employer_ID == id)
+            .Include(p => p.Project)
+            .Include(p => p.Project.Freelance)
+            .ToList();
+            ViewData["ProjectFreelance"] = ProjectFreelance;
+            ViewData["ProfileDetailsFreelance"] = ProfileDetailsFreelance;
             return View();
         }
         public IActionResult Error()

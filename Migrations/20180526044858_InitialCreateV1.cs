@@ -27,6 +27,7 @@ namespace FreelanceGoMasterV2.Migrations
                     Fax = table.Column<string>(nullable: true),
                     Line = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(nullable: false),
                     imgName = table.Column<string>(nullable: true)
                 },
@@ -51,6 +52,7 @@ namespace FreelanceGoMasterV2.Migrations
                     ID_Card = table.Column<string>(nullable: false),
                     Line = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
                     TelephoneNumber = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: false),
                     imgName = table.Column<string>(nullable: true)
@@ -77,6 +79,7 @@ namespace FreelanceGoMasterV2.Migrations
                     ImgName = table.Column<string>(nullable: true),
                     Line = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
                     TelephoneNumber = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: false)
                 },
@@ -121,7 +124,9 @@ namespace FreelanceGoMasterV2.Migrations
                     ProjectPrice = table.Column<int>(nullable: false),
                     ProjectStatus = table.Column<bool>(nullable: false),
                     ProjectTimeOut = table.Column<DateTime>(nullable: false),
+                    ProjectTimelength = table.Column<int>(nullable: false),
                     StartingDate = table.Column<DateTime>(nullable: false),
+                    SuccessStatus = table.Column<bool>(nullable: false),
                     Timelength = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -153,6 +158,9 @@ namespace FreelanceGoMasterV2.Migrations
                 {
                     FreelanceSkill_ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Date_Create = table.Column<DateTime>(nullable: false),
+                    Date_Update = table.Column<DateTime>(nullable: false),
+                    DelStatus = table.Column<bool>(nullable: false),
                     Freelance_ID = table.Column<int>(nullable: false),
                     Skill_ID = table.Column<int>(nullable: false)
                 },
@@ -203,6 +211,50 @@ namespace FreelanceGoMasterV2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FreelanceRating",
+                columns: table => new
+                {
+                    Rating_ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Company_ID = table.Column<int>(nullable: true),
+                    Date_Create = table.Column<DateTime>(nullable: false),
+                    DelStatus = table.Column<bool>(nullable: false),
+                    Employer_ID = table.Column<int>(nullable: true),
+                    Freelance_ID = table.Column<int>(nullable: false),
+                    Project_ID = table.Column<int>(nullable: true),
+                    Score = table.Column<int>(nullable: false),
+                    TextReview = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FreelanceRating", x => x.Rating_ID);
+                    table.ForeignKey(
+                        name: "FK_FreelanceRating_Company_Company_ID",
+                        column: x => x.Company_ID,
+                        principalTable: "Company",
+                        principalColumn: "Company_ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FreelanceRating_Employer_Employer_ID",
+                        column: x => x.Employer_ID,
+                        principalTable: "Employer",
+                        principalColumn: "Employer_ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FreelanceRating_Freelance_Freelance_ID",
+                        column: x => x.Freelance_ID,
+                        principalTable: "Freelance",
+                        principalColumn: "Freelance_ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FreelanceRating_Project_Project_ID",
+                        column: x => x.Project_ID,
+                        principalTable: "Project",
+                        principalColumn: "Project_ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProjectSkill",
                 columns: table => new
                 {
@@ -248,6 +300,26 @@ namespace FreelanceGoMasterV2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_FreelanceRating_Company_ID",
+                table: "FreelanceRating",
+                column: "Company_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FreelanceRating_Employer_ID",
+                table: "FreelanceRating",
+                column: "Employer_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FreelanceRating_Freelance_ID",
+                table: "FreelanceRating",
+                column: "Freelance_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FreelanceRating_Project_ID",
+                table: "FreelanceRating",
+                column: "Project_ID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FreelanceSkill_Freelance_ID",
                 table: "FreelanceSkill",
                 column: "Freelance_ID");
@@ -287,6 +359,9 @@ namespace FreelanceGoMasterV2.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Auction");
+
+            migrationBuilder.DropTable(
+                name: "FreelanceRating");
 
             migrationBuilder.DropTable(
                 name: "FreelanceSkill");

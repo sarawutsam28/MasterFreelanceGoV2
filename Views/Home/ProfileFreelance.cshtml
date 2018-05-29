@@ -23,8 +23,6 @@
 		border-color: #ccc;
 		-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
 	}
-
-
 	.nav-pills>li.active>a,
 	.nav-pills>li.active>a:focus,
 	.nav-pills>li.active>a:hover {
@@ -52,7 +50,6 @@
 										<div class="col-sm-12 text-center">
 											<a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProfileFreelance.Freelance_ID >@ProfileFreelance.FullName</a>
 											<input type="hidden" name="" id="Freelance_ID" class="form-control" value=@ProfileFreelance.Freelance_ID>
-											
 										</div>
 									</div>
 									<div class="row">
@@ -82,7 +79,7 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a  style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
+											<a  href="/Freelnace/UpdateProfileFreelance/@ProfileFreelance.Freelance_ID" style="margin:1rem;" class="btn btn-xs btn-danger">แก้ไข</a>
 										</div>
 									</div>
 								</div>
@@ -133,10 +130,10 @@
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคาเสนอ</th>
-																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
-																							<th class="col-xs-1"></th>
+																							<th class="col-xs-2 text-center">สถานะ</th>
+																							<th class="col-xs-2 text-center">ราคา</th>
+																							<th class="col-xs-2 text-center">ระยะเวลา</th>
+																							<th class="col-xs-2 text-center">สิ้นสุด</th>
 																						</tr>
 																					</thead>
 		
@@ -165,22 +162,33 @@
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคา</th>
-																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-4">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-3 text-center">สถานะ</th>
+																							<th class="col-xs-2 text-center">ราคา</th>
+																							<th class="col-xs-2 text-center">ระยะเวลาทำงาน</th>
 																						</tr>
 																					</thead>
 																					<tbody class="points_table_scrollbar">
 																						@foreach (Project Project in ProjectFreelance) 
 																						{
 																							<div>
-																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true)
+																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true && Project.FreelanceSuccessStatus == false)
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
-																										<td class="col-xs-2">@Project.Budget บาท</td>
-																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-																										<td class="col-xs-4">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-4"><a asp-controller="Freelnace" asp-action="ProjectDetailsWorking" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-3 text-center">กำลังทำงาน</td>
+																										<td class="col-xs-2 text-center">@Project.ProjectPrice บาท</td>
+																										<td class="col-xs-2 text-center">
+																											<div class="row">
+																												<div class="col-sm-12 text-center">
+																													@Project.ProjectTimelength วัน
+																												</div>
+																											</div>
+																											<div class="row">
+																												<div class="col-sm-12 text-center">
+																													<a asp-controller="Freelnace" asp-action="Rating" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success ">เสร็จสิ้นการทำงาน</a>
+																												</div>
+																											</div>
+																										</td>
 																									</tr>
 																								}
 																							</div>
@@ -217,7 +225,7 @@
 																						@foreach (Project Project in ProjectFreelance) 
 																						{
 																							<div>
-																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true)
+																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true && Project.FreelanceSuccessStatus == true )
 																								{
 																									<tr class="odd" style="height:5rem;">
 																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
@@ -269,9 +277,10 @@
                     var year = date.getFullYear();
                     var row1 = $('<tr class="odd" style="height:5rem;">'+
 										'<td class="col-xs-4"><a href="/Freelnace/ProjectDetails/'+data.project_ID+'">'+data.projectName+'</a></td>'+
-										'<td class="col-xs-2">'+data.price+' บาท</td>'+
-										'<td class="col-xs-3">รอการตอบรับ</td>'+
-										'<td class="col-xs-4">'+day +'/'+month+'/'+year+'</td>'+
+										'<td class="col-xs-2 text-center">รอการตอบรับ</td>'+
+										'<td class="col-xs-2 text-center">'+data.price+' บาท</td>'+
+										'<td class="col-xs-2 text-center">'+data.auctionTime+' วัน</td>'+
+										'<td class="col-xs-2 text-center">'+day +'/'+month+'/'+year+'</td>'+
 								  '</tr>'
 								);
                     $("#ProjectName").append(row1);

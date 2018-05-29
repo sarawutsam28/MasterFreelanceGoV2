@@ -1,0 +1,164 @@
+@using FreelanceGo_MasterV2.Models;
+@{ Layout = "_NewLayuot"; ViewData["Title"] = "Rating"; }
+
+
+@{  
+   var Project = ViewData["_Project"] as Project; 
+   //IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+}
+<style>
+    .project{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+.Auction{
+    margin-top: 3rem;
+    padding: 3rem;
+    border: 1px solid red;
+	border-color: #ccc;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+.rating {
+      float:left;
+    }
+
+    /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+      follow these rules. Every browser that supports :checked also supports :not(), so
+      it doesn’t make the test unnecessarily selective */
+    .rating:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+        clip:rect(0,0,0,0);
+    }
+
+    .rating:not(:checked) > label {
+        float:right;
+        width:1em;
+        /* padding:0 .1em; */
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:300%;
+        /* line-height:1.2; */
+        color:#ddd;
+    }
+
+    .rating:not(:checked) > label:before {
+        content: '★ ';
+    }
+
+    .rating > input:checked ~ label {
+        color: red;
+        
+    }
+
+    .rating:not(:checked) > label:hover,
+    .rating:not(:checked) > label:hover ~ label {
+        color: red;
+        
+    }
+    .rating > input:checked + label:hover,
+    .rating > input:checked + label:hover ~ label,
+    .rating > input:checked ~ label:hover,
+    .rating > input:checked ~ label:hover ~ label,
+    .rating > label:hover ~ input:checked ~ label {
+        color: red;
+    }
+
+    .rating > label:active {
+        position:relative;
+        top:2px;
+        left:2px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="project"> 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Meh">5 stars</label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Kinda bad">4 stars</label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Kinda bad">3 stars</label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Sucks big tim">2 stars</label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea id="TextReview" class="form-control" rows="3"></textarea>
+                        <input type="hidden" id="Project_ID" value=@Project.Project_ID />
+                        <input type="hidden" id="Employer_ID" value=@Project.Employer_ID />
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12 ">
+                        <a id="btnRating"><button style="margin:2rem;" type="button" class="btn btn-primary pull-right">ให้คะแนน</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $().ready(function() {
+        var Score = 0;
+        var TextReview = "";
+        $("#star1").change(function() {
+            Score = $("#star1").val();
+            console.log(Score);
+        });
+        $("#star2").change(function() {
+            Score = $("#star2").val();
+            console.log(Score);
+        });
+        $("#star3").change(function() {
+            Score = $("#star3").val();
+            console.log(Score);
+        });
+        $("#star4").change(function() {
+            Score = $("#star4").val();
+            console.log(Score);
+        });
+        $("#star5").change(function() {
+            Score = $("#star5").val();
+            console.log(Score);
+        });
+        var Project_ID = $("#Project_ID").val();
+        var Employer_ID = $("#Employer_ID").val();
+        console.log(Project_ID);
+        console.log(Employer_ID);
+        $("#TextReview").change(function() {
+            TextReview = $("#TextReview").val();
+            console.log(TextReview);
+        });
+        $("#btnRating").click(function () {
+			jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Freelnace/SaveEmployerRating",
+				data: {
+					Employer_ID: Employer_ID,
+					Project_ID: Project_ID,
+					Score: Score,
+					TextReview: TextReview,
+				},
+				success: function (data) {
+					console.log(data);
+					location.replace("http://localhost:5000/Home/ProfileFreelance/"+localStorage['Employer_ID']);
+				},
+				error: function (data) {
+					alert("เกิดข้อผิดพลาด");
+				},
+			});
+		});
+    });
+</script>

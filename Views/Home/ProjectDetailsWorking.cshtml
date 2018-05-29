@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models;
-@{ Layout = "_CompanyLayout"; ViewData["Title"] = "ProjectDetails"; }
+@{ Layout = "_NewLayuot"; ViewData["Title"] = "ProjectDetails"; }
 
 
 @{  
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>ราคาเริ่มต้น: @ProjectDetails.Budget</h3>
+                        <h3>ราคา: @ProjectDetails.ProjectPrice บาท</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -65,14 +65,19 @@
                         <h3>วันที่หมดเวลาประกาศงาน: @Html.DisplayFor(modelItem => ProjectDetails.ProjectTimeOut)</h3>
                     </div>
                 </div>
-                   <div class="row">
+                 <div class="row">
                     <div class="col-sm-12">
                         <h3 id="Project_IDText">ความสามารถที่ต้องการ: </h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>ประกาศโดย: @ProjectDetails.Company.Company_Name</h3>
+                        <h3>ประกาศโดย: @ProjectDetails.Employer.FullName</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>ผู้รับงาน: <a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProjectDetails.Freelance.Freelance_ID>@ProjectDetails.Freelance.FullName</a></h3>
                     </div>
                 </div>
             </div>
@@ -88,8 +93,7 @@
                                 <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
                                 <th class="col-xs-5">ชื่อ</th>
                                 <th class="col-xs-3 text-center">ราคา</th>
-                                <th class="col-xs-3 text-center">ระยะเวลาในการทำงาน/วัน</th>
-                                <th class="col-xs-1 text-center"></th>
+                                <th class="col-xs-4 text-center">ระยะเวลาในการทำงาน/วัน</th>
                                 </tr>
 							</thead>
 							<tbody id="AuctionTable" class="points_table_scrollbar">
@@ -104,9 +108,9 @@
 
 
 <script>
-   $().ready(function() {
-       var Project_ID = $("#Project_ID").val();
-       jQuery.ajax({
+$().ready(function() {
+        var Project_ID = $("#Project_ID").val();
+        jQuery.ajax({
         type: "get",
         dataType: "json",
         url: "/Freelnace/GetProjectAuction/"+ Project_ID,
@@ -116,8 +120,7 @@
                var row1 = $('<tr class="odd" style="height:5rem;">'+
                                     '<td class="col-xs-2"><a href="/Freelnace/ProfileDetailsFreelance/'+data.freelance_ID+'">'+data.fullName+'</a></td>'+
                                     '<td class="col-xs-3 text-center">'+ data.price +' บาท</td>'+
-                                    '<td class="col-xs-3 text-center">'+ data.auctionTime +' วัน</td>'+
-                                    '<td class="col-xs-1 text-center"><a href="/Company/AcceptFreelance?id='+data.freelance_ID+'&ProjectPrice='+data.price+'&ProjectTimelength='+data.auctionTime+'" class="btn btn-xs btn-success pull-right"><i class="fas fa-check"></i></a>'+
+                                    '<td class="col-xs-4 text-center">'+ data.auctionTime +' วัน</td>'+
                             '</tr>');
                $("#AuctionTable").append(row1);
             });
@@ -126,7 +129,7 @@
             alert("กรอกข้อมูลไม่ถูกต้อง");
         },
         }); //end ajax
-       jQuery.ajax({
+        jQuery.ajax({
         type: "get",
         dataType: "json",
         url: "/Home/GetProjectSkill/"+ Project_ID,
@@ -140,5 +143,5 @@
             alert("กรอกข้อมูลไม่ถูกต้อง");
         },
         }); //end ajax
-   });
+});
 </script>

@@ -83,7 +83,12 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult ProfileDetailsEmployer(int id)
         {
             var ProfileDetailsEmployer = _context.Employer.SingleOrDefault(e => e.Employer_ID == id);
+            var ProjectEmployer = _context.EmployerRating.Where(p => p.Employer_ID == id)
+            .Include(p => p.Project)
+            .Include(p => p.Project.Freelance)
+            .ToList();
             ViewData["ProfileDetailsEmployer"] = ProfileDetailsEmployer;
+            ViewData["ProjectEmployer"] = ProjectEmployer;
             return View();
         }
         public IActionResult UpdateProfileEmployer(int id)
@@ -127,6 +132,21 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
             .Reference(b => b.Employer)
             .Load();
+            HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
+            ViewData["ProjectDetails"] = ProjectDetails;
+            return View();
+        }
+        public IActionResult ProjectDetailsWorking(int id)
+        {
+            var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Employer)
+            .Load();
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.Freelance)
+            .Load();
+            HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
             ViewData["ProjectDetails"] = ProjectDetails;
             return View();
         }
@@ -468,6 +488,56 @@ namespace FreelanceGo_MasterV2.Controllers
                 return Ok(model);
             }
             return Json(new { Result = "NullImg" });
+        }
+        public IActionResult AcceptFreelance(int id, int ProjectPrice, int ProjectTimelength)
+        {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var ProjectAcceptFreelanceId = HttpContext.Session.GetInt32("ProjectAcceptFreelanceId");
+            var _ProjectAcceptFreelance = _context.Project.SingleOrDefault(p => p.Project_ID == ProjectAcceptFreelanceId);
+            _ProjectAcceptFreelance.Freelance_ID = id;
+            _ProjectAcceptFreelance.ProjectPrice = ProjectPrice;
+            _ProjectAcceptFreelance.ProjectTimelength = ProjectTimelength;
+            _context.Update(_ProjectAcceptFreelance);
+            _context.SaveChanges();
+            return RedirectToAction("ProfileEmployer", new { id = Employer_ID });
+        }
+        public IActionResult Rating(int id)
+        {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            if (Employer_ID == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            ViewData["_Project"] = _Project;
+            return View();
+        }
+        public async Task<IActionResult> SaveFreelanceRating(FreelanceRating FreelanceRating)
+        {
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == FreelanceRating.Project_ID);
+            _Project.SuccessStatus = true;
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            FreelanceRating.Employer_ID = Employer_ID;
+            FreelanceRating.Date_Create = DateTime.Now;
+            _context.Update(_Project);
+            _context.FreelanceRating.Add(FreelanceRating);
+            await _context.SaveChangesAsync();
+            return Json(new { result = FreelanceRating });
+        }
+        public IActionResult HistoryProjectDetails(int id)
+        {
+            var Project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            _context.Entry(Project)
+            .Reference(b => b.Employer)
+            .Load();
+            _context.Entry(Project)
+            .Reference(b => b.Freelance)
+            .Load();
+            _context.Entry(Project)
+            .Reference(b => b.Company)
+            .Load();
+            ViewData["Project"] = Project;
+            return View();
         }
         public IActionResult Error()
         {

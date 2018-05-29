@@ -40,11 +40,13 @@ namespace FreelanceGo_MasterV2.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime EndDate { get; set; }
         public int ProjectPrice { get; set; }
+        public int ProjectTimelength { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ProjectTimeOut { get; set; }
         [Required]
+        //หมดเวลารึยัง
         public bool ProjectStatus { get; set; }
         [Required]
         [DataType(DataType.Date)]
@@ -58,8 +60,11 @@ namespace FreelanceGo_MasterV2.Models
         public bool DelStatus { get; set; }
         [Required]
         public bool SuccessStatus { get; set; }
+        [Required]
+        public bool FreelanceSuccessStatus { get; set; }
         public List<ProjectSkill> ProjectSkill { get; set; }
         public List<Auction> Auction { get; set; }
+
 
     }
 }

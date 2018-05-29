@@ -119,7 +119,7 @@
 																		<a href="#captain" data-toggle="tab">ได้ผู้รับงาน</a>
 																	</li>
 																	<li style="width: 33.3333%;">
-																		<a href="#description" data-toggle="tab">หมดเวลา</a>
+																		<a href="#description" data-toggle="tab">เสร็จสิ้น</a>
 																	</li>
 																</ul>
 															</div>
@@ -141,10 +141,10 @@
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคา</th>
-																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
-																							<th class="col-xs-1"></th>
+																							<th class="col-xs-2 text-center">ราคา</th>
+																							<th class="col-xs-3 text-center">สถานะ</th>
+																							<th class="col-xs-3 text-center">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-1 "></th>
 																						</tr>
 																					</thead>
 		
@@ -159,7 +159,7 @@
 																										<td class="col-xs-2">@Project.Budget บาท</td>
 																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
 																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
-																										<td class="col-xs-1"><a asp-controller="Company" asp-action="UpdateProject" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success pull-right">แก้ไข</a>
+																										<td class="col-xs-1"><a asp-controller="Company" asp-action="UpdateProject" asp-route-id=@Project.Project_ID class="btn btn-xs btn-info pull-right">แก้ไข</a>
 																										</td>
 																									</tr>
 																								}
@@ -187,23 +187,34 @@
 																				<table style="width: 100%;">
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
-																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคา</th>
-																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-4">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-4 ">ชื่องาน</th>
+																							<th class="col-xs-2 text-center">ราคา</th>
+																							<th class="col-xs-3 text-center">สถานะ</th>
+																							<th class="col-xs-4 text-center">ระยะเวลาในการทำงาน</th>
 																						</tr>
 																					</thead>
 																					<tbody class="points_table_scrollbar">
 																						@foreach (Project Project in ProjectCompany) 
 																						{
 																							<div>
-																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true)
+																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true && Project.SuccessStatus == false)
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
-																										<td class="col-xs-2">@Project.Budget บาท</td>
-																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-																										<td class="col-xs-4">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-4"><a asp-controller="Company" asp-action="ProjectDetailsWorking" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-2 text-center">@Project.Budget บาท</td>
+																										<td class="col-xs-3 text-center">กำลังทำงาน</td>
+																										<td class="col-xs-3 text-center">
+																											<div class="row">
+																												<div class="col-sm-12">
+																													@Project.ProjectTimelength วัน
+																												</div>
+																											</div>
+																											<div class="row">
+																												<div class="col-sm-12 text-center">
+																													<a asp-controller="Company" asp-action="Rating" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success ">เสร็จสิ้นการทำงาน</a>
+																												</div>
+																											</div>
+																										</td>
 																									</tr>
 																								}
 																							</div>
@@ -231,9 +242,9 @@
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคา</th>
-																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-3">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-2 text-center">ราคา</th>
+																							<th class="col-xs-3 text-center">สถานะ</th>
+																							<th class="col-xs-3 text-center">ระยะเวลาในการทำงาน</th>
 																						</tr>
 																					</thead>
 		
@@ -241,13 +252,13 @@
 																						@foreach (Project Project in ProjectCompany) 
 																						{
 																							<div>
-																								@if (Project.Freelance_ID != null && Project.ProjectStatus == false)
+																								@if (Project.SuccessStatus == true)
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
-																										<td class="col-xs-2">@Project.Budget บาท</td>
-																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-																										<td class="col-xs-3">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-4"><a asp-controller="Company" asp-action="HistoryProjectDetails" asp-route-id=@Project.Project_ID >@Project.ProjectName</a></td>
+																										<td class="col-xs-2 text-center">@Project.ProjectPrice บาท</td>
+																										<td class="col-xs-3 text-center">เสร็จสิ้น</td>
+																										<td class="col-xs-3 text-center">@Project.ProjectTimelength วัน</td>
 																									</tr>
 																								}
 																							</div>

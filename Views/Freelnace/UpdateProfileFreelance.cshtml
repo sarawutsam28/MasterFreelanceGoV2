@@ -1,8 +1,9 @@
 @using FreelanceGo_MasterV2.Models; 
-@{ Layout = "_NewLayuot"; ViewData["Title"] = "UpdateProfileEmployer"; } 
+@{ Layout = "_FreelnaceLayout"; ViewData["Title"] = "UpdateProfileFreelance"; } 
 @{ 
-    var UpdateProfileEmployer = ViewData["UpdateProfileEmployer"] as Employer; 
-    //IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+    var UpdateProfileFreelance = ViewData["UpdateProfileFreelance"] as Freelance; 
+    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+    //IEnumerable<Project> ProjectFreelances = ViewData["ProjectFreelance"] as IEnumerable<Project>; 
 }
 
 
@@ -23,9 +24,9 @@
               <span class="input-group-addon">
                 <i class="fa fa-user fa" aria-hidden="true"></i>
               </span>
-              <input id="FullName" value="@UpdateProfileEmployer.FullName" type="text" class="form-control" placeholder="ชื่อ-นามสกุล" />
-              <input id="imgName" value="@UpdateProfileEmployer.imgName" type="hidden" class="form-control" />
-              <input id="Employer_ID" value=@UpdateProfileEmployer.Employer_ID type="hidden" class="form-control" />
+              <input id="FullName" value="@UpdateProfileFreelance.FullName" type="text" class="form-control" placeholder="ชื่อ-นามสกุล" />
+              <input id="imgName" value="@UpdateProfileFreelance.ImgName" type="hidden" class="form-control" />
+              <input id="Freelance_ID" value=@UpdateProfileFreelance.Freelance_ID type="hidden" class="form-control" />
             </div>
             <span id="error_fullName" class="text-danger"></span>
           </div>
@@ -37,7 +38,7 @@
               <span class="input-group-addon">
                 <i class="fas fa-envelope" aria-hidden="true"></i>
               </span>
-              <input id="Email" type="email" value="@UpdateProfileEmployer.Email" class="form-control" placeholder="อีเมล" />
+              <input id="Email" type="email" value="@UpdateProfileFreelance.Email" class="form-control" placeholder="อีเมล" />
             </div>
             <span id="error_email" class="text-danger"></span>
           </div>
@@ -49,7 +50,7 @@
               <span class="input-group-addon">
                 <i class="fas fa-lock-open" aria-hidden="true"></i>
               </span>
-              <input id="TelephoneNumber"  value="@UpdateProfileEmployer.TelephoneNumber" type="text" class="form-control" placeholder="เบอร์โทร" />
+              <input id="TelephoneNumber"  value="@UpdateProfileFreelance.TelephoneNumber" type="text" class="form-control" placeholder="เบอร์โทร" />
             </div>
             <span id="error_password" class="text-danger"></span>
           </div>
@@ -61,7 +62,7 @@
               <span class="input-group-addon">
                 <i class="fas fa-lock-open" aria-hidden="true"></i>
               </span>
-              <input type="text" id="Facebook" value="@UpdateProfileEmployer.Facebook" class="form-control" placeholder="Facebook" />
+              <input type="text" id="Facebook" value="@UpdateProfileFreelance.Facebook" class="form-control" placeholder="Facebook" />
             </div>
           </div>
         </div>
@@ -72,7 +73,7 @@
               <span class="input-group-addon">
                 <i class="fas fa-lock-open" aria-hidden="true"></i>
               </span>
-              <input type="text" id="Line" value="@UpdateProfileEmployer.Line" class="form-control" placeholder="Line" />
+              <input type="text" id="Line" value="@UpdateProfileFreelance.Line" class="form-control" placeholder="Line" />
             </div>
           </div>
         </div>
@@ -83,7 +84,7 @@
               <span class="input-group-addon">
                 <i class="fas fa-lock-open" aria-hidden="true"></i>
               </span>
-              <input type="text" id="Address" value="@UpdateProfileEmployer.Address" class="form-control" placeholder="Address" />
+              <input type="text" id="Address" value="@UpdateProfileFreelance.Address" class="form-control" placeholder="Address" />
             </div>
           </div>
         </div>
@@ -98,6 +99,27 @@
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-12">
+                <label for="name" class="cols-sm-2 control-label">ทักษะความสามารถ</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fas fa-tasks"></i>
+                    </span>
+                    <select id="skills"  class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+                        @foreach (Skill Skill in Skills) 
+                          {
+                            <option value=@Skill.Skill_ID>@Skill.Name</option>
+                          }
+                             <option  value=null><h1>สกิวของฉัน</h1></option>
+                      </select>
+                </div>
+              </div>
+              </div>
+              </div>
+              </div>
         <div class="text-center">
           <button id="submid" type="button" class="btn btn-danger">UPDATE</button>
         </div>
@@ -106,8 +128,8 @@
 
 <script>
 $().ready(function () {
-  var Employer = {
-    Employer_ID: 0,
+  var Freelance = {
+    Freelance_ID: 0,
     FullName: '',
     Email: '',
     TelephoneNumber: '',
@@ -116,34 +138,34 @@ $().ready(function () {
     Address: '',
   }
   var imgName = '';
-       Employer.FullName = $("#FullName").val();
-       Employer.Email = $("#Email").val();
-       Employer.TelephoneNumber = $("#TelephoneNumber").val();
-       Employer.Facebook = $("#Facebook").val();
-       Employer.Line = $("#Line").val();
-       Employer.Address = $("#Address").val();
-       Employer.Employer_ID = $("#Employer_ID").val();
+       Freelance.FullName = $("#FullName").val();
+       Freelance.Email = $("#Email").val();
+       Freelance.TelephoneNumber = $("#TelephoneNumber").val();
+       Freelance.Facebook = $("#Facebook").val();
+       Freelance.Line = $("#Line").val();
+       Freelance.Address = $("#Address").val();
+       Freelance.Freelance_ID = $("#Freelance_ID").val();
        imgName = $("#imgName").val();
-       console.log(Employer);
+       console.log(Freelance);
        console.log(imgName);
       $("#FullName").change(function () {
-        Employer.FullName = $("#FullName").val();
+        Freelance.FullName = $("#FullName").val();
       });
        $("#Email").change(function () {
-        Employer.Email = $("#Email").val();
+        Freelance.Email = $("#Email").val();
       });
         $("#TelephoneNumber").change(function () {
-        Employer.TelephoneNumber = $("#TelephoneNumber").val();
+        Freelance.TelephoneNumber = $("#TelephoneNumber").val();
       });
        $("#Facebook").change(function () {
-        Employer.Facebook = $("#Facebook").val();
+        Freelance.Facebook = $("#Facebook").val();
       });
        $("#Line").change(function () {
-        Employer.Line = $("#Line").val();
+        Freelance.Line = $("#Line").val();
       });
         $("#Address").change(function () {
-        Employer.Address = $("#Address").val();
-        console.log(Employer);
+        Freelance.Address = $("#Address").val();
+        console.log(Freelance);
       });
       var f =  new FormData();
       console.log(f);
@@ -161,6 +183,32 @@ $().ready(function () {
                 console.log(model)
         }
          $(document).on('change', 'input[type=file]', onchange);
+
+       //select2
+     $("#skills").select2({
+        placeholder: "กรุณาเลือกทักษะ"
+    });
+    $("#skills").change(function() {
+    Skill = $("#skills").val();
+    console.log(Skill);
+    });
+    Skill = $("#skills").val();
+    console.log(Skill);
+     jQuery.ajax({
+        type: "get",
+        dataType: "json",
+        url: "/Freelnace/GetFreelanceSkill/"+ Freelance.Freelance_ID,
+        success: function (data) {
+            console.log(data);
+            $.each(data, function(key, data) {   
+               var newOption = new Option(data.text = data.name, data.id = data.skill_ID, false, true);
+               $('#skills').append(newOption).trigger('change');
+            });
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
       $("#submid").click(function() {
            $.ajax({
                 method: 'POST',
@@ -170,17 +218,33 @@ $().ready(function () {
                 contentType: false,
               }).done(onSuccess);
             jQuery.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "/Freelnace/UpdateSkillFreelance",
+                        data:  {
+                            id: Freelance.Freelance_ID,
+                            skills: Skill
+                        },
+                        success: function (data) {
+                       // alert("ประกาศสำเร็จ");
+                        console.log(data);
+                        },
+                        error: function (data) {
+                        alert("กรอกข้อมูลไม่ถูกต้อง");
+                        },
+            }); //end ajax 
+            jQuery.ajax({
                     type: "post",
                     dataType: "json",
-                    url: "/Home/UpdateEmployer",
+                    url: "/Freelnace/UpdateFreelance",
                     data:  {
-                      Employer_ID: Employer.Employer_ID,
-                      FullName: Employer.FullName,
-                      Email: Employer.Email,
-                      TelephoneNumber: Employer.TelephoneNumber,
-                      Facebook: Employer.Facebook,
-                      Line: Employer.Line,
-                      Address: Employer.Address,
+                      Freelance_ID: Freelance.Freelance_ID,
+                      FullName: Freelance.FullName,
+                      Email: Freelance.Email,
+                      TelephoneNumber: Freelance.TelephoneNumber,
+                      Facebook: Freelance.Facebook,
+                      Line: Freelance.Line,
+                      Address: Freelance.Address,
                       imgName: imgName
                     },
                 //    processData: false,
@@ -188,7 +252,7 @@ $().ready(function () {
                     success: function (data) {
                       alert("ประกาศสำเร็จ");
                       console.log(data);
-                    location.replace("http://localhost:5000/Home/ProfileEmployer/"+localStorage['Employer_ID']);
+                    location.replace("http://localhost:5000/Home/ProfileFreelance/"+localStorage['Freelance_ID']);
                     },
                     error: function (data) {
                       alert("กรอกข้อมูลไม่ถูกต้อง");

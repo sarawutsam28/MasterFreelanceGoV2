@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace FreelanceGoMasterV2.Migrations
 {
-    public partial class InitialCreateV3 : Migration
+    public partial class InitialCreateV2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "SuccessStatus",
+                name: "FreelanceSuccessStatus",
                 table: "Project",
                 nullable: false,
                 defaultValue: false);
@@ -18,7 +18,7 @@ namespace FreelanceGoMasterV2.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "SuccessStatus",
+                name: "FreelanceSuccessStatus",
                 table: "Project");
         }
     }

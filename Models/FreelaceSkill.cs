@@ -19,5 +19,11 @@ namespace FreelanceGo_MasterV2.Models
 
         [ForeignKey("Skill_ID")]
         public Skill Skill { get; set; }
+        [Required]
+        public DateTime Date_Create { get; set; }
+        [Required]
+        public DateTime Date_Update { get; set; }
+        [Required]
+        public bool DelStatus { get; set; }
     }
 }
