@@ -237,17 +237,17 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["_Project"] = _Project;
             return View();
         }
-        public async Task<IActionResult> SaveEmployerRating(EmployerRating EmployerRating)
+        public async Task<IActionResult> SaveFreelanceRating(FreelanceRating FreelanceRating)
         {
-            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == EmployerRating.Project_ID);
+            var _Project = _context.Project.SingleOrDefault(p => p.Project_ID == FreelanceRating.Project_ID);
             _Project.SuccessStatus = true;
             var Company_ID = HttpContext.Session.GetInt32("Company_ID");
-            EmployerRating.Company_ID = Company_ID;
-            EmployerRating.Date_Create = DateTime.Now;
+            FreelanceRating.Company_ID = Company_ID;
+            FreelanceRating.Date_Create = DateTime.Now;
             _context.Update(_Project);
-            _context.EmployerRating.Add(EmployerRating);
+            _context.FreelanceRating.Add(FreelanceRating);
             await _context.SaveChangesAsync();
-            return Json(new { result = EmployerRating });
+            return Json(new { result = FreelanceRating });
         }
         public IActionResult Error()
         {

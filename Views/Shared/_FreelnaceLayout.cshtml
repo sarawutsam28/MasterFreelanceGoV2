@@ -56,7 +56,7 @@
                         </a>
                     </div>
                 </div>
-                <ul class="nav navbar-nav navbar-right" style="margin-top: 10px;">
+                <ul id="freeNav" class="nav navbar-nav navbar-right" style="margin-top: 10px;">
                     <li>
                         <a asp-controller="Freelnace" asp-action="SearchProject">
                             <span class="glyphicon glyphicon-user"></span> ค้นหา</a>
@@ -80,8 +80,16 @@
 </body>
 <script>
     $("#HomeProfile").click(function() {
-        location.replace("http://localhost:5000/Home/ProfileFreelance/"+localStorage['Freelance_ID']);
+        if(Freelance_ID == null) {
+           location.replace("http://localhost:5000/Home");
+        }else{
+            location.replace("http://localhost:5000/Home/ProfileFreelance/"+localStorage['Freelance_ID']);
+        }
     });
+    var Freelance_ID = localStorage['Freelance_ID'];
+    if(Freelance_ID == null) {
+        $("#freeNav").css("display", "none");
+    }
 </script>
 
 </html>

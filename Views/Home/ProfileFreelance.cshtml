@@ -48,33 +48,42 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProfileFreelance.Freelance_ID >@ProfileFreelance.FullName</a>
+											<a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProfileFreelance.Freelance_ID ><h4>@ProfileFreelance.FullName</h4></a>
 											<input type="hidden" name="" id="Freelance_ID" class="form-control" value=@ProfileFreelance.Freelance_ID>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileFreelance.Email</label>
+											อีเมล: @ProfileFreelance.Email
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileFreelance.TelephoneNumber</label>
+											เบอร์โทร: @ProfileFreelance.TelephoneNumber
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileFreelance.Facebook</label>
+											Facebook: @ProfileFreelance.Facebook
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileFreelance.Line</label>
+											Line: @ProfileFreelance.Line
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileFreelance.Address</label>
+											ที่อยู่: @ProfileFreelance.Address
+										</div>
+									</div>
+									<hr style="margin-bottom: 0rem;">
+									<div class="row">
+										<div class="col-sm-12 text-center" style="color: red; font-size: 3rem;">
+											@for (int i=0;i< ProfileFreelance.Rating; i++)
+                                            {
+                                                <span>★</span>
+                                            }
 										</div>
 									</div>
 									<div class="row">

@@ -56,32 +56,41 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Home" asp-action="ProfileDetailsEmployer" asp-route-id=@ProfileEmployer.Employer_ID >@ProfileEmployer.FullName</a>
+											<a asp-controller="Home" asp-action="ProfileDetailsEmployer" asp-route-id=@ProfileEmployer.Employer_ID ><h4>@ProfileEmployer.FullName</h4></a>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileEmployer.Email</label>
+											อีเมล: @ProfileEmployer.Email
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileEmployer.TelephoneNumber</label>
+											เบอร์โทร: @ProfileEmployer.TelephoneNumber
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileEmployer.Facebook</label>
+											Facebook: @ProfileEmployer.Facebook
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileEmployer.Line</label>
+											Line: @ProfileEmployer.Line
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<label>@ProfileEmployer.Address</label>
+											ที่อยู่: @ProfileEmployer.Address
+										</div>
+									</div>
+									<hr style="margin-bottom: 0rem;">
+									<div class="row">
+										<div class="col-sm-12 text-center" style="color: red; font-size: 3rem;">
+											@for (int i=0;i< ProfileEmployer.Rating; i++)
+                                            {
+                                                <span>★</span>
+                                            }
 										</div>
 									</div>
 									<div class="row">

@@ -284,6 +284,9 @@ namespace FreelanceGo_MasterV2.Controllers
             .Reference(b => b.Employer)
             .Load();
             _context.Entry(ProjectDetails)
+            .Reference(b => b.Company)
+            .Load();
+            _context.Entry(ProjectDetails)
             .Reference(b => b.Freelance)
             .Load();
             HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
