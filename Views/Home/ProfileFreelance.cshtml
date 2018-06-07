@@ -77,6 +77,11 @@
 											ที่อยู่: @ProfileFreelance.Address
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											ความสามารถ: <span id="Freelance_Skill"></span>
+										</div>
+									</div>
 									<hr style="margin-bottom: 0rem;">
 									<div class="row">
 										<div class="col-sm-12 text-center" style="color: red; font-size: 3rem;">
@@ -225,9 +230,9 @@
 																					<thead>
 																						<tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
 																							<th class="col-xs-4">ชื่องาน</th>
-																							<th class="col-xs-2">ราคา</th>
-																							<th class="col-xs-3">สถานะ</th>
-																							<th class="col-xs-4">ระยะเวลาสิ้นสุด</th>
+																							<th class="col-xs-2 text-center">ราคา</th>
+																							<th class="col-xs-3 text-center">สถานะ</th>
+																							<th class="col-xs-4 text-center">ระยะเวลาทำงาน</th>
 																						</tr>
 																					</thead>
 																					<tbody class="points_table_scrollbar">
@@ -237,10 +242,10 @@
 																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true && Project.FreelanceSuccessStatus == true )
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a>@Project.ProjectName</a></td>
-																										<td class="col-xs-2">@Project.Budget บาท</td>
-																										<td class="col-xs-3">ยังไม่ได้ผู้รับทำงาน</td>
-																										<td class="col-xs-4">@Html.DisplayFor(modelItem => Project.ProjectTimeOut) </td>
+																										<td class="col-xs-4"><a asp-controller="Freelnace" asp-action="HistoryProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-2 text-center">@Project.ProjectPrice บาท</td>
+																										<td class="col-xs-3 text-center">เสร็จสิ้น</td>
+																										<td class="col-xs-4 text-center">@Project.ProjectTimelength วัน</td>
 																									</tr>
 																								}
 																							</div>
@@ -299,5 +304,20 @@
 					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
 				},
 		    });
+			console.log(Freelance_ID);
+		jQuery.ajax({
+			type: "get",
+			dataType: "json",
+			url: "/Freelnace/GetSkillsFreelance/"+ Freelance_ID,
+			success: function (data) {
+				console.log(data);
+				$.each(data, function(key, data) {   
+				$("#Freelance_Skill").append(data.skillName + " | ");
+				});
+			},
+			error: function (data) {
+				alert("กรอกข้อมูลไม่ถูกต้อง");
+			},
+        }); //end ajax
 	});
 	</script>

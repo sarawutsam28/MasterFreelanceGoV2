@@ -27,7 +27,22 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             HttpContext.Session.Clear();
             var Skill = _context.Skill.ToList();
-            var ProjectList = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true);
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null);
+            var ProjectLength = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null).ToArray();
+            var FreelanceLength = _context.Freelance.Where(p => p.DelStatus == false).ToArray();
+            var EmployerLength = _context.Employer.Where(p => p.DelStatus == false).ToArray();
+            var CompanyLength = _context.Company.Where(p => p.DelStatus == false).ToArray();
+            var ProjectLengths = 0;
+            var FreelanceLengths = 0;
+            var EmployerLengths = 0;
+            var CompanyLengths = 0;
+            ProjectLengths = ProjectLength.Length;
+            FreelanceLengths = FreelanceLength.Length;
+            EmployerLengths = EmployerLength.Length;
+            CompanyLengths = CompanyLength.Length;
+            ViewData["EmployerLengths"] = EmployerLengths + CompanyLengths;
+            ViewData["ProjectLengths"] = ProjectLengths;
+            ViewData["FreelanceLengths"] = FreelanceLengths;
             ViewData["Skill"] = Skill;
             ViewData["ProjectList"] = ProjectList;
             return View();
@@ -51,6 +66,10 @@ namespace FreelanceGo_MasterV2.Controllers
             return View();
         }
         public IActionResult Login()
+        {
+            return View();
+        }
+         public IActionResult newLogin()
         {
             return View();
         }
@@ -180,6 +199,26 @@ namespace FreelanceGo_MasterV2.Controllers
 
             return Json(new { Result = "OK" });
         }
+        public IActionResult UpdateFreelanceSkill(int[] skillList)
+        {
+            var SessionFreelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+
+            foreach (var skillLists in skillList)
+            {
+                var _FreelanceSkill = new FreelanceSkill
+                {
+                    Skill_ID = skillLists,
+                    Freelance_ID = (int)SessionFreelance_ID,
+                    Date_Create = DateTime.Now,
+                    Date_Update = DateTime.Now,
+                    DelStatus = false,
+                };
+                _context.FreelanceSkill.Add(_FreelanceSkill);
+                _context.SaveChanges();
+            }
+
+            return Json(new { Result = "OK" });
+        }
         public IActionResult DelProjectSkill()
         {
             var _Project = _context.ProjectSkill.Where(p => p.Project_ID == 29).ToList();
@@ -234,6 +273,8 @@ namespace FreelanceGo_MasterV2.Controllers
             };
             _context.Add(_Freelance);
             _context.SaveChanges();
+            int id = _Freelance.Freelance_ID;
+            HttpContext.Session.SetInt32("Freelance_ID", id);
             return Json(new { Result = _Freelance });
         }
         [HttpPost]
@@ -521,6 +562,20 @@ namespace FreelanceGo_MasterV2.Controllers
             FreelanceRating.Date_Create = DateTime.Now;
             _context.Update(_Project);
             _context.FreelanceRating.Add(FreelanceRating);
+            await _context.SaveChangesAsync();
+
+            /////FreelanceRating
+            var _Rating = _context.FreelanceRating.Where(r => r.Freelance_ID == FreelanceRating.Freelance_ID).ToArray();
+            var Length = _Rating.Length;
+            int sum = 0;
+            foreach (var _Ratings in _Rating)
+            {
+                sum = sum + _Ratings.Score;
+            }
+            int RatingFree = sum / Length;
+            var Freelancedata = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == FreelanceRating.Freelance_ID);
+            Freelancedata.Rating = RatingFree;
+            _context.Update(Freelancedata);
             await _context.SaveChangesAsync();
             return Json(new { result = FreelanceRating });
         }

@@ -27,7 +27,6 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             return View();
         }
-        //[Route("{searchString}/{item1}/{item2}/{item3}")]
         public async Task<IActionResult> SearchProject()
         {
             var searchString = "โคราช";
@@ -47,7 +46,7 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["_Project"] = await _Project.ToListAsync();
             return View();
         }
-        public async Task<IActionResult> SearchString(string searchString = "สร้าง")
+        public async Task<IActionResult> SearchString(string searchString)
         {
             var _Project = from m in _context.Project
                            select m;
@@ -56,7 +55,7 @@ namespace FreelanceGo_MasterV2.Controllers
             {
                 _Project = _Project.Where(s => s.ProjectName.Contains(searchString) || s.Description.Contains(searchString));
             }
-
+            _Project = _Project.Where(p => p.DelStatus == false && p.Freelance_ID == null && p.ProjectStatus == true);
             ViewData["_Project"] = await _Project.ToListAsync();
             return Json(await _Project.ToListAsync());
         }
@@ -70,6 +69,10 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
            .Reference(b => b.Company)
            .Load();
+            var AuctionList = _context.Auction.Where(a => a.Project_ID == id)
+           .Include(x => x.Project)
+           .Include(x => x.Freelance).ToList();
+            ViewData["AuctionList"] = AuctionList;
             ViewData["ProjectDetails"] = ProjectDetails;
             /// ViewData["Auction"] = Auction;
             return View();
@@ -101,6 +104,7 @@ namespace FreelanceGo_MasterV2.Controllers
                     FullName = d.Freelance.FullName,
                     Freelance_ID = d.Freelance_ID,
                     Price = d.Price,
+                    Rating = d.Freelance.Rating,
                     AuctionTime = d.AuctionTime,
                     Date_Create = d.Date_Create,
                 })
@@ -274,6 +278,37 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Update(_Project);
             _context.EmployerRating.Add(EmployerRating);
             await _context.SaveChangesAsync();
+            //updateRating
+            if (EmployerRating.Employer_ID != null)
+            {
+                var _Rating = _context.EmployerRating.Where(r => r.Employer_ID == EmployerRating.Employer_ID).ToArray();
+                var Length = _Rating.Length;
+                int sum = 0;
+                foreach (var _Ratings in _Rating)
+                {
+                    sum = sum + _Ratings.Score;
+                }
+                int RatingEm = sum / Length;
+                var Employerdata = _context.Employer.SingleOrDefault(e => e.Employer_ID == EmployerRating.Employer_ID);
+                Employerdata.Rating = RatingEm;
+                _context.Update(Employerdata);
+                await _context.SaveChangesAsync();
+            }
+            if (EmployerRating.Company_ID != null)
+            {
+                var _Rating = _context.EmployerRating.Where(r => r.Company_ID == EmployerRating.Company_ID).ToArray();
+                var Length = _Rating.Length;
+                int sum = 0;
+                foreach (var _Ratings in _Rating)
+                {
+                    sum = sum + _Ratings.Score;
+                }
+                int RatingCom = sum / Length;
+                var Company = _context.Company.SingleOrDefault(e => e.Company_ID == EmployerRating.Company_ID);
+                Company.Rating = RatingCom;
+                _context.Update(Company);
+                await _context.SaveChangesAsync();
+            }
             return Json(new { result = EmployerRating });
         }
         public IActionResult ProjectDetailsWorking(int id)

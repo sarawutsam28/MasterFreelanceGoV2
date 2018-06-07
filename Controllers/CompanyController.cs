@@ -247,6 +247,20 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Update(_Project);
             _context.FreelanceRating.Add(FreelanceRating);
             await _context.SaveChangesAsync();
+
+            /////FreelanceRating
+            var _Rating = _context.FreelanceRating.Where(r => r.Freelance_ID == FreelanceRating.Freelance_ID).ToArray();
+            var Length = _Rating.Length;
+            int sum = 0;
+            foreach (var _Ratings in _Rating)
+            {
+                sum = sum + _Ratings.Score;
+            }
+            int RatingFree = sum / Length;
+            var Freelancedata = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == FreelanceRating.Freelance_ID);
+            Freelancedata.Rating = RatingFree;
+            _context.Update(Freelancedata);
+            await _context.SaveChangesAsync();
             return Json(new { result = FreelanceRating });
         }
         public IActionResult Error()

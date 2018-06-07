@@ -58,22 +58,22 @@ dd{
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ประกาศโดย: @Project.Company.Company_Name</h3>
+                            <h3>ประกาศโดย: @Project.Company.Company_Name
+                                (@for (int i=0;i< Project.Company.Rating; i++)
+                                {
+                                    <span style="color: red;">★</span>
+                                })
+                            </h3>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>คะแนนผู้จ้าง: @Project.Company.Rating</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>ผู้รับทำงาน: @Project.Freelance.FullName</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>คะแนนผู้รับทำงาน: @Project.Freelance.Rating</h3>
+                            <h3>ผู้รับทำงาน: @Project.Freelance.FullName
+                                (@for (int i=0;i< Project.Freelance.Rating; i++)
+                                {
+                                    <span style="color: red;">★</span>
+                                })
+                            </h3>
                         </div>
                     </div>
                 </div>

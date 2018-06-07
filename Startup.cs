@@ -25,7 +25,10 @@ namespace FreelanceGo_MasterV2
         {
             services.AddDbContext<dDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc();
+            services.AddMvc()
+            .AddJsonOptions(
+            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDistributedMemoryCache();
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddSession(options =>

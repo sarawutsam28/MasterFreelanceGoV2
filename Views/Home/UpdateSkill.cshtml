@@ -72,14 +72,14 @@ $().ready(function () {
         jQuery.ajax({
                     type: "post",
                     dataType: "json",
-                    url: "/Home/UpdateProjectSkill",
+                    url: "/Home/UpdateFreelanceSkill",
                     data:  {
                       skillList: Skill,
                     },
                     success: function (data) {
                       alert("ประกาศสำเร็จ");
                       console.log(data);
-                    location.replace("http://localhost:5000/Home/ProfileEmployer/"+localStorage['Employer_ID']);
+                    location.replace("http://localhost:5000/Home/Login");
                     },
                     error: function (data) {
                       alert("กรอกข้อมูลไม่ถูกต้อง");

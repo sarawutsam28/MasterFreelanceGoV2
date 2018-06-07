@@ -56,24 +56,39 @@ dd{
                             <h3>ระยะเวลาในการทำงาน: @Project.ProjectTimelength</h3>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>ประกาศโดย: @Project.Employer.FullName</h3>
+                    @if (@Project.Employer != null) {
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>ประกาศโดย: @Project.Employer.FullName
+                                    (@for (int i=0;i< Project.Employer.Rating; i++)
+                                    {
+                                        <span style="color: red;">★</span>
+                                    })
+                                </h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>คะแนนผู้จ้าง: @Project.Employer.Rating</h3>
+                    }
+                    else if(@Project.Company != null) 
+                    {
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>ประกาศโดย: @Project.Company.Company_Name
+                                    (@for (int i=0;i< Project.Company.Rating; i++)
+                                    {
+                                        <span style="color: red;">★</span>
+                                    })
+                                </h3>
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ผู้รับทำงาน: @Project.Freelance.FullName</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>คะแนนผู้รับทำงาน: @Project.Freelance.Rating</h3>
+                            <h3>ผู้รับทำงาน: @Project.Freelance.FullName
+                                 (@for (int i=0;i< Project.Freelance.Rating; i++)
+                                {
+                                    <span style="color: red;">★</span>
+                                })
+                            </h3>
                         </div>
                     </div>
                 </div>

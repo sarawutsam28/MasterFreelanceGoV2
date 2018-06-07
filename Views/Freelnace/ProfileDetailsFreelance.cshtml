@@ -74,7 +74,12 @@ dd{
                                 </dt>
                                 <dd>
                                     @ProfileDetailsFreelance.Address
-                                </dd>                  
+                                </dd> 
+                                <dt>
+                                    ความสามารถ
+                                </dt>
+                                <dd id="Freelance_Skill">
+                                </dd>                     
                             </dl>
                          </div>
                          <div class="col-sm-5 ">
@@ -137,6 +142,7 @@ dd{
 <script>
 $(document).ready(function () {
     var Freelnace_ID = $("#Freelnace_ID").val();
+    console.log(Freelnace_ID);
      jQuery.ajax({
         type: "get",
         dataType: "json",
@@ -144,12 +150,7 @@ $(document).ready(function () {
         success: function (data) {
             console.log(data);
             $.each(data, function(key, data) {   
-               /*var row1 = $('<tr class="odd" style="height:5rem;">'+
-                                    '<td class="col-xs-2"><a href="/Freelnace/ProfileDetailsFreelance/'+data.freelance_ID+'">'+data.fullName+'</a></td>'+
-                                    '<td class="col-xs-3 text-center">'+ data.price +' บาท</td>'+
-                                    '<td class="col-xs-3 text-center">'+ data.auctionTime +' วัน</td>'+
-                            '</tr>');
-               $("#AuctionTable").append(row1);*/
+              $("#Freelance_Skill").append(data.skillName + " | ");
             });
         },
         error: function (data) {

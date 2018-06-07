@@ -30,14 +30,24 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult ProjectDetails(int id)
         {
             var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
-
+            /*var aaa = _context.Auction.Where(x => x.Project_ID == id)
+            .Include(p => p.Freelance)
+                .ThenInclude(x => x.FullName)
+            .ToList();*/
+            _context.Entry(ProjectDetails)
+           .Collection(b => b.Auction)
+           .Load();
             _context.Entry(ProjectDetails)
             .Reference(b => b.Employer)
             .Load();
             _context.Entry(ProjectDetails)
            .Reference(b => b.Company)
            .Load();
+            var AuctionList = _context.Auction.Where(a => a.Project_ID == id)
+            .Include(x => x.Project)
+            .Include(x => x.Freelance).ToList();
             ViewData["ProjectDetails"] = ProjectDetails;
+            ViewData["AuctionList"] = AuctionList;
             return View();
         }
         public IActionResult ProfileDetailsEmployer(int id)

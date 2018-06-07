@@ -74,6 +74,11 @@ dd{
                                 </dt>
                                 <dd>
                                     @ProfileDetailsFreelance.Address
+                                </dd>  
+                                <dt>
+                                    ความสามารถ
+                                </dt>
+                                <dd id="Freelance_Skill">
                                 </dd>                  
                             </dl>
                          </div>
@@ -93,7 +98,7 @@ dd{
                 <div class="feedback">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h2>ประวัติการจ้างงาน</h2>
+                            <h2>ประวัติการทำงาน</h2>
                         </div>
                     </div>
                     <div class="row">
@@ -150,6 +155,20 @@ $(document).ready(function () {
                                     '<td class="col-xs-3 text-center">'+ data.auctionTime +' วัน</td>'+
                             '</tr>');
                $("#AuctionTable").append(row1);*/
+            });
+        },
+        error: function (data) {
+            alert("กรอกข้อมูลไม่ถูกต้อง");
+        },
+        }); //end ajax
+        jQuery.ajax({
+        type: "get",
+        dataType: "json",
+        url: "/Freelnace/GetSkillsFreelance/"+ Freelnace_ID,
+        success: function (data) {
+            console.log(data);
+            $.each(data, function(key, data) {   
+              $("#Freelance_Skill").append(data.skillName + " | ");
             });
         },
         error: function (data) {
