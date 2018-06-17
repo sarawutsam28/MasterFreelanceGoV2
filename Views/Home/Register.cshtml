@@ -137,7 +137,7 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
-					<div class="panel-heading">
+					<!-- <div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-4">
 								<a href="#" class="active" id="login-form-link">ฟรีแลนซ์</a>
@@ -150,11 +150,14 @@
 							</div>
 						</div>
 						<hr>
-					</div>
+					</div> -->
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
 								<form id="login-form" role="form" style="display: block;">
+									<div class="form-group text-center">
+										<h3>สมัครสมาชิก</h3>
+									</div>
 									<div class="form-group">
 										<label>ชื่อผู้ใช้</label>
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
@@ -164,20 +167,25 @@
 										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
 									</div>
 									<div class="form-group">
-										<label>ชื่อ-นามสกุล</label>
-										<input type="text" name="FullName" id="FullName" tabindex="2" class="form-control" placeholder="ชื่อ-นามสกุล">
+											<label >ประเภทผู้ใช้</label>
+    										<select style="height: 45px;" id="userType" tabindex="2" class="form-control">
+												<option value=null>-- ประเภทผู้ใช้ --</option>
+												<option>ฟรีแลนซ์</option>
+												<option>ผู้จ้าง</option>
+												<option>ผู้จ้าง(บริษัท)</option>
+											</select>
+    								</div>
+									<div class="form-group">
+										<label>ชื่อ-นามสกุล / ชื่อบริษัท</label>
+										<input type="text" name="FullName" id="FullName" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
 									</div>
 									<div class="form-group">
-										<label>เลขบัตรประชาชน</label>
-										<input type="text" name="ID_Card" id="ID_Card" tabindex="2" class="form-control" placeholder="เลขบัตรประชาชน">
+										<label>เบอร์โทร</label>
+										<input type="text" name="TelephoneNumber" id="TelephoneNumber" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
 									</div>
 									<div class="form-group">
 										<label>อีเมล</label>
 										<input type="email" name="Email" id="Email" tabindex="2" class="form-control" placeholder="FreelanceG0@gmail.com">
-									</div>
-									<div class="form-group">
-										<label>เบอร์โทร</label>
-										<input type="text" name="TelephoneNumber" id="TelephoneNumber" tabindex="2" class="form-control" placeholder="เบอร์โทร">
 									</div>
 									<div class="form-group">
 										<label>Facebook</label>
@@ -194,14 +202,14 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="button" name="login-submit" id="Freelance-submit" tabindex="4" class="form-control btn btn-login" value="สมัคร">
+												<input type="button" name="login-submit" id="btn-submit" tabindex="4" class="form-control btn btn-login" value="สมัคร">
 											</div>
 										</div>
 									</div>
 							</div>
 						</div>
 						</form>
-						<form id="register-form" role="form" style="display: none;">
+						<!-- <form id="register-form" role="form" style="display: none;">
 							<div class="form-group">
 								<label>ชื่อผู้ใช้</label>
 								<input type="text" name="usernameEmployer" id="usernameEmployer" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้"
@@ -296,7 +304,7 @@
 									</div>
 								</div>
 							</div>
-						</form>
+						</form> -->
 					</div>
 				</div>
 			</div>
@@ -310,259 +318,133 @@
 <script>
 	$(document).ready(function () {
 		//refisterFreelance
-		var Freelance = {
+		var UserRegister = {
 			UserName: '',
 			Password: '',
 			FullName: '',
-			ID_Card: '',
-			Email: '',
 			TelephoneNumber: '',
+			Email: '',
 			Facebook: '',
 			Line: '',
 			Address: '',
 		};
+		var userType = '';
 		$("#username").change(function () {
-			Freelance.UserName = $("#username").val();
+			UserRegister.UserName = $("#username").val();
+			console.log(UserRegister);
 		});
 		$("#password").change(function () {
-			Freelance.Password = $("#password").val();
+			UserRegister.Password = $("#password").val();
+			console.log(UserRegister);
+		});
+		$("#userType").change(function () {
+			userType = $("#userType").val();
+			console.log(userType);
 		});
 		$("#FullName").change(function () {
-			Freelance.FullName = $("#FullName").val();
-		});
-		$("#ID_Card").change(function () {
-			Freelance.ID_Card = $("#ID_Card").val();
-			console.log(Freelance);
+			UserRegister.FullName = $("#FullName").val();
+			console.log(UserRegister);
 		});
 		$("#Email").change(function () {
-			Freelance.Email = $("#Email").val();
-			console.log(Freelance);
+			UserRegister.Email = $("#Email").val();
+			console.log(UserRegister);
 		});
 		$("#TelephoneNumber").change(function () {
-			Freelance.TelephoneNumber = $("#TelephoneNumber").val();
-			console.log(Freelance);
+			UserRegister.TelephoneNumber = $("#TelephoneNumber").val();
+			console.log(UserRegister);
 		});
 		$("#Facebook").change(function () {
-			Freelance.Facebook = $("#Facebook").val();
-			console.log(Freelance);
+			UserRegister.Facebook = $("#Facebook").val();
+			console.log(UserRegister);
 		});
 		$("#Line").change(function () {
-			Freelance.Line = $("#Line").val();
-			console.log(Freelance);
+			UserRegister.Line = $("#Line").val();
+			console.log(UserRegister);
 		});
 		$("#Address").change(function () {
-			Freelance.Address = $("#Address").val();
-			console.log(Freelance);
+			UserRegister.Address = $("#Address").val();
+			console.log(UserRegister);
 		});
-		$("#Freelance-submit").click(function () {
-			jQuery.ajax({
-				type: "post",
-				dataType: "json",
-				url: "/Home/FreelanceRegister",
-				data: {
-					UserName: Freelance.UserName,
-					Password: Freelance.Password,
-					FullName: Freelance.FullName,
-					ID_Card: Freelance.ID_Card,
-					Email: Freelance.Email,
-					TelephoneNumber: Freelance.TelephoneNumber,
-					Facebook: Freelance.Facebook,
-					Line: Freelance.Line,
-					Address: Freelance.Address,
-				},
-				success: function (data) {
-					console.log(data);
-					location.replace("http://localhost:5000/Home/UpdateSkill/");
-				},
-				error: function (data) {
-					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-					location.replace("http://localhost:5000/Home/Register");
-				},
-			});
+		
+		$("#btn-submit").click(function () {
+			if(userType == 'ฟรีแลนซ์')
+			{
+				jQuery.ajax({
+					type: "post",
+					dataType: "json",
+					url: "/Home/FreelanceRegister",
+					data: {
+						UserName: UserRegister.UserName,
+						Password: UserRegister.Password,
+						Email: UserRegister.Email,
+						FullName: UserRegister.FullName,
+						TelephoneNumber: UserRegister.TelephoneNumber,
+						Facebook: UserRegister.Facebook,
+						Line: UserRegister.Line,
+						Address: UserRegister.Address,
+					},
+					success: function (data) {
+						console.log(data);
+						location.replace("http://localhost:5000/Home/UpdateSkill/");
+					},
+					error: function (data) {
+						alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+						location.replace("http://localhost:5000/Home/Register");
+					},
+				});
+			}
+			if(userType == 'ผู้จ้าง')
+			{
+				jQuery.ajax({
+					type: "post",
+					dataType: "json",
+					url: "/Home/EmployerRegister",
+					data: {
+						UserName: UserRegister.UserName,
+						Password: UserRegister.Password,
+						Email: UserRegister.Email,
+						FullName: UserRegister.FullName,
+						TelephoneNumber: UserRegister.TelephoneNumber,
+						Facebook: UserRegister.Facebook,
+						Line: UserRegister.Line,
+						Address: UserRegister.Address,
+					},
+					success: function (data) {
+						console.log(data);
+						location.replace("http://localhost:5000/Home/Login/");
+					},
+					error: function (data) {
+						alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+						location.replace("http://localhost:5000/Home/Register");
+					},
+				});
+			}
+			if(userType == 'ผู้จ้าง(บริษัท)')
+			{
+				jQuery.ajax({
+					type: "post",
+					dataType: "json",
+					url: "/Home/CompanyRegister",
+					data: {
+						UserName: UserRegister.UserName,
+						Password: UserRegister.Password,
+						Email: UserRegister.Email,
+						Company_Name: UserRegister.FullName,
+						Company_Tel: UserRegister.TelephoneNumber,
+						Facebook: UserRegister.Facebook,
+						Line: UserRegister.Line,
+						Company_Address: UserRegister.Address,
+					},
+					success: function (data) {
+						console.log(data);
+						//location.replace("http://localhost:5000/Home/Login/");
+					},
+					error: function (data) {
+						alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+						//location.replace("http://localhost:5000/Home/Register");
+					},
+				});
+			}
 		});
-		//refisterEmployer
-		var Employer = {
-			UserName: '',
-			Password: '',
-			FullName: '',
-			ID_Card: '',
-			Email: '',
-			TelephoneNumber: '',
-			Facebook: '',
-			Line: '',
-			Address: '',
-		};
-		$("#usernameEmployer").change(function () {
-			Employer.UserName = $("#usernameEmployer").val();
-		});
-		$("#passwordEmployer").change(function () {
-			Employer.Password = $("#passwordEmployer").val();
-		});
-		$("#FullNameEmployer").change(function () {
-			Employer.FullName = $("#FullNameEmployer").val();
-		});
-		$("#ID_CardEmployer").change(function () {
-			Employer.ID_Card = $("#ID_CardEmployer").val();
-			console.log(Employer);
-		});
-		$("#EmailEmployer").change(function () {
-			Employer.Email = $("#EmailEmployer").val();
-			console.log(Employer);
-		});
-		$("#TelephoneNumberEmployer").change(function () {
-			Employer.TelephoneNumber = $("#TelephoneNumberEmployer").val();
-			console.log(Employer);
-		});
-		$("#FacebookEmployer").change(function () {
-			Employer.Facebook = $("#FacebookEmployer").val();
-			console.log(Employer);
-		});
-		$("#LineEmployer").change(function () {
-			Employer.Line = $("#LineEmployer").val();
-			console.log(Employer);
-		});
-		$("#AddressEmployer").change(function () {
-			Employer.Address = $("#AddressEmployer").val();
-			console.log(Employer);
-		});
-		$("#Employer-submit").click(function () {
-			jQuery.ajax({
-				type: "post",
-				dataType: "json",
-				url: "/Home/EmployerRegister",
-				data: {
-					UserName: Employer.UserName,
-					Password: Employer.Password,
-					FullName: Employer.FullName,
-					ID_Card: Employer.ID_Card,
-					Email: Employer.Email,
-					TelephoneNumber: Employer.TelephoneNumber,
-					Facebook: Employer.Facebook,
-					Line: Employer.Line,
-					Address: Employer.Address,
-				},
-				success: function (data) {
-					console.log(data);
-					location.replace("http://localhost:5000/Home/Login/");
-				},
-				error: function (data) {
-					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-					location.replace("http://localhost:5000/Home/Register");
-				},
-			});
-		});
-		//refisterCompany
-		var Company = {
-			UserName: '',
-			Password: '',
-			FullName: '',
-			Company_TaxID: '',
-			Fax: '',
-			Email: '',
-			TelephoneNumber: '',
-			Facebook: '',
-			Line: '',
-			Address: '',
-		};
-		$("#usernameCompany").change(function () {
-			Company.UserName = $("#usernameCompany").val();
-			console.log(Company);
-		});
-		$("#passwordCompany").change(function () {
-			Company.Password = $("#passwordCompany").val();
-			console.log(Company);
-		});
-		$("#FullNameCompany").change(function () {
-			Company.FullName = $("#FullNameCompany").val();
-			console.log(Company);
-		});
-		$("#Fax").change(function () {
-			Company.Fax = $("#Fax").val();
-			console.log(Company);
-		});
-		$("#Company_TaxID").change(function () {
-			Company.Company_TaxID = $("#Company_TaxID").val();
-			console.log(Company);
-		});
-		$("#EmailCompany").change(function () {
-			Company.Email = $("#EmailCompany").val();
-			console.log(Company);
-		});
-		$("#TelephoneNumberCompany").change(function () {
-			Company.TelephoneNumber = $("#TelephoneNumberCompany").val();
-			console.log(Company);
-		});
-		$("#FacebookCompany").change(function () {
-			Company.Facebook = $("#FacebookCompany").val();
-			console.log(Company);
-		});
-		$("#LineCompany").change(function () {
-			Company.Line = $("#LineCompany").val();
-			console.log(Company);
-		});
-		$("#AddressCompany").change(function () {
-			Company.Address = $("#AddressCompany").val();
-			console.log(Company);
-		});
-		$("#Company-submit").click(function () {
-			jQuery.ajax({
-				type: "post",
-				dataType: "json",
-				url: "/Home/CompanyRegister",
-				data: {
-					UserName: Company.UserName,
-					Password: Company.Password,
-					Company_Name: Company.FullName,
-					Company_TaxID: Company.Company_TaxID,
-					Fax: Company.Fax,
-					Email: Company.Email,
-					Company_Tel: Company.TelephoneNumber,
-					Facebook: Company.Facebook,
-					Line: Company.Line,
-					Company_Address: Company.Address,
-				},
-				success: function (data) {
-					console.log(data);
-					location.replace("http://localhost:5000/Home/Login/");
-				},
-				error: function (data) {
-					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-					location.replace("http://localhost:5000/Home/Register");
-				},
-			});
-		});
-		//css
-		$('#login-form-link').click(function (e) {
-			$("#login-form").delay(100).fadeIn(100);
-			$("#register-form").fadeOut(100);
-			$("#registerCompany-form").fadeOut(100);
-			$('#register-form-link').removeClass('active');
-			$('#registerCompany-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		$('#register-form-link').click(function (e) {
-			$("#register-form").delay(100).fadeIn(100);
-			$("#login-form").fadeOut(100)
-			$("#registerCompany-form").fadeOut(100);;
-			$('#login-form-link').removeClass('active');
-			$('#registerCompany-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		$('#registerCompany-form-link').click(function (e) {
-			$("#registerCompany-form").delay(100).fadeIn(100);
-			$("#login-form").fadeOut(100);
-			$("#register-form").fadeOut(100);
-			$('#login-form-link').removeClass('active');
-			$('#register-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		// end tab
-		$("#Skill").click(function () {
-			$(".skill").slideToggle("slow");
-		});
-
 	});
 </script>

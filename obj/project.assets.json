@@ -12789,11 +12789,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ProjectCS\\MasterFreelanceGo\\MasterFreelanceGoV2\\FreelanceGo-MasterV2.csproj",
+      "projectUniqueName": "G:\\CS-Project\\MasterFreelanceGoV2\\FreelanceGo-MasterV2.csproj",
       "projectName": "FreelanceGo-MasterV2",
-      "projectPath": "D:\\ProjectCS\\MasterFreelanceGo\\MasterFreelanceGoV2\\FreelanceGo-MasterV2.csproj",
+      "projectPath": "G:\\CS-Project\\MasterFreelanceGoV2\\FreelanceGo-MasterV2.csproj",
       "packagesPath": "C:\\Users\\CharKo\\.nuget\\packages\\",
-      "outputPath": "D:\\ProjectCS\\MasterFreelanceGo\\MasterFreelanceGoV2\\obj\\",
+      "outputPath": "G:\\CS-Project\\MasterFreelanceGoV2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

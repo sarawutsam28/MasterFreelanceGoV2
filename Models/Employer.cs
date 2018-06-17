@@ -19,8 +19,6 @@ namespace FreelanceGo_MasterV2.Models
         public string Password { get; set; }
         [Required]
         public string FullName { get; set; }
-
-        [Required]
         public string ID_Card { get; set; }
         public int Rating { get; set; }
 

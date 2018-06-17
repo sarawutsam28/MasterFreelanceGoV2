@@ -144,13 +144,13 @@ input:hover{
     						</div>
     						<hr>
     					</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-sm-12 text-center">
 									<label style="margin-right: 1rem;"><input id="employer"type="radio" class="radio-inline" name="radios" ><span class="outside"><span class="inside"></span></span> ผู้จ้าง</label>
 									<label style="margin-right: 1rem;"><input id="company" type="radio"class="radio-inline" name="radios" ><span class="outside"><span class="inside"></span></span> ผู้จ้าง(บริษัท)</label>
 									<label style="margin-right: 1rem;"><input id="freelance" type="radio" class="radio-inline" name="radios"><span class="outside"><span class="inside"></span></span> ฟรีแลนซ์</label>
 							</div>
-						</div>
+						</div> -->
     					<div class="panel-body">
     						<div class="row">
     							<div class="col-lg-12">
@@ -159,13 +159,22 @@ input:hover{
 											<label >ชื่อผู้ใช้</label>
     										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
     									</div>
+										<div class="form-group">
+											<label >ประเภทผู้ใช้</label>
+    										<select style="height: 45px;" id="userType" tabindex="2" class="form-control">
+												<option value=null>-- ประเภทผู้ใช้ --</option>
+												<option>ฟรีแลนซ์</option>
+												<option>ผู้จ้าง</option>
+												<option>ผู้จ้าง(บริษัท)</option>
+											</select>
+    									</div>
     									<div class="form-group">
 											<label >Password</label>
     										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
     									</div>
 										<div class="row">
-											<div class="col-sm-12">
-												<a href="/Home/Register">สมัครสมาชิก</a>
+											<div class="col-sm-12 text-center form-group" >
+												<a href="/Home/Register">> สมัครสมาชิก <</a>
 											</div>
 										</div>
     									<div class="form-group">
@@ -235,20 +244,12 @@ input:hover{
 			user.Password = $("#password").val();
 			console.log(user);
 		});
-		$("#employer").change(function () {
-			userType = 'employer';
-			console.log(userType);
-		});
-		$("#company").change(function () {
-			userType = 'company';
-			console.log(userType);
-		});
-		$("#freelance").change(function () {
-			userType = 'freelance';
+		$("#userType").change(function () {
+			userType = $("#userType").val();
 			console.log(userType);
 		});
 		$("#Freelance-submit").click(function () {
-			if(userType == 'freelance')
+			if(userType == 'ฟรีแลนซ์')
 			{
 				jQuery.ajax({
 				type: "post",
@@ -270,7 +271,7 @@ input:hover{
 				},
 			});
 			}
-			else if (userType == 'employer')
+			else if (userType == 'ผู้จ้าง')
 			{
 				jQuery.ajax({
 				type: "post",
@@ -292,7 +293,7 @@ input:hover{
 				},
 			});
 			}
-			else if (userType == 'company')
+			else if (userType == 'ผู้จ้าง(บริษัท)')
 			{
 				jQuery.ajax({
 				type: "post",

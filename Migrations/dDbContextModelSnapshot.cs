@@ -109,8 +109,7 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("FullName")
                         .IsRequired();
 
-                    b.Property<string>("ID_Card")
-                        .IsRequired();
+                    b.Property<string>("ID_Card");
 
                     b.Property<string>("Line");
 
@@ -161,9 +160,7 @@ namespace FreelanceGoMasterV2.Migrations
 
                     b.HasIndex("Freelance_ID");
 
-                    b.HasIndex("Project_ID")
-                        .IsUnique()
-                        .HasFilter("[Project_ID] IS NOT NULL");
+                    b.HasIndex("Project_ID");
 
                     b.ToTable("EmployerRating");
                 });
@@ -189,8 +186,7 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<string>("FullName")
                         .IsRequired();
 
-                    b.Property<string>("ID_Card")
-                        .IsRequired();
+                    b.Property<string>("ID_Card");
 
                     b.Property<string>("ImgName");
 
@@ -244,9 +240,7 @@ namespace FreelanceGoMasterV2.Migrations
 
                     b.HasIndex("Freelance_ID");
 
-                    b.HasIndex("Project_ID")
-                        .IsUnique()
-                        .HasFilter("[Project_ID] IS NOT NULL");
+                    b.HasIndex("Project_ID");
 
                     b.ToTable("FreelanceRating");
                 });
@@ -402,8 +396,8 @@ namespace FreelanceGoMasterV2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FreelanceGo_MasterV2.Models.Project", "Project")
-                        .WithOne("EmployerRating")
-                        .HasForeignKey("FreelanceGo_MasterV2.Models.EmployerRating", "Project_ID");
+                        .WithMany()
+                        .HasForeignKey("Project_ID");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.FreelanceRating", b =>
@@ -422,8 +416,8 @@ namespace FreelanceGoMasterV2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FreelanceGo_MasterV2.Models.Project", "Project")
-                        .WithOne("FreelanceRating")
-                        .HasForeignKey("FreelanceGo_MasterV2.Models.FreelanceRating", "Project_ID");
+                        .WithMany()
+                        .HasForeignKey("Project_ID");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.FreelanceSkill", b =>

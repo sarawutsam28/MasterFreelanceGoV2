@@ -19,3 +19,14 @@ D:\ProjectCS\MasterFreelanceGo\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\Freel
 D:\ProjectCS\MasterFreelanceGo\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.dll
 D:\ProjectCS\MasterFreelanceGo\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.pdb
 D:\ProjectCS\MasterFreelanceGo\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.csprojResolveAssemblyReference.cache
+G:\CS-Project\MasterFreelanceGoV2\bin\Debug\netcoreapp2.0\FreelanceGo-MasterV2.deps.json
+G:\CS-Project\MasterFreelanceGoV2\bin\Debug\netcoreapp2.0\FreelanceGo-MasterV2.runtimeconfig.json
+G:\CS-Project\MasterFreelanceGoV2\bin\Debug\netcoreapp2.0\FreelanceGo-MasterV2.runtimeconfig.dev.json
+G:\CS-Project\MasterFreelanceGoV2\bin\Debug\netcoreapp2.0\FreelanceGo-MasterV2.dll
+G:\CS-Project\MasterFreelanceGoV2\bin\Debug\netcoreapp2.0\FreelanceGo-MasterV2.pdb
+G:\CS-Project\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.csprojResolveAssemblyReference.cache
+G:\CS-Project\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.csproj.CoreCompileInputs.cache
+G:\CS-Project\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.AssemblyInfoInputs.cache
+G:\CS-Project\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.AssemblyInfo.cs
+G:\CS-Project\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.dll
+G:\CS-Project\MasterFreelanceGoV2\obj\Debug\netcoreapp2.0\FreelanceGo-MasterV2.pdb

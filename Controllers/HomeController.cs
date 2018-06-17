@@ -69,7 +69,7 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             return View();
         }
-         public IActionResult newLogin()
+        public IActionResult newLogin()
         {
             return View();
         }
@@ -260,9 +260,8 @@ namespace FreelanceGo_MasterV2.Controllers
                 UserName = Freelance.UserName,
                 Password = Freelance.Password,
                 FullName = Freelance.FullName,
-                ID_Card = Freelance.ID_Card,
-                Email = Freelance.Email,
                 TelephoneNumber = Freelance.TelephoneNumber,
+                Email = Freelance.Email,
                 Facebook = Freelance.Facebook,
                 Line = Freelance.Line,
                 Address = Freelance.Address,

@@ -11,8 +11,8 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    [Migration("20180526090456_InitialCreateV2")]
-    partial class InitialCreateV2
+    [Migration("20180614035517_dbV1")]
+    partial class dbV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,6 +130,41 @@ namespace FreelanceGoMasterV2.Migrations
                     b.HasKey("Employer_ID");
 
                     b.ToTable("Employer");
+                });
+
+            modelBuilder.Entity("FreelanceGo_MasterV2.Models.EmployerRating", b =>
+                {
+                    b.Property<int>("Rating_ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("Company_ID");
+
+                    b.Property<DateTime>("Date_Create");
+
+                    b.Property<bool>("DelStatus");
+
+                    b.Property<int?>("Employer_ID");
+
+                    b.Property<int?>("Freelance_ID")
+                        .IsRequired();
+
+                    b.Property<int?>("Project_ID");
+
+                    b.Property<int>("Score");
+
+                    b.Property<string>("TextReview");
+
+                    b.HasKey("Rating_ID");
+
+                    b.HasIndex("Company_ID");
+
+                    b.HasIndex("Employer_ID");
+
+                    b.HasIndex("Freelance_ID");
+
+                    b.HasIndex("Project_ID");
+
+                    b.ToTable("EmployerRating");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.Freelance", b =>
@@ -346,6 +381,26 @@ namespace FreelanceGoMasterV2.Migrations
                         .WithMany("Auction")
                         .HasForeignKey("Project_ID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FreelanceGo_MasterV2.Models.EmployerRating", b =>
+                {
+                    b.HasOne("FreelanceGo_MasterV2.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("Company_ID");
+
+                    b.HasOne("FreelanceGo_MasterV2.Models.Employer", "Employer")
+                        .WithMany()
+                        .HasForeignKey("Employer_ID");
+
+                    b.HasOne("FreelanceGo_MasterV2.Models.Freelance", "Freelance")
+                        .WithMany()
+                        .HasForeignKey("Freelance_ID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FreelanceGo_MasterV2.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("Project_ID");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.FreelanceRating", b =>
