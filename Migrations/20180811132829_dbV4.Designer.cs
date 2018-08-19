@@ -11,36 +11,15 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    partial class dDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180811132829_dbV4")]
+    partial class dbV4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FreelanceGo_MasterV2.Models.Admin", b =>
-                {
-                    b.Property<int>("Admin_ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date_Create");
-
-                    b.Property<DateTime>("Date_Update");
-
-                    b.Property<bool>("DelStatus");
-
-                    b.Property<string>("PassWord")
-                        .IsRequired();
-
-                    b.Property<string>("UserName")
-                        .IsRequired();
-
-                    b.HasKey("Admin_ID");
-
-                    b.ToTable("Admin");
-                });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.Auction", b =>
                 {

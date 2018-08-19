@@ -10,9 +10,7 @@
                     }
 
                     .Search {
-                        border: 1px solid red;
                         -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-                        margin-top: 3rem;
                         padding: 5rem;
                         padding-top: 1rem;
                         display: none;
@@ -31,12 +29,11 @@
                         border: 1px solid red;
                         border-color: #ccc;
                         -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-                        margin-top: 3rem;
                         padding: 5rem;
                         background-color: white;
                     }
 
-                    th {
+                    thCenter {
                         text-align: center;
                     }
 
@@ -79,7 +76,6 @@
                         margin-left: auto;
                     }
                 </style>
-
 
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
                     <ol class="carousel-indicators">
@@ -145,7 +141,7 @@
                 </div>
                 <div class="row" id="tableContainer">
                     <div class="row" style="margin-top: 3rem;">
-                    <div class="col-sm-12">
+                    <!-- <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 ">
                                 <div class="connn text-center" style="height: 5rem;padding: 10px;border: 20px;width: 20rem; margin-left: 25%;">@ViewData["ProjectLengths"] ประกาศ</div>
@@ -157,38 +153,18 @@
                                 <div class="connn text-center" style="height: 5rem;padding: 10px;border: 20px;width: 20rem; margin-left: 25%;">ผู้จ้าง @ViewData["EmployerLengths"] คน</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <a id="searchToggle" class="btn btn-xs btn-success text-center">
-                                    <i class="fas fa-search"></i> ค้นหา</a>
-                            </div>
+                    <div class="row" style="margin-bottom: 1rem;">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <input style="width: 40%;" type="text" id="searchString"  class="form-control pull-right" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="buttonSearch"><i class="fas fa-search"></i></button>
+                                </span>
+                            </div><!-- /input-group -->
                         </div>
-                        <div class="Search">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h3>
-                                        <i class="fas fa-search"></i> ค้นหา</h3>
-                                    <input type="text" id="searchString" class="form-control" id="exampleInputAmount" placeholder="Search">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="input-group" style="margin-top: 3rem;">
-                                        <select type="text" id="SelectSearch" class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
-                                            @foreach (Skill Skill in Skills) {
-                                            <option value=@Skill.Skill_ID>@Skill.Name</option>
-                                            }
-                                        </select>
-                                        <span class="input-group-btn">
-                                            <button type="button" id="buttonSearch" class="btn btn-default">Go!</button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <h3 id="dataNull" style="color:red;"></h3>
@@ -198,19 +174,18 @@
                             <thead>
                                 <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
                                     <th class="col-xs-5">ชื่อ/รายละอียด</th>
-                                    <th class="col-xs-2">ระยะเวลา</th>
-                                    <th class="col-xs-3">ประมูลถึง</th>
-                                    <th class="col-xs-2 ">ราคา</th>
+                                    <th class="col-xs-2 text-center">ระยะเวลา</th>
+                                    <th class="col-xs-3 text-center">ประมูลถึง</th>
+                                    <th class="col-xs-2 text-center">ราคา</th>
                                 </tr>
                             </thead>
                             <tbody class="points_table_scrollbar">
-                            </tbody>
                                  @foreach (@Project @ProjectLists in @ProjectList) {
                                 <tr class="projectComtroller">
                                 <td class="col-xs-5">
                                     <div class="row">
                                         <div class="col-sm-12 projectName">
-                                            <a href=/Outsider/ProjectDetails/@ProjectLists.Project_ID>@ProjectLists.ProjectName</a>
+                                            <a href=/Outsider/ProjectDetails/@ProjectLists.Project_ID><h4>@ProjectLists.ProjectName</h4></a>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -231,29 +206,20 @@
                                     <div class="row">
                                         <div class="col-sm-12 text-center Budget">@ProjectLists.Budget บาท</div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 text-center">
-                                            <a href="/Home/Login" class="btn btn-xs btn-success text-center">
-                                                <i class="fas fa-bullseye"></i> ประมูล</a>
-                                        </div>
-                                    </div>
+                                   
                                 </td>
                             </tr>
                             }
-                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
 
 
+
                 <script>
                     $(document).ready(function () {
-                        $("#SelectSearch").select2({
-                            placeholder: "ค้นหาด้วย ทักษะ"
-                        });
-                        $("#searchToggle").click(function () {
-                            $(".Search").slideToggle("slow");
-                        });
+                        $("#dataNull").css("display", "none");
                         var searchString = "";
                         $("#searchString").change(function() {
                             searchString = $("#searchString").val();
@@ -288,8 +254,12 @@
                                     if(data.length == 0)
                                         {
                                             $(".projectComtroller").css("display", "none");
-                                            $("#dataNull").text("ไม่พบประกาศ");
+                                            var rowNone = $('<tr id="rowNone"><td></td><td class="text-center"><p>-- ไม่พบประกาศ --</p></td></tr>');
+                                            $("#tableSearch").append(rowNone);
                                         }
+                                    else{
+                                            $("#rowNone").css("display", "none");
+                                    }
                                 },
                                 error: function (data) {
                                     alert("เกิดข้อผิดพลาด");

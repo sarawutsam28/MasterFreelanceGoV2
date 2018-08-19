@@ -127,15 +127,6 @@ input:hover{
     				<div class="panel panel-login">
     					<div class="panel-heading">
     						<div class="row">
-    							<!--<div class="col-xs-4">
-    								<a href="#" class="active" id="login-form-link">ฟรีแลนซ์</a>
-    							</div>
-    							<div class="col-xs-4">
-    								<a href="#" id="register-form-link">ผู้จ้าง</a>
-    							</div>
-								<div class="col-xs-4">
-    								<a href="#" id="registerCompany-form-link">บริษัท</a>
-    							</div>-->
 								<div class="row">
 									<div class="col-sm-12">
 										<h3>เข้าสู่ระบบ</h3>
@@ -144,13 +135,6 @@ input:hover{
     						</div>
     						<hr>
     					</div>
-						<!-- <div class="row">
-							<div class="col-sm-12 text-center">
-									<label style="margin-right: 1rem;"><input id="employer"type="radio" class="radio-inline" name="radios" ><span class="outside"><span class="inside"></span></span> ผู้จ้าง</label>
-									<label style="margin-right: 1rem;"><input id="company" type="radio"class="radio-inline" name="radios" ><span class="outside"><span class="inside"></span></span> ผู้จ้าง(บริษัท)</label>
-									<label style="margin-right: 1rem;"><input id="freelance" type="radio" class="radio-inline" name="radios"><span class="outside"><span class="inside"></span></span> ฟรีแลนซ์</label>
-							</div>
-						</div> -->
     					<div class="panel-body">
     						<div class="row">
     							<div class="col-lg-12">
@@ -185,40 +169,6 @@ input:hover{
     										</div>
     									</div>
     								</form>
-    								<!-- <form id="register-form"  role="form" style="display: none;">
-    									<div class="form-group">
-											<label >ชื่อผู้ใช้</label>
-    										<input type="text" name="usernameEmployer" id="usernameEmployer" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
-    									</div>
-    									<div class="form-group">
-											<label >Password</label>
-    										<input type="password" name="passwordEmployer" id="passwordEmployer" tabindex="2" class="form-control" placeholder="Password">
-    									</div>
-    									<div class="form-group">
-    										<div class="row">
-    											<div class="col-sm-6 col-sm-offset-3">
-    												<input type="button" name="Employer-submit" id="Employer-submit" tabindex="4" class="form-control btn btn-register" value="Login">
-    											</div>
-    										</div>
-    									</div>
-    								</form>
-									<form id="registerCompany-form"  role="form" style="display: none;">
-    									<div class="form-group">
-											<label >ชื่อผู้ใช้</label>
-    										<input type="text" name="usernameCompany" id="usernameCompany" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
-    									</div>
-    									<div class="form-group">
-											<label >Password</label>
-    										<input type="password" name="passwordCompany" id="passwordCompany" tabindex="2" class="form-control" placeholder="Password">
-    									</div>
-    									<div class="form-group">
-    										<div class="row">
-    											<div class="col-sm-6 col-sm-offset-3">
-    												<input type="button" name="register-submit" id="Company-submit" tabindex="4" class="form-control btn btn-com" value="Login">
-    											</div>
-    										</div>
-    									</div>
-    								</form> -->
     							</div>
     						</div>
     					</div>
@@ -231,12 +181,15 @@ input:hover{
 
 <script>
 	$(document).ready(function () {
+		var url = window.location.href;
+		console.log(url);
 		//loginFreelance
 		var user = {
 			UserName: '',
 			Password: '',
 		};
 		var userType = '';
+		console.log(localStorage['toURL']);
 		$("#username").change(function () {
 			user.UserName = $("#username").val();
 		});
@@ -262,8 +215,9 @@ input:hover{
 				success: function (data) {
 					console.log(data);
 			     	localStorage['Freelance_ID'] = data.result.freelance_ID;
-					//location.replace("http://localhost:5000/Home/ProfileFreelance/");
-					location.replace("http://localhost:5000/Home/ProfileFreelance/"+ localStorage['Freelance_ID']);
+					console.log(localStorage['toURL']);
+					location.replace(localStorage['toURL']);
+					//location.replace("http://localhost:5000/Home/ProfileFreelance/"+ localStorage['Freelance_ID']);
 				},
 				error: function (data) {
 					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
@@ -315,80 +269,6 @@ input:hover{
 			});
 			}
 			});
-		/*//loginEmployer
-		var Employer = {
-			UserName: '',
-			Password: '',
-		};
-		$("#usernameEmployer").change(function () {
-			Employer.UserName = $("#usernameEmployer").val();
-		});
-		$("#passwordEmployer").change(function () {
-			Employer.Password = $("#passwordEmployer").val();
-			console.log(Employer);
-		});
-		$("#Employer-submit").click(function () {
-			});
-		//loginCompany
-		var Company = {
-			UserName: '',
-			Password: '',
-		};
-		$("#usernameCompany").change(function () {
-			Company.UserName = $("#usernameCompany").val();
-		});
-		$("#passwordCompany").change(function () {
-			Company.Password = $("#passwordCompany").val();
-			console.log(Company);
-		});
-		$("#Company-submit").click(function () {
-			jQuery.ajax({
-				type: "post",
-				dataType: "json",
-				url: "/Home/LoginCompany",
-				data: {
-					UserName: Company.UserName,
-					Password: Company.Password,
-				},
-				success: function (data) {
-					console.log(data);
-					localStorage['Company_ID'] = data.result.company_ID;
-					location.replace("http://localhost:5000/Home/ProfileCompany/"+localStorage['Company_ID']);
-				},
-				error: function (data) {
-					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-					location.replace("http://localhost:5000/Home/Login");
-				},
-			});
-			});
-		//css
-			$('#login-form-link').click(function(e) {
-			$("#login-form").delay(100).fadeIn(100);
-			$("#register-form").fadeOut(100);
-			$("#registerCompany-form").fadeOut(100);
-			$('#register-form-link').removeClass('active');
-			$('#registerCompany-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		$('#register-form-link').click(function(e) {
-			$("#register-form").delay(100).fadeIn(100);
-			$("#login-form").fadeOut(100)
-			$("#registerCompany-form").fadeOut(100);;
-			$('#login-form-link').removeClass('active');
-			$('#registerCompany-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		$('#registerCompany-form-link').click(function(e) {
-			$("#registerCompany-form").delay(100).fadeIn(100);
-			$("#login-form").fadeOut(100);
-			$("#register-form").fadeOut(100);
-			$('#login-form-link').removeClass('active');
-			$('#register-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		// end tab*/
+		
 	});
 </script>

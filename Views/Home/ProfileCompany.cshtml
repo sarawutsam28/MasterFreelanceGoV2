@@ -55,7 +55,37 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Company" asp-action="ProfileDetailsCompany" asp-route-id=@ProfileCompany.Company_ID >@ProfileCompany.Company_Name</a>
+											<a asp-controller="Company" asp-action="ProfileDetailsCompany" asp-route-id=@ProfileCompany.Company_ID ><h3></h3>@ProfileCompany.Company_Name</a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<ul class="nav">
+												<li class="active">
+													<a>
+													<i class="fas fa-envelope"></i>
+													 @ProfileCompany.Email </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fas fa-phone-square"></i> @ProfileCompany.Company_Tel </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fab fa-facebook"></i>
+													 @ProfileCompany.Facebook </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fab fa-line"></i>
+													 @ProfileCompany.Line </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="glyphicon glyphicon-flag"></i>
+													ที่อยู่: @ProfileCompany.Company_Address </a>
+												</li>
+											</ul>
 										</div>
 									</div>
 									<div class="row">

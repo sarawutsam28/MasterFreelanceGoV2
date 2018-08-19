@@ -48,38 +48,42 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProfileFreelance.Freelance_ID ><h4>@ProfileFreelance.FullName</h4></a>
+											<a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProfileFreelance.Freelance_ID ><h3>@ProfileFreelance.FullName</h3></a>
 											<input type="hidden" name="" id="Freelance_ID" class="form-control" value=@ProfileFreelance.Freelance_ID>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											อีเมล: @ProfileFreelance.Email
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											เบอร์โทร: @ProfileFreelance.TelephoneNumber
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											Facebook: @ProfileFreelance.Facebook
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											Line: @ProfileFreelance.Line
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											ที่อยู่: @ProfileFreelance.Address
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											ความสามารถ: <span id="Freelance_Skill"></span>
+											<ul class="nav">
+												<li class="active">
+													<a>
+													<i class="fas fa-envelope"></i>
+													 @ProfileFreelance.Email </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fas fa-phone-square"></i> @ProfileFreelance.TelephoneNumber </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fab fa-facebook"></i>
+													 @ProfileFreelance.Facebook </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fab fa-line"></i>
+													 @ProfileFreelance.Line </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="glyphicon glyphicon-flag"></i>
+													ที่อยู่: @ProfileFreelance.Address </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													ความสามารถ: <span id="Freelance_Skill"></span></a>
+												</li>
+											</ul>
 										</div>
 									</div>
 									<hr style="margin-bottom: 0rem;">
@@ -242,7 +246,7 @@
 																								@if (Project.Freelance_ID != null && Project.ProjectStatus == true && Project.FreelanceSuccessStatus == true )
 																								{
 																									<tr class="odd" style="height:5rem;">
-																										<td class="col-xs-4"><a asp-controller="Freelnace" asp-action="HistoryProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
+																										<td class="col-xs-4"><a asp-controller="Home" asp-action="HistoryProjectDetails" asp-route-id=@Project.Project_ID>@Project.ProjectName</a></td>
 																										<td class="col-xs-2 text-center">@Project.ProjectPrice บาท</td>
 																										<td class="col-xs-3 text-center">เสร็จสิ้น</td>
 																										<td class="col-xs-4 text-center">@Project.ProjectTimelength วัน</td>

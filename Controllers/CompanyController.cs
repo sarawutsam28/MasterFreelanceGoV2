@@ -29,6 +29,8 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectPost()
         {
+            var Skill = _context.Skill.ToList();
+            ViewData["Skill"] = Skill;
             return View();
         }
         public IActionResult ProfileDetailsCompany(int id)
@@ -53,7 +55,36 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["ProjectDetails"] = ProjectDetails;
             return View();
         }
-        public async Task<IActionResult> SaveProject(Project Project)
+        /* public async Task<IActionResult> SaveProject(Project Project)
+         {
+             var _Project = new Project
+             {
+                 Company_ID = (int)HttpContext.Session.GetInt32("Company_ID"),
+                 ProjectName = Project.ProjectName,
+                 Description = Project.Description,
+                 Budget = Project.Budget,
+                 Timelength = Project.Timelength,
+                 StartingDate = Project.StartingDate,
+                 EndDate = Project.EndDate,
+                 ProjectStatus = true,
+                 ProjectTimeOut = DateTime.Now.AddDays(15),
+                 Date_Create = DateTime.Now,
+                 Date_Update = DateTime.Now,
+                 DelStatus = false,
+             };
+             _context.Project.Add(_Project);
+             await _context.SaveChangesAsync();
+             int id = _Project.Project_ID;
+             HttpContext.Session.SetInt32("Project_ID", id);
+             return Json(new { Result = id });
+         }*/
+        public IActionResult UpdateSkill()
+        {
+            var Skill = _context.Skill.ToList();
+            ViewData["Skill"] = Skill;
+            return View();
+        }
+        public async Task<IActionResult> SaveProjectCompany(Project Project, int[] skillList)
         {
             var _Project = new Project
             {
@@ -73,14 +104,20 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Project.Add(_Project);
             await _context.SaveChangesAsync();
             int id = _Project.Project_ID;
-            HttpContext.Session.SetInt32("Project_ID", id);
+            foreach (var skillLists in skillList)
+            {
+                var _ProjectSkill = new ProjectSkill
+                {
+                    Skill_ID = skillLists,
+                    Project_ID = id,
+                    Date_Create = DateTime.Now,
+                    Date_Update = DateTime.Now,
+                    DelStatus = false,
+                };
+                _context.ProjectSkill.Add(_ProjectSkill);
+                _context.SaveChanges();
+            }
             return Json(new { Result = id });
-        }
-        public IActionResult UpdateSkill()
-        {
-            var Skill = _context.Skill.ToList();
-            ViewData["Skill"] = Skill;
-            return View();
         }
         public async Task<IActionResult> UpdateCompany(Company Company)
         {

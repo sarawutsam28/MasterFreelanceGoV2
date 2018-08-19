@@ -2,7 +2,9 @@
      Layout = "_NewLayuot"; 
      ViewData["Title"] = "ProjectPost"; 
 }
-
+@{ 
+    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+}
 
 
 
@@ -66,6 +68,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group " id="Skillformgroup">
+										<label>เลือกทักษะที่ต้องใช้ในการทำงาน</label>
+										<div class="input"  tabindex="2">
+											<select id="skills"  class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+												@foreach (Skill Skill in Skills) 
+												{
+													<option value=@Skill.Skill_ID>@Skill.Name</option>
+												}
+											</select>
+										</div>
+								</div>
                                 <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">งบประมาณ</label>
                                     <div class="cols-sm-10">
@@ -129,6 +142,12 @@
 
 <script>
     $(document).ready(function () {
+        var Skill = [];
+		$("#skills").select2();
+			$("#skills").change(function() {
+			Skill = $("#skills").val();
+			console.log(Skill);
+		});
         var Project = {
             ProjectName: "",
             Description: "",
@@ -162,20 +181,24 @@
 				dataType: "json",
 				url: "/Home/SaveProject",
 				data: {
-					ProjectName: Project.ProjectName,
-					Description: Project.Description,
-                    Budget:Project.Budget,
-                    Timelength:Project.Timelength,
-                    StartingDate:Project.StartingDate,
-                    EndDate:Project.EndDate,
+                    Project: 
+                        {
+                        ProjectName: Project.ProjectName,
+                        Description: Project.Description,
+                        Budget:Project.Budget,
+                        Timelength:Project.Timelength,
+                        StartingDate:Project.StartingDate,
+                        EndDate:Project.EndDate,
+                        },
+                    skillList: Skill,
 				},
 				success: function (data) {
 					console.log(data);
-					location.replace("http://localhost:5000/Home/UpdateSkill");
+					//location.replace("http://localhost:5000/Home/UpdateSkill");
 				},
 				error: function (data) {
 					alert("เกิดข้อผิดพลาด");
-					location.replace("http://localhost:5000/Home/ProjectPost");
+					//location.replace("http://localhost:5000/Home/ProjectPost");
 				},
 			});
 			});

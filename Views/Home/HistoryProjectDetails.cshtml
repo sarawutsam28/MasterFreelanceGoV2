@@ -12,8 +12,9 @@
 
 <style>
 .profile{
-    margin-top: 3rem;
     padding: 3rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
     border: 1px solid red;
 	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
@@ -28,6 +29,13 @@
 dd{
     margin: 1rem;
 }
+.boxrating {
+    background-color: red;
+    color: white;
+    border-radius: 2px;
+    margin-right: 6px;
+    padding: 1px 3px 0;
+}
 </style>
 
 
@@ -35,47 +43,92 @@ dd{
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>@Project.ProjectName</h1>
+                    </div>
+                </div>
                 <div class="profile">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ชื่อ: @Project.ProjectName</h3>
+                            <h3>รายละเอียด</h3>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>รายละเอียด: @Project.Description</h3>
+                            <p>@Project.Description</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ราคา: @Project.ProjectPrice</h3>
+                            <p>ราคาเริ่มต้น: @Project.Budget บาท</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ระยะเวลาในการทำงาน: @Project.ProjectTimelength</h3>
+                            <p>ราคาเสนอ: @Project.ProjectPrice บาท</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ประกาศโดย: @Project.Employer.FullName
-                                 (@for (int i=0;i< Project.Employer.Rating; i++)
-                                {
-                                    <span style="color: red;">★</span>
-                                })
-                            </h3>
+                            <p>ระยะเวลาในการทำงาน: @Project.ProjectTimelength วัน</p> 
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>ผู้รับทำงาน: @Project.Freelance.FullName
-                                (@for (int i=0;i< Project.Freelance.Rating; i++)
-                                {
-                                    <span style="color: red;">★</span>
-                                })
-                            </h3>
+                            <p>ระยะเวลาเสนอทำงาน: @Project.Timelength วัน</p> 
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>วันเริ่มประมูล:  @Html.DisplayFor(modelItem => Project.StartingDate) วัน</p> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>วันสิ้นสุดการประมูล: @Html.DisplayFor(modelItem => Project.EndDate) วัน</p> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ข้อมูลผู้จ้าง</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="col-sm-12">
+                                <h4>
+                                    <a>@Project.Employer.FullName</a>
+                                </h4>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="boxrating">@Project.Employer.Rating.0</span> @for (int i=0;i
+                                < Project.Employer.Rating; i++) { <span style="color: red; font-size: 20px;">★</span>
+                                    }
+                            </div>
+                     </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>ข้อมูลฟรีแลนซ์</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="col-sm-12">
+                                <h4>
+                                    <a>@Project.Freelance.FullName</a>
+                                </h4>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="boxrating">@Project.Freelance.Rating.0</span> @for (int i=0;i
+                                < Project.Freelance.Rating; i++) { <span style="color: red; font-size: 20px;">★</span>
+                                    }
+                            </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-sm-12">
+                             <span class="pull-right">
+                              <span style=" color: red; font-weight: bold;">ProjectID: </span>@Project.Project_ID </span>
+                         </div>
+                     </div>
                 </div>
             </div>
         </div>

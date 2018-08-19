@@ -17,6 +17,7 @@ namespace FreelanceGo_MasterV2.Models
         public DbSet<Employer> Employer { get; set; }
         public DbSet<Freelance> Freelance { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<Admin> Admin { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<ProjectSkill> ProjectSkill { get; set; }
         public DbSet<FreelanceSkill> FreelanceSkill { get; set; }

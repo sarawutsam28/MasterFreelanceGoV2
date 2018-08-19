@@ -56,32 +56,37 @@
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Home" asp-action="ProfileDetailsEmployer" asp-route-id=@ProfileEmployer.Employer_ID ><h4>@ProfileEmployer.FullName</h4></a>
+											<a asp-controller="Home" asp-action="ProfileDetailsEmployer" asp-route-id=@ProfileEmployer.Employer_ID ><h3>@ProfileEmployer.FullName</h3></a>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											อีเมล: @ProfileEmployer.Email
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											เบอร์โทร: @ProfileEmployer.TelephoneNumber
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											Facebook: @ProfileEmployer.Facebook
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											Line: @ProfileEmployer.Line
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											ที่อยู่: @ProfileEmployer.Address
+											<ul class="nav">
+												<li class="active">
+													<a>
+													<i class="fas fa-envelope"></i>
+													 @ProfileEmployer.Email </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fas fa-phone-square"></i> @ProfileEmployer.TelephoneNumber </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fab fa-facebook"></i>
+													 @ProfileEmployer.Facebook </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="fab fa-line"></i>
+													 @ProfileEmployer.Line </a>
+												</li>
+												<li>
+													<a style="padding-top: 2px;">
+													<i class="glyphicon glyphicon-flag"></i>
+													ที่อยู่: @ProfileEmployer.Address </a>
+												</li>
+											</ul>
 										</div>
 									</div>
 									<hr style="margin-bottom: 0rem;">

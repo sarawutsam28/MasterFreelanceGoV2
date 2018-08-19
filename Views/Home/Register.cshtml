@@ -1,5 +1,7 @@
- @{ ViewData["Title"] = "Register"; }
-
+@{ ViewData["Title"] = "Register"; }
+@{ 
+    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+}
 
 <style>
 	.containerRegis {
@@ -137,20 +139,6 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
-					<!-- <div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-4">
-								<a href="#" class="active" id="login-form-link">ฟรีแลนซ์</a>
-							</div>
-							<div class="col-xs-4">
-								<a href="#" id="register-form-link">ผู้จ้าง</a>
-							</div>
-							<div class="col-xs-4">
-								<a href="#" id="registerCompany-form-link">บริษัท</a>
-							</div>
-						</div>
-						<hr>
-					</div> -->
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
@@ -175,6 +163,17 @@
 												<option>ผู้จ้าง(บริษัท)</option>
 											</select>
     								</div>
+									<div class="form-group " id="Skillformgroup">
+										<label>เลือกทักษะที่ต้องใช้ในการทำงาน</label>
+										<div class="input"  tabindex="2">
+											<select id="skills"  class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+												@foreach (Skill Skill in Skills) 
+												{
+													<option value=@Skill.Skill_ID>@Skill.Name</option>
+												}
+											</select>
+										</div>
+									</div>
 									<div class="form-group">
 										<label>ชื่อ-นามสกุล / ชื่อบริษัท</label>
 										<input type="text" name="FullName" id="FullName" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้" value="">
@@ -209,102 +208,6 @@
 							</div>
 						</div>
 						</form>
-						<!-- <form id="register-form" role="form" style="display: none;">
-							<div class="form-group">
-								<label>ชื่อผู้ใช้</label>
-								<input type="text" name="usernameEmployer" id="usernameEmployer" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้"
-								 value="">
-							</div>
-							<div class="form-group">
-								<label>Password</label>
-								<input type="password" name="passwordEmployer" id="passwordEmployer" tabindex="2" class="form-control" placeholder="Password">
-							</div>
-							<div class="form-group">
-								<label>ชื่อ-นามสกุล</label>
-								<input type="text" name="FullNameEmployer" id="FullNameEmployer" tabindex="2" class="form-control" placeholder="ชื่อ-นามสกุล">
-							</div>
-							<div class="form-group">
-								<label>เลขบัตรประชาชน</label>
-								<input type="text" name="ID_CardEmployer" id="ID_CardEmployer" tabindex="2" class="form-control" placeholder="เลขบัตรประชาชน">
-							</div>
-							<div class="form-group">
-								<label>อีเมล</label>
-								<input type="text" name="EmailEmployer" id="EmailEmployer" tabindex="2" class="form-control" placeholder="FreelanceG0@gmail.com">
-							</div>
-							<div class="form-group">
-								<label>เบอร์โทร</label>
-								<input type="text" name="TelephoneNumberEmployer" id="TelephoneNumberEmployer" tabindex="2" class="form-control" placeholder="เบอร์โทร">
-							</div>
-							<div class="form-group">
-								<label>Facebook</label>
-								<input type="text" name="" id="FacebookEmployer" tabindex="2" class="form-control" placeholder="Facebook">
-							</div>
-							<div class="form-group">
-								<label>Line</label>
-								<input type="text" name="LineEmployer" id="LineEmployer" tabindex="2" class="form-control" placeholder="Line">
-							</div>
-							<div class="form-group">
-								<label>ที่อยู่</label>
-								<input type="text" name="AddressEmployer" id="AddressEmployer" tabindex="2" class="form-control" placeholder="ที่อยู่">
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-6 col-sm-offset-3">
-										<input type="button" name="Employer-submit" id="Employer-submit" tabindex="4" class="form-control btn btn-register" value="สมัคร">
-									</div>
-								</div>
-							</div>
-						</form>
-						<form id="registerCompany-form" role="form" style="display: none;">
-							<div class="form-group">
-								<label>ชื่อผู้ใช้</label>
-								<input type="text" name="usernameCompany" id="usernameCompany" tabindex="1" class="form-control" placeholder="ชื่อผู้ใช้"
-								 value="">
-							</div>
-							<div class="form-group">
-								<label>Password</label>
-								<input type="password" name="passwordCompany" id="passwordCompany" tabindex="2" class="form-control" placeholder="Password">
-							</div>
-							<div class="form-group">
-								<label>ชื่อบริษัท</label>
-								<input type="text" name="FullNameCompany" id="FullNameCompany" tabindex="2" class="form-control" placeholder="ชื่อบริษัท">
-							</div>
-							<div class="form-group">
-								<label>เบอร์ FAX</label>
-								<input type="text" name="Company_TaxID" id="Company_TaxID" tabindex="2" class="form-control" placeholder="เบอร์ FAX">
-							</div>
-							<div class="form-group">
-								<label>เลขผู้เสียภาษีบริษัท</label>
-								<input type="text" name="Fax" id="Fax" tabindex="2" class="form-control" placeholder="เลขผู้เสียภาษีบริษัท">
-							</div>
-							<div class="form-group">
-								<label>อีเมล</label>
-								<input type="text" name="EmailCompany" id="EmailCompany" tabindex="2" class="form-control" placeholder="FreelanceG0@gmail.com">
-							</div>
-							<div class="form-group">
-								<label>เบอร์โทร</label>
-								<input type="text" name="TelephoneNumberCompany" id="TelephoneNumberCompany" tabindex="2" class="form-control" placeholder="เบอร์โทร">
-							</div>
-							<div class="form-group">
-								<label>Facebook</label>
-								<input type="text" name="FacebookCompany" id="FacebookCompany" tabindex="2" class="form-control" placeholder="Facebook">
-							</div>
-							<div class="form-group">
-								<label>Line</label>
-								<input type="text" name="LineCompany" id="LineCompany" tabindex="2" class="form-control" placeholder="Line">
-							</div>
-							<div class="form-group">
-								<label>ที่อยู่</label>
-								<input type="text" name="AddressCompany" id="AddressCompany" tabindex="2" class="form-control" placeholder="ที่อยู่">
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-6 col-sm-offset-3">
-										<input type="button" name="Company-submit" id="Company-submit" tabindex="4" class="form-control btn btn-com" value="สมัคร">
-									</div>
-								</div>
-							</div>
-						</form> -->
 					</div>
 				</div>
 			</div>
@@ -317,6 +220,14 @@
 
 <script>
 	$(document).ready(function () {
+		//updateskill
+		var Skill = [];
+		$("#skills").select2();
+			$("#skills").change(function() {
+			Skill = $("#skills").val();
+			console.log(Skill);
+		});
+		$("#Skillformgroup").hide();
 		//refisterFreelance
 		var UserRegister = {
 			UserName: '',
@@ -329,6 +240,7 @@
 			Address: '',
 		};
 		var userType = '';
+		//var id = 0;
 		$("#username").change(function () {
 			UserRegister.UserName = $("#username").val();
 			console.log(UserRegister);
@@ -340,6 +252,14 @@
 		$("#userType").change(function () {
 			userType = $("#userType").val();
 			console.log(userType);
+			if(userType == "ฟรีแลนซ์")
+			{
+				$("#Skillformgroup").show();
+			}
+			else{
+				$("#Skillformgroup").hide();
+			}
+
 		});
 		$("#FullName").change(function () {
 			UserRegister.FullName = $("#FullName").val();
@@ -374,24 +294,50 @@
 					dataType: "json",
 					url: "/Home/FreelanceRegister",
 					data: {
-						UserName: UserRegister.UserName,
-						Password: UserRegister.Password,
-						Email: UserRegister.Email,
-						FullName: UserRegister.FullName,
-						TelephoneNumber: UserRegister.TelephoneNumber,
-						Facebook: UserRegister.Facebook,
-						Line: UserRegister.Line,
-						Address: UserRegister.Address,
+						Freelance: {
+							UserName: UserRegister.UserName,
+							Password: UserRegister.Password,
+							Email: UserRegister.Email,
+							FullName: UserRegister.FullName,
+							TelephoneNumber: UserRegister.TelephoneNumber,
+							Facebook: UserRegister.Facebook,
+							Line: UserRegister.Line,
+							Address: UserRegister.Address,
+						},
+						skillList: Skill,
 					},
 					success: function (data) {
 						console.log(data);
-						location.replace("http://localhost:5000/Home/UpdateSkill/");
+						console.log(data.result.freelance_ID);
+						localStorage['DataFreelance_ID'] = data.result.freelance_ID;
+						//location.replace("http://localhost:5000/Home/UpdateSkill/");
 					},
 					error: function (data) {
 						alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-						location.replace("http://localhost:5000/Home/Register");
+						//location.replace("http://localhost:5000/Home/Register");
 					},
 				});
+				/*jQuery.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/Home/UpdateFreelanceSkill",
+                    data:  {
+                      skillList: Skill,
+					  id: localStorage['DataFreelance_ID'],
+                    },
+                    success: function (data) {
+                      alert("ประกาศสำเร็จ");
+					  console.log(data);
+                      console.log(localStorage['DataFreelance_ID']);
+					  
+                    //location.replace("http://localhost:5000/Home/Login");
+                    },
+                    error: function (data) {
+					  console.log(data);
+					  console.log(localStorage['DataFreelance_ID']);
+                      alert("กรอกข้อมูลไม่ถูกต้อง");
+                    },
+          		}); //end ajax*/
 			}
 			if(userType == 'ผู้จ้าง')
 			{

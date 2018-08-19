@@ -29,11 +29,12 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectDetails(int id)
         {
+            var Employer_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            if (Employer_ID != null)
+            {
+                return RedirectToAction("ProjectDetails", "Freelnace", new { id = id });
+            }
             var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
-            /*var aaa = _context.Auction.Where(x => x.Project_ID == id)
-            .Include(p => p.Freelance)
-                .ThenInclude(x => x.FullName)
-            .ToList();*/
             _context.Entry(ProjectDetails)
            .Collection(b => b.Auction)
            .Load();
