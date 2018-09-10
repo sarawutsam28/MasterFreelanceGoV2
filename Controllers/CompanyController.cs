@@ -29,8 +29,15 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectPost()
         {
-            var Skill = _context.Skill.ToList();
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            if (Employer_ID == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
             ViewData["Skill"] = Skill;
+            ViewData["TypeProject"] = TypeProject;
             return View();
         }
         public IActionResult ProfileDetailsCompany(int id)
@@ -51,6 +58,9 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
             .Reference(b => b.Company)
             .Load();
+            _context.Entry(ProjectDetails)
+           .Reference(b => b.TypeProject)
+           .Load();
             HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
             ViewData["ProjectDetails"] = ProjectDetails;
             return View();
@@ -84,23 +94,34 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["Skill"] = Skill;
             return View();
         }
-        public async Task<IActionResult> SaveProjectCompany(Project Project, int[] skillList)
+        public async Task<IActionResult> SaveProjectCompany(Project Project, int[] skillList, Boolean check1, Boolean check2)
         {
             var _Project = new Project
             {
                 Company_ID = (int)HttpContext.Session.GetInt32("Company_ID"),
                 ProjectName = Project.ProjectName,
                 Description = Project.Description,
+                TypeProject_ID = Project.TypeProject_ID,
                 Budget = Project.Budget,
                 Timelength = Project.Timelength,
                 StartingDate = Project.StartingDate,
                 EndDate = Project.EndDate,
                 ProjectStatus = true,
+                ProjectAuctionStatus = false,
                 ProjectTimeOut = DateTime.Now.AddDays(15),
                 Date_Create = DateTime.Now,
                 Date_Update = DateTime.Now,
                 DelStatus = false,
             };
+            if (check1)
+            {
+                _Project.StartingDate = DateTime.Now;
+                _Project.ProjectAuctionStatus = true;
+            }
+            if (check2)
+            {
+                _Project.EndDate = DateTime.Now.AddDays(15);
+            }
             _context.Project.Add(_Project);
             await _context.SaveChangesAsync();
             int id = _Project.Project_ID;
@@ -117,7 +138,7 @@ namespace FreelanceGo_MasterV2.Controllers
                 _context.ProjectSkill.Add(_ProjectSkill);
                 _context.SaveChanges();
             }
-            return Json(new { Result = id });
+            return Json(new { _Project });
         }
         public async Task<IActionResult> UpdateCompany(Company Company)
         {
@@ -158,7 +179,9 @@ namespace FreelanceGo_MasterV2.Controllers
                     DelStatus = d.Skill.DelStatus,
                 })
                 .ToList();
-            var Skill = _context.Skill.ToList();
+            var AuctionCount = _context.Auction.Where(a => a.Project_ID == id).Count();
+            ViewData["AuctionCount"] = AuctionCount;
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
             ViewData["UpdateProject"] = UpdateProject;
             ViewData["Skill"] = Skill;
             ViewData["SkillProject"] = SkillProject;

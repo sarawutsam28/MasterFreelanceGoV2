@@ -2,8 +2,8 @@
 @{ Layout = "_FreelnaceLayout"; 
 ViewData["Title"] = "Search"; } 
 @{ 
-    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
-   // IEnumerable<Project> _Project = ViewData["_Project"] as IEnumerable <Project>; 
+   IEnumerable<Project> ProjectList = ViewData["ProjectList"] as IEnumerable<Project>; 
+   IEnumerable<TypeProject> TypeProjects = ViewData["TypeProject"] as IEnumerable<TypeProject>; 
 }
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
@@ -12,9 +12,8 @@ ViewData["Title"] = "Search"; }
 <style>
     .Search {
         border: 1px solid red;
-         border-color: #ccc;
+        border-color: #ccc;
         -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-        margin-top: 3rem;
         padding: 5rem;
         padding-top: 1rem;
     }
@@ -22,7 +21,7 @@ ViewData["Title"] = "Search"; }
         border: 1px solid red;
          border-color: #ccc;
         -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-        margin-top: 3rem;
+        margin-top: 1rem;
         padding: 5rem;
     }
     th{
@@ -41,41 +40,94 @@ ViewData["Title"] = "Search"; }
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="Search">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3> ค้นหา</h3>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search">
-                        </div>
+                <div class="row text-center">
+                    <div class="col-sm-12">
+                        <h1>ค้นหาประกาศงาน</h1>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="input-group" style="margin-top: 3rem;">
-                                    <select type="text" id="SelectSearch" class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
-                                        @foreach (Skill Skill in Skills) 
-                                    {
-                                        <option value=@Skill.Skill_ID>@Skill.Name</option>
-                                    }
-                                    </select>
-                                <span class="input-group-btn">
-                                        <button type="button" id="buttonSearch" class="btn btn-default">Go!</button>
-                                </span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="formSearch">
+                            <div class="row" >
+                                <div class="col-sm-12">
+                                    <div class="formSearch-header">
+                                        <form style="padding: 2rem;padding-left: 7rem;">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                            <input type="text" id="searchString" class="form-control " placeholder="ค้นหาประกาศ">
+                                            </div>
+                                            <div class="col-sm-4">
+                                            <select class="form-control" id="seTypeProject">
+                                                <option value=null>เลือกประเภทงาน</option>
+                                                @foreach (TypeProject TypeProjectList in TypeProjects) 
+                                                {
+                                                    <option value=@TypeProjectList.TypeProject_ID>@TypeProjectList.Name</option>
+                                                }
+                                            </select>
+                                            </div>
+                                            <div class="col-sm-2 pull-left">
+                                                <button class="btn btn-default " type="button" id="buttonSearch">
+                                                    <i class="fas fa-search"></i> ค้นหา
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-sm-12">
+                                    <div class="formSearch-header" style="border-bottom: 1px solid #BEC0C2;">
+                                        <table style="width:100%;" id="tableSearch" class="tableSearch">
+                                            <thead>
+                                                <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
+                                                    <th class="col-xs-5">ชื่อ/รายละอียด</th>
+                                                    <th class="col-xs-2 text-center">ระยะเวลา</th>
+                                                    <th class="col-xs-3 text-center">ประมูลถึง</th>
+                                                    <th class="col-xs-2 text-center">ราคา</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="points_table_scrollbar">
+                                                @foreach (@Project @ProjectLists in @ProjectList) {
+                                                <tr class="projectComtroller">
+                                                    <td class="col-xs-5">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 projectName">
+                                                                <a href=/Freelnace/ProjectDetails/@ProjectLists.Project_ID>
+                                                                    <h4><i class="fas fa-archive"></i> @ProjectLists.ProjectName</h4>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12"> @ProjectLists.Description</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-xs-2">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 text-center Timelength">@ProjectLists.Timelength วัน</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-xs-2">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 text-center EndDate">@Html.DisplayFor(modelItem => @ProjectLists.EndDate)</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-xs-2">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 text-center Budget"><i class="fal fa-calendar-alt"></i>@ProjectLists.Budget บาท</div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                     <table style="width:100%;" id="tableSearch" class="tableSearch">
-							<thead>
-                                <tr style="height: 5rem; background-color: #4e4d4d; color:  white;">
-                                <th class="col-xs-5">ชื่อ/รายละอียด</th>
-                                <th class="col-xs-2">ระยะเวลา</th>
-                                <th class="col-xs-3">ประมูลถึง</th>
-                                <th class="col-xs-2 ">ราคา</th>
-                                </tr>
-							</thead>
-							<tbody class="points_table_scrollbar">
-							</tbody>
-							</table>
             </div>
         </div>
     </div>
@@ -83,39 +135,66 @@ ViewData["Title"] = "Search"; }
 
 
 <script>
-$(document).ready(function () {
-    $("#SelectSearch").select2({
-        placeholder: "ค้นหาด้วย ทักษะ"
-    });
-    $("#buttonSearch").click(function () {
-			jQuery.ajax({
-				type: "get",
-				dataType: "json",
-				url: "/Freelnace/SearchString",
-				success: function (data) {
-					console.log(data);
-                    jQuery.each( data, function( i, data ) {
+    $(document).ready(function () {
+        $("#dataNull").css("display", "none");
+        var searchString = "";
+        var typeProject =  0;
+        $("#searchString").change(function () {
+            searchString = $("#searchString").val();
+            console.log(searchString);
+            if(searchString == "")
+            {
+                $("#buttonSearch").prop('disabled', true);
+            }else
+            {
+                 $("#buttonSearch").prop('disabled', false);
+            }
+        });
+        $("#seTypeProject").change(function () {
+            typeProject = $("#seTypeProject").val();
+            console.log(typeProject);
+        });
+        $("#buttonSearch").click(function () {
+            jQuery.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/Freelnace/SearchString",
+                data: {
+                    searchString: searchString,
+                    typeProject: typeProject
+                },
+                success: function (data) {
+                    console.log(data);
+                    $(".projectAPI").css("display", "none");
+                    $(".trrowNone").css("display", "none");
+                    jQuery.each(data, function (i, data) {
                         $("#tableSearch").find('tbody')
-                    var date = new Date(data.endDate);
-                    var day = date.getDate();
-                    var month = date.getMonth();
-                    var year = date.getFullYear();
-                    var row1 = $('<tr> <td class="col-xs-5"><div class="row"><div class="col-sm-12 projectName">'+ '<a href=/Freelnace/ProjectDetails/'+data.project_ID+'>'+data.projectName+ '</a>' +'</div></div>'+
-                                '<div class="row"><div class="col-sm-12">'+ data.description +'</div></div>'+
-                                '</td><td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center Timelength">'+data.timelength+' วัน'+'</div></div></td>'+
-                                '<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center EndDate">'+ day+ '-' + month + '-' + year +'</div></div></td>'+
-                                '<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center Budget">'+data.budget+' บาท'+'</div></div>'+
-                                '<div class="row"><div class="col-sm-12 text-center"><a class="btn btn-xs btn-success" href=/Freelnace/ProjectDetails/'+data.project_ID+' text-center"><i class="fas fa-check"></i> ประมูล</a></div></div></td></tr>');
-                    var row2 = $('<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center Timelength"></div></div></td>');
-                    var row3 = $('<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center EndDate"></div></div></td>');
-                    var row4 = $('<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center Budget"></div></div><div class="row"><div class="col-sm-12 text-center">'+'<a  href=/Freelnace/ProjectDetails/'+data.project_ID+ ' class="btn btn-xs btn-success text-center"><i class="fas fa-check"></i></a></div></div></td></tr>');
-                    $("#tableSearch").append(row1);
+                        var date = new Date(data.endDate);
+                        var day = date.getDate();
+                        var month = date.getMonth();
+                        var year = date.getFullYear();
+                        var row1 = $('<tr class="projectAPI"> <td class="col-xs-5"><div class="row"><div class="col-sm-12 projectName">' + '<a href=/Freelnace/ProjectDetails/' + data.project_ID + '>' + '<h4>' + '<i class="fas fa-archive"></i> '+ data.projectName + '</h4>' + '</a>' + '</div></div>' +
+                            '<div class="row"><div class="col-sm-12">' + data.description + '</div></div>' +
+                            '</td><td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center Timelength">' + data.timelength + ' วัน' + '</div></div></td>' +
+                            '<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center EndDate">' + day + '/' + month + '/' + year + '</div></div></td>' +
+                            '<td class="col-xs-2"><div class="row"><div class="col-sm-12 text-center Budget">' + data.budget + ' บาท' + '</div></div>');
+                        $("#tableSearch").append(row1);
+                        $(".projectComtroller").css("display", "none");
                     });
-				},
-				error: function (data) {
-					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-				},
-		    });
-	});
-});
+                    if (data.length == 0) {
+                        $(".projectComtroller").css("display", "none");
+                        $(".trrowNone").css("display", "none");
+                        var rowNone = $('<tr class="trrowNone" id="rowNone"><td></td><td class="text-center"><p>-- ไม่พบประกาศ --</p></td></tr>');
+                        $("#tableSearch").append(rowNone);
+                    }
+                    else {
+                        $("#rowNone").css("display", "none");
+                    }
+                },
+                error: function (data) {
+                    alert("เกิดข้อผิดพลาด");
+                },
+            });
+        });
+    });
 </script>

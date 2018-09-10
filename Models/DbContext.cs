@@ -25,5 +25,6 @@ namespace FreelanceGo_MasterV2.Models
         public DbSet<Auction> Auction { get; set; }
         public DbSet<FreelanceRating> FreelanceRating { get; set; }
         public DbSet<EmployerRating> EmployerRating { get; set; }
+        public DbSet<TypeProject> TypeProject { get; set; }
     }
 }

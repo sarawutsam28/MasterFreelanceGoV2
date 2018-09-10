@@ -34,6 +34,8 @@ namespace FreelanceGo_MasterV2.Models
 
         public string ImgName { get; set; }
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date_Create { get; set; }
         [Required]
         public DateTime Date_Update { get; set; }

@@ -4,6 +4,7 @@
 }
 @{ 
     IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
+    IEnumerable<TypeProject> TypeProjects = ViewData["TypeProject"] as IEnumerable<TypeProject>; 
 }
 
 
@@ -68,6 +69,23 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">ประเภทงาน</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-tasks"></i>
+                                            </span>
+                                            <select class="form-control" id="seTypeProject">
+                                                <option value=null>เลือกประเภทงาน</option>
+                                            @foreach (TypeProject TypeProjectList in TypeProjects) 
+												{
+													<option value=@TypeProjectList.TypeProject_ID>@TypeProjectList.Name</option>
+												}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group " id="Skillformgroup">
 										<label>เลือกทักษะที่ต้องใช้ในการทำงาน</label>
 										<div class="input"  tabindex="2">
@@ -101,6 +119,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="Check1">
+                                    <label class="form-check-label" >เริ่มตอนนี้</label>
+                                </div>
                                 <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">วันเริ่มประมูล</label>
                                     <div class="cols-sm-10">
@@ -112,6 +134,10 @@
                                             />
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="Check2">
+                                    <label class="form-check-label" for="exampleCheck1">จนกว่าจะหมดระยะเวลา</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">วันสิ้นสุดการประมูล</label>
@@ -142,6 +168,8 @@
 
 <script>
     $(document).ready(function () {
+        var check1 = false;
+        var check2 = false;
         var Skill = [];
 		$("#skills").select2();
 			$("#skills").change(function() {
@@ -155,6 +183,7 @@
             Timelength: 0,
             StartingDate: null,
             EndDate: null,
+            seTypeProject: 0
         };
         $("#ProjectName").change(function() {
             Project.ProjectName = $("#ProjectName").val();
@@ -170,37 +199,64 @@
         });
         $("#StartingDate").change(function() {
             Project.StartingDate = $("#StartingDate").val();
+            console.log(Project.StartingDate);
         });
         $("#EndDate").change(function() {
             Project.EndDate = $("#EndDate").val();
             console.log(Project);
         });
+        $("#seTypeProject").change(function() {
+            Project.seTypeProject = $("#seTypeProject").val();
+            //Project.seTypeProject = $('#seTypeProject option:selected').val()
+            console.log(Project.seTypeProject);
+        });
         $("#Project-submit").click(function () {
-			jQuery.ajax({
-				type: "post",
-				dataType: "json",
-				url: "/Home/SaveProject",
-				data: {
-                    Project: 
-                        {
-                        ProjectName: Project.ProjectName,
-                        Description: Project.Description,
-                        Budget:Project.Budget,
-                        Timelength:Project.Timelength,
-                        StartingDate:Project.StartingDate,
-                        EndDate:Project.EndDate,
-                        },
-                    skillList: Skill,
-				},
-				success: function (data) {
-					console.log(data);
-					//location.replace("http://localhost:5000/Home/UpdateSkill");
-				},
-				error: function (data) {
-					alert("เกิดข้อผิดพลาด");
-					//location.replace("http://localhost:5000/Home/ProjectPost");
-				},
+			 jQuery.ajax({
+			 	type: "post",
+			 	dataType: "json",
+			 	url: "/Home/SaveProject",
+			 	data: {
+                     Project: 
+                         {
+                         ProjectName: Project.ProjectName,
+                         Description: Project.Description,
+                         Budget:Project.Budget,
+                         Timelength:Project.Timelength,
+                         StartingDate:Project.StartingDate,
+                         EndDate:Project.EndDate,
+                         TypeProject_ID: Project.seTypeProject,
+                         },
+                     skillList: Skill,
+                     check1: check1,
+                     check2: check2,
+			 	},
+			 	success: function (data) {
+			 		console.log(data);
+			 		location.replace("http://localhost:5000/Home/ProfileEmployer/"+localStorage['Employer_ID']);
+			 	},
+			 	error: function (data) {
+			 		alert("เกิดข้อผิดพลาด");
+			 		location.replace("http://localhost:5000/Home/ProjectPost");
+			 	},
+			 });
 			});
-			});
+        $('#Check1').change(function() {
+            if (this.checked) {
+                $("#StartingDate").prop('disabled', true);
+                check1 = true;
+            } else {
+                $("#StartingDate").prop('disabled', false);
+                check1 = false;
+            }
+        });
+         $('#Check2').change(function() {
+            if (this.checked) {
+                $("#EndDate").prop('disabled', true);
+                check2 = true;
+            } else {
+                $("#EndDate").prop('disabled', false);
+                check2 = false;
+            }
+        });
     });
 </script>

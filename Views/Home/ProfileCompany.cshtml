@@ -31,6 +31,58 @@
 		color: #fff;
 		background-color: #ff0909;
 	}
+	.rating {
+      float:left;
+    }
+
+    /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+      follow these rules. Every browser that supports :checked also supports :not(), so
+      it doesn’t make the test unnecessarily selective */
+    .rating:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+        clip:rect(0,0,0,0);
+    }
+
+    .rating:not(:checked) > label {
+        float:right;
+        width:1em;
+        /* padding:0 .1em; */
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:300%;
+        /* line-height:1.2; */
+        color:#ddd;
+    }
+
+    .rating:not(:checked) > label:before {
+        content: '★ ';
+    }
+
+    .rating > input:checked ~ label {
+        color: red;
+        
+    }
+
+    .rating:not(:checked) > label:hover,
+    .rating:not(:checked) > label:hover ~ label {
+        color: red;
+        
+    }
+    .rating > input:checked + label:hover,
+    .rating > input:checked + label:hover ~ label,
+    .rating > input:checked ~ label:hover,
+    .rating > input:checked ~ label:hover ~ label,
+    .rating > label:hover ~ input:checked ~ label {
+        color: red;
+    }
+
+    .rating > label:active {
+        position:relative;
+        top:2px;
+        left:2px;
+    }
 </style>
 
 <div>
@@ -49,13 +101,13 @@
 								<div class="col-sm-12">
 									<div class="row">
 										<div class="col-sm-12"style="padding-right: 0px;padding-left: 0px;">
-											<img  src="~/images/@ProfileCompany.imgName" style="width: 100rem; height: 20rem;"  class="img-responsive" alt="">
+											<img  src="~/images/@ProfileCompany.imgName" style="width: 100rem; height: 25rem;"  class="img-responsive" alt="">
 										</div>
 									</div>
 									<hr>
 									<div class="row">
 										<div class="col-sm-12 text-center">
-											<a asp-controller="Company" asp-action="ProfileDetailsCompany" asp-route-id=@ProfileCompany.Company_ID ><h3></h3>@ProfileCompany.Company_Name</a>
+											<a asp-controller="Company" asp-action="ProfileDetailsCompany" asp-route-id=@ProfileCompany.Company_ID ><h3>@ProfileCompany.Company_Name</h3></a>
 										</div>
 									</div>
 									<div class="row">
@@ -88,34 +140,13 @@
 											</ul>
 										</div>
 									</div>
+									<hr style="margin-bottom: 0rem;">
 									<div class="row">
-										<div class="col-sm-12">
-											อีเมล: @ProfileCompany.Email
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											เบอร์โทร: @ProfileCompany.Company_Tel
-										</div>
-									</div>
-                                    <div class="row">
-										<div class="col-sm-12">
-											@ProfileCompany.Company_TaxID
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											Facebook: @ProfileCompany.Facebook
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											Line: @ProfileCompany.Line
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											ที่อยู่: @ProfileCompany.Company_Address
+										<div class="col-sm-12 text-center" style="color: red; font-size: 3rem;">
+											@for (int i=0;i< ProfileCompany.Rating; i++)
+                                            {
+                                                <span>★</span>
+                                            }
 										</div>
 									</div>
 									<div class="row">
@@ -241,7 +272,7 @@
 																											</div>
 																											<div class="row">
 																												<div class="col-sm-12 text-center">
-																													<a asp-controller="Company" asp-action="Rating" asp-route-id=@Project.Project_ID class="btn btn-xs btn-success ">เสร็จสิ้นการทำงาน</a>
+																													<a class="btn btn-xs btn-success btnss" data-toggle="modal" data-target="#exampleModalCenter" ProjectID="@Project.Project_ID"  FreelanceID=@Project.Freelance_ID>เสร็จสิ้นการทำงาน</a>
 																												</div>
 																											</div>
 																										</td>
@@ -313,11 +344,101 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">ให้คะเเนน</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="rating">
+								<input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Meh">5 stars</label>
+								<input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Kinda bad">4 stars</label>
+								<input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Kinda bad">3 stars</label>
+								<input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Sucks big tim">2 stars</label>
+								<input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<textarea id="TextReview" class="form-control" rows="3"></textarea>
+							<input type="hidden" id="Project_ID"/>
+							<input type="hidden" id="Freelance_ID" /> 
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="btnRating">บันทึก</button>
+				</div>
+				</div>
+			</div>
+		</div>
 		</div>
 	</div>
 
 
-	<script type="text/javascript">
-		$(document).ready(function () {
+<script>
+    $().ready(function() {
+        var Score = 0;
+        var TextReview = "";
+        $("#star1").change(function() {
+            Score = $("#star1").val();
+            console.log(Score);
+        });
+        $("#star2").change(function() {
+            Score = $("#star2").val();
+            console.log(Score);
+        });
+        $("#star3").change(function() {
+            Score = $("#star3").val();
+            console.log(Score);
+        });
+        $("#star4").change(function() {
+            Score = $("#star4").val();
+            console.log(Score);
+        });
+        $("#star5").change(function() {
+            Score = $("#star5").val();
+            console.log(Score);
+        });
+        $("#TextReview").change(function() {
+            TextReview = $("#TextReview").val();
+            console.log(TextReview);
+        });
+        $("#btnRating").click(function () {
+			var Project_ID = $("#Project_ID").val();
+        	var Freelance_ID = $("#Freelance_ID").val();
+			jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Company/SaveFreelanceRating",
+				data: {
+					Freelance_ID: Freelance_ID,
+					Project_ID: Project_ID,
+					Score: Score,
+					TextReview: TextReview,
+				},
+				success: function (data) {
+					console.log(data);
+					location.reload();
+				},
+				error: function (data) {
+					alert("เกิดข้อผิดพลาด");
+				},
+			});
 		});
-	</script>
+		$(".btnss").click(function() {
+			var Project_ID = $(this).attr("ProjectID");
+			var Freelance_ID = $(this).attr("FreelanceID");
+			$("#Project_ID").val(Project_ID);
+			$("#Freelance_ID").val(Freelance_ID);
+		});
+    });
+</script>

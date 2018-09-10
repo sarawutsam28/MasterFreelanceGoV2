@@ -21,6 +21,9 @@ namespace FreelanceGo_MasterV2.Models
         public int? Freelance_ID { get; set; }
         [ForeignKey("Freelance_ID")]
         public Freelance Freelance { get; set; }
+        public int? TypeProject_ID { get; set; }
+        [ForeignKey("TypeProject_ID")]
+        public TypeProject TypeProject { get; set; }
         [Required]
         public string ProjectName { get; set; }
 
@@ -46,8 +49,11 @@ namespace FreelanceGo_MasterV2.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ProjectTimeOut { get; set; }
         [Required]
-        //หมดเวลารึยัง
+        //หมดเวลารึยัง true == ยังไม่หมดเวลา
         public bool ProjectStatus { get; set; }
+        [Required]
+        //เริ่มประมูลรึยัง true = เริ่มปะมูลได้
+        public bool ProjectAuctionStatus { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -58,6 +64,7 @@ namespace FreelanceGo_MasterV2.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
         public bool DelStatus { get; set; }
+        //ส่งงานผู้จ้าง เสดรึยัง
         [Required]
         public bool SuccessStatus { get; set; }
         [Required]

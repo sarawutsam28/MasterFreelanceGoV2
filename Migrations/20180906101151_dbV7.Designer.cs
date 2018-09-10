@@ -11,9 +11,10 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    partial class dDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180906101151_dbV7")]
+    partial class dbV7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

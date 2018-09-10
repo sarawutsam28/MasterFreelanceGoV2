@@ -1,0 +1,241 @@
+@{ Layout = "_AdminLayout"; 
+    ViewData["Title"] = "เพิ่มรายการทักษะ"; 
+    IEnumerable<Skill> SkillList = ViewData["Skills"] as IEnumerable<Skill>; 
+}
+<style>
+    .tabelcon{
+        margin: 1em;
+    }
+</style>
+<div>
+    <div class="container" style="margin-left: 10rem; padding-right: 4rem;">
+        <div class="panel panel-primary" style="margin-top: 3rem;">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 style="margin-left: 3rem;">จัดการรายการทักษะ</h1>
+                    </div>
+                </div>
+            </div>
+                <div class="panel-body">
+                    <div class="tabelcon">
+                        <div class="row col-md-12 custyle">
+                        <table class="table table-striped ">
+                        <thead>
+                        <a  class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#exampleModalCenter1"><b>+</b> เพิ่มรายการทักษะ</a>
+                            <tr>
+                                <th>ID</th>
+                                <th>ชื่อ</th>
+                                <th class="text-center">วันที่แก้ไข</th>
+                                <th class="text-center">แก้ไข</th>
+                                <th class="text-center">ลบ/กู้คืน</th>
+                            </tr>
+                        </thead>
+                             @foreach (@Skill @SkillLists in @SkillList) {
+                                <tr class="projectComtroller">
+                                    <td class="col-xs-1">
+                                        <div class="row">
+                                            <div class="col-sm-12 ">
+                                                <p>@SkillLists.Skill_ID</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-5">
+                                        <div class="row">
+                                            <div class="col-sm-12 ">
+                                                    <a  title="@SkillLists.Skill_Description">@SkillLists.Name</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-center ">@Html.DisplayFor(modelItem => @SkillLists.Date_Update)</div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="row">
+                                            <div class=" col-sm-12 text-center "><a data-toggle="modal" data-target="#exampleModalCenter" class='edit btn btn-success btn-xs' idskill=@SkillLists.Skill_ID>
+                                                <span class="glyphicon glyphicon-edit"></span> แก้ไข</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-center ">
+                                                 @if(  @SkillLists.DelStatus == false)
+                                            {
+                                                <div class="col-sm-12">
+                                                    <a href="/Admin/RemoveSkill/@SkillLists.Skill_ID" class='projectIDval btn btn-danger btn-xs'>
+                                                        <span class="glyphicon glyphicon-trash"></span> ลบ</a>
+                                                </div>
+                                            }
+                                            else
+                                            {       
+                                                <div class="col-sm-12">
+                                                    <a href="/Admin/RecoverSkill/@SkillLists.Skill_ID" class='projectIDval btn btn-success btn-xs'>
+                                                        <span class="glyphicon glyphicon-edit"></span> กู้คืน</a>
+                                                </div>
+                                            }
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                        </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">แก้รายการทักษะ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                             <div class="form-group">
+                                <label for="exampleInputEmail1">ชื่อใหม่</label>
+                                <input type="text" class="form-control" id="nameSkillValue">
+                                <input type="hidden" id="Skill_ID" class="form-control">
+                                <input type="hidden" id="Date_Create" class="form-control">
+                                <input type="hidden" id="DelStatus" class="form-control">
+                            </div>
+                             <div class="form-group">
+                                <label for="exampleInputEmail1">รายละเอียดทักษะ</label>
+                                <input type="text" class="form-control" id="Skill_DescriptionEdit" placeholder="รายละเอียดประเภทงาน">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        <button type="button" disabled class="btn btn-primary" id="seveEditSkill">บันทึก</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">เพิ่มรายการทักษะ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ชื่อรายการทักษะ</label>
+                            <input type="text" class="form-control" id="addskill" placeholder="ชื่อรายการทักษะ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">รายละเอียดทักษะ</label>
+                            <input type="text" class="form-control" id="Skill_Description" placeholder="รายละเอียดประเภทงาน">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        <button type="button" class="btn btn-primary" id="addskill-btn">เพิ่มรายการทักษะ</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+    
+</div>
+</div>
+<script>
+$().ready(function() {
+    var addskill = "";
+    var Skill_DescriptionEdit = "";
+    var Skill_Description = "";
+    var Name = "";
+    $("#nameSkillValue").change(function(){
+        $("#seveEditSkill").removeAttr('disabled');
+        Name = $("#nameSkillValue").val();
+        console.log(Name);
+    });
+     $("#addskill").change(function(){
+        addskill = $("#addskill").val();
+        console.log(addskill);
+    });
+    $("#Skill_DescriptionEdit").change(function(){
+        $("#seveEditSkill").removeAttr('disabled');
+        Skill_DescriptionEdit = $("#Skill_DescriptionEdit").val();
+        console.log(Skill_DescriptionEdit);
+    });
+    $("#Skill_Description").change(function(){
+        Skill_Description = $("#Skill_Description").val();
+        console.log(Skill_Description);
+    });
+
+    $(".edit").click(function() {
+        var id = $(this).attr("idskill");
+        jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Admin/skillEdit",
+				data: {
+                    id : id
+				},
+				success: function (data) {
+					console.log(data.skill_ID);
+                    $("#nameSkillValue").val(data.name);
+                    $("#Skill_ID").val(data.skill_ID);
+                    $("#Skill_DescriptionEdit").val(data.skill_Description);
+                    $("#Date_Create").val(data.date_Create);
+                    $("#DelStatus").val(data.delStatus);
+				},
+				error: function (data) {
+					alert("เกิดข้อผิดพลาด");
+				},
+			});
+    });
+    $("#seveEditSkill").click(function() {
+        var Skill_ID = $("#Skill_ID").val();
+         Name = $("#nameSkillValue").val();
+        var Skill_DescriptionEdit = $("#Skill_DescriptionEdit").val();
+        var Date_Create = $("#Date_Create").val();
+        var DelStatus = $("#DelStatus").val();
+        jQuery.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/Admin/EditSkillSeve",
+				data: {
+                    Skill_ID : Skill_ID,
+                    Name : Name,
+                    Skill_Description : Skill_DescriptionEdit,
+                    Date_Create : Date_Create,
+                    DelStatus : DelStatus
+				},
+				success: function (data) {
+					console.log(data);
+                    location.reload();
+				},
+				error: function (data) {
+					alert("เกิดข้อผิดพลาด");
+				},
+			});
+    });
+    $("#addskill-btn").click(function () {
+        jQuery.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/Admin/SaveSkill",
+                    data: {
+                        Name:addskill,
+                        Skill_Description:Skill_Description
+                    },
+                    success: function (data) {
+                      console.log(data);
+                      location.reload();
+                    },
+                    error: function (data) {
+                      alert("กรอกข้อมูลไม่ถูกต้อง");
+                    },
+          }); //end ajax
+        });
+});
+</script>

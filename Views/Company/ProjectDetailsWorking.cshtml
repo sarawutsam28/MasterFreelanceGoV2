@@ -8,13 +8,18 @@
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style>
-.project{
-    margin-top: 3rem;
-    padding: 3rem;
+.project {
+    background-color: white;
+    padding: 5rem;
+    padding-bottom: 2rem;
+    padding-top: 1rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
     border: 1px solid red;
-	border-color: #ccc;
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+    border-color: #ccc;
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
 }
+
 .Auction{
     margin-top: 3rem;
     padding: 3rem;
@@ -22,67 +27,89 @@
 	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
 }
+.boxrating {
+    background-color: red;
+    color: white;
+    border-radius: 2px;
+    margin-right: 6px;
+    padding: 1px 3px 0;
+}
 </style>
 
 
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <div class="project"> 
-                <div class="row">
+             <div class="row">
                     <div class="col-sm-12">
-                        <h3>ชื่องาน: @ProjectDetails.ProjectName</h3>
+                        <h1>@ProjectDetails.ProjectName</h1>
                         <input type="hidden" id="Project_ID" value=@ProjectDetails.Project_ID />
                     </div>
                 </div>
+            <div class="project"> 
                 <div class="row">
-                    <div class="col-sm-12">
-                        <h3>รายละเอียด @ProjectDetails.Description</h3>
+                    <div class="col-sm-8">
+                        <h3>รายละเอียด</h3>
+                    </div>
+                    <div class="col-sm-4">
+                         <a asp-controller="Company" asp-action="Rating" asp-route-id=@ProjectDetails.Project_ID> <button type="button" style="background-color: #5cb85c; color: white; margin-right: 3rem; margin-top:3rem; width: 25rem; height:4rem" class="btn pull-right">
+                          <i class="fas fa-genderless"></i> สิ้นสุดการทำงาน</button></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>ราคา: @ProjectDetails.ProjectPrice บาท</h3>
+                        <p>ราคา: @ProjectDetails.ProjectPrice บาท</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>ระยะเวลาในการทำงาน: @ProjectDetails.Timelength วัน</h3>
+                        <p>ระยะเวลาในการทำงาน: @ProjectDetails.Timelength วัน</p>
                     </div>
                 </div>
                  <div class="row">
                     <div class="col-sm-12">
-                        <h3>วันที่เริ่มประมูล: @Html.DisplayFor(modelItem => ProjectDetails.StartingDate)</h3>
+                        <p>วันที่เริ่มประมูล: @Html.DisplayFor(modelItem => ProjectDetails.StartingDate)</p>
                     </div>
                 </div>
                  <div class="row">
                     <div class="col-sm-12">
-                        <h3>วันที่สิ้นสุดการประมูล: @Html.DisplayFor(modelItem => ProjectDetails.EndDate)</h3>
+                        <p>วันที่สิ้นสุดการประมูล: @Html.DisplayFor(modelItem => ProjectDetails.EndDate)</p>
                     </div>
                 </div>
                  <div class="row">
                     <div class="col-sm-12">
-                        <h3>วันที่หมดเวลาประกาศงาน: @Html.DisplayFor(modelItem => ProjectDetails.ProjectTimeOut)</h3>
+                        <p>วันที่หมดเวลาประกาศงาน: @Html.DisplayFor(modelItem => ProjectDetails.ProjectTimeOut)</p>
                     </div>
                 </div>
                  <div class="row">
                     <div class="col-sm-12">
-                        <h3 id="Project_IDText">ความสามารถที่ต้องการ: </h3>
+                        <h3 >ความสามารถที่ต้องการ</h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>ประกาศโดย: @ProjectDetails.Company.Company_Name
-                             (@for (int i=0;i< ProjectDetails.Company.Rating; i++)
-                            {
-                                <span style="color: red;">★</span>
-                            })</h3>
-                        </h3>
+                        <p id="Project_IDText"></p>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12">
+                        <h3>ข้อมูลผู้รับงาน</h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>ผู้รับงาน: <a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProjectDetails.Freelance.Freelance_ID>@ProjectDetails.Freelance.FullName</a></h3>
+                        <h4><a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProjectDetails.Freelance.Freelance_ID>@ProjectDetails.Freelance.FullName</a></h4>
+                    </div>
+                    <div class="col-sm-12">
+                        <span class="boxrating">@ProjectDetails.Freelance.Rating.0</span> @for (int i=0;i
+                        < ProjectDetails.Freelance.Rating; i++) { <span style="color: red; font-size: 20px;">★</span>
+                        }
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 1rem;">
+                    <div class="col-sm-12">
+                        <span class="pull-right">
+                            <span style=" color: red; font-weight: bold;">PrijectID:</span> @ProjectDetails.Project_ID</span>
                     </div>
                 </div>
             </div>

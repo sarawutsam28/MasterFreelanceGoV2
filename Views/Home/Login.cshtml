@@ -216,12 +216,18 @@ input:hover{
 					console.log(data);
 			     	localStorage['Freelance_ID'] = data.result.freelance_ID;
 					console.log(localStorage['toURL']);
-					location.replace(localStorage['toURL']);
-					//location.replace("http://localhost:5000/Home/ProfileFreelance/"+ localStorage['Freelance_ID']);
+					var toURL = localStorage['toURL']
+					if(toURL == null)
+					{
+						location.replace("http://localhost:5000/Home/ProfileFreelance/"+ localStorage['Freelance_ID']);
+					}else
+					{
+						location.replace(localStorage['toURL']);
+					}
 				},
 				error: function (data) {
-					alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-					//location.replace("http://localhost:5000/Home/Login");
+					alert("ไม่พบผู้ใช้");
+					location.reload();
 				},
 			});
 			}

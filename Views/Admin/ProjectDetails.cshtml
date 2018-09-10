@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models; 
-@{ Layout = "_Layout"; ViewData["Title"] = "ProjectDetails"; } 
+@{ Layout = "_AdminLayout"; ViewData["Title"] = "ProjectDetails"; } 
 @{ var ProjectDetails = ViewData["ProjectDetails"] as Project; 
  IEnumerable <Auction> AuctionList = ViewData["AuctionList"] as IEnumerable<Auction>; }
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -47,12 +47,8 @@
                     </div>
                     <div class="project">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-12">
                                 <h3>รายละเอียด</h3>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="/Home/Login"> <button type="button" style="background-color: rgb(27, 184, 247); color: white; margin-right: 3rem; margin-top:3rem; width: 25rem; height:4rem" class="btn pull-right">
-                                    <i class="fas fa-bullseye"></i> ประมูล</button></a>
                             </div>
                         </div>
                         <div class="row">
@@ -105,7 +101,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <h4>
-                                    <a>@ProjectDetails.Employer.FullName</a>
+                                    <a href="/Outsider/ProfileDetailsEmployer/@ProjectDetails.Employer.Employer_ID">@ProjectDetails.Employer.FullName</a>
                                 </h4>
                             </div>
                             <div class="col-sm-12">

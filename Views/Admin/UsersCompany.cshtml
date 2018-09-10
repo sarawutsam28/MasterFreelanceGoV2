@@ -1,0 +1,196 @@
+ @{ Layout = "_AdminLayout"; 
+ViewData["Title"] = "จัดการผู้ใช้"; 
+IEnumerable<Company> CompanyList = ViewData["Company"] as IEnumerable<Company>; 
+}
+<style>
+    .tabelcon {
+        margin: 1em;
+    }
+</style>
+<div>
+    <div class="container" style="margin-left: 10rem; padding-right: 4rem;">
+        <div class="panel panel-warning" style="margin-top: 3rem;">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 style="margin-left: 3rem;">จัดการผู้ใช้ผู้จ้าง(บริษัท)</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="margin-bottom: 1rem;">
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <input style="width: 40%;" type="text" id="searchString" class="form-control pull-right" placeholder="ไอดีผู้ใช้จัดการผู้ใช้ผู้จ้าง(บริษัท)">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="buttonSearch">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabelcon">
+                    <div class="row col-md-12 custyle">
+                        <table class="table table-striped ">
+                            <thead>
+                                <a href="/Home/Register" class="btn btn-primary btn-xs pull-right">
+                                    <b>+</b> เพิ่มผู้ใช้</a>
+                                <tr>
+                                    <th>ID</th>
+                                    <th >ชื่อ/สกุล</th>
+                                    <th class="text-center">อีเมล</th>
+                                    <th class="text-center">วันที่สมัคร</th>
+                                    <th class="text-center">ลบ/กู้คืน</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableSearch">
+                                @foreach (@Company @CompanyLists in @CompanyList) {
+                                <tr class="projectComtroller">
+                                    <td class="col-xs-1">
+                                        <div class="row">
+                                            <div class="col-sm-12 ">
+                                                <p>@CompanyLists.Company_ID</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-5">
+                                        <div class="row">
+                                            <div class="col-sm-12 ">
+                                                <a href=/Outsider/ProfileDetailsCompany/@CompanyLists.Company_ID>
+                                                    <h4>@CompanyLists.Company_Name</h4>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-center ">@CompanyLists.Email</div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-center ">@Html.DisplayFor(modelItem => @CompanyLists.Date_Create)</div>
+                                        </div>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <div class="row text-center">
+                                            <div class="row text-center">
+                                            @if( @CompanyLists.DelStatus == false)
+                                            {
+                                                <div class="col-sm-12">
+                                                    <a href="/Admin/RemoveCompany/@CompanyLists.Company_ID" class='projectIDval btn btn-danger btn-xs'>
+                                                        <span class="glyphicon glyphicon-trash"></span> ลบ</a>
+                                                </div>
+                                            }
+                                            else
+                                            {       
+                                                <div class="col-sm-12">
+                                                    <a href="/Admin/RecoverCompany/@CompanyLists.Company_ID" class='projectIDval btn btn-success btn-xs'>
+                                                        <span class="glyphicon glyphicon-edit"></span> กู้คืน</a>
+                                                </div>
+                                            }
+                                    </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>    <!--panel-body-->
+        </div>
+        
+    </div>
+</div>
+<script>
+$().ready(function() {
+    var searchID = 0;
+        $("#searchString").change(function () {
+            searchID = $("#searchString").val();
+            console.log(searchID);
+        });
+        $("#buttonSearch").click(function () {
+            jQuery.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/Admin/searchCompanyID",
+                data: {
+                    searchID: searchID,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $(".projectAPI").css("display", "none");
+                    jQuery.each(data, function (i, data) {
+                        $("#tableSearch").find('tbody')
+                        var date = new Date(data.date_Create);
+                        var day = date.getDate();
+                        var month = date.getMonth();
+                        var year = date.getFullYear();
+                        var row1 = $(' <tr class="projectAPI">'+
+                        '<td class="col-xs-1">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12 projectName">'+
+                                    '<p>'+ data.company_ID +'</p>'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-5">'+
+                            '<div class="row">'+
+                               ' <div class="col-sm-12 projectName">'+
+                                    '<a href=/Admin/ProjectDetails/'+data.company_ID+'>'+
+                                        '<h4>'+data.Company_Name+'</h4>'+
+                                    '</a>'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-2">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12 text-center Timelength">'+data.email+'</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-2">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12 text-center">'+
+                                '<div class="col-sm-12 text-center Timelength">'+day+'/'+month+'/'+year+'</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-2">'+
+                            '<div class="row text-center">'+
+                                '<div class="col-sm-12" id="del'+data.company_ID+'">'+
+                                '</div>'+
+                                '<div class="col-sm-12" id="rec'+data.company_ID+'">'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '</tr>');
+                        $("#tableSearch").append(row1);
+                        if(data.delStatus == false)
+                        {
+                             $("#del"+data.company_ID).append("<a href='/Admin/RemoveCompany/"+data.company_ID +"' class='projectIDval btn btn-danger btn-xs'>"+
+                                           "<span class='glyphicon glyphicon-edit'></span> Del</a>");
+                        }else
+                        {
+                           $("#rec"+data.company_ID).append("<a href='/Admin/RecoverCompany/"+data.company_ID +"' class='projectIDval btn btn-success btn-xs'>"+
+                                           "<span class='glyphicon glyphicon-edit'></span> กู้คืน</a>");
+                        }
+                        $(".projectComtroller").css("display", "none");
+                    });
+                    // if (data.length == 0) {
+                    //     $(".projectComtroller").css("display", "none");
+                    //     var rowNone = $('<tr id="rowNone"><td></td><td class="text-center"><p>-- ไม่พบประกาศ --</p></td></tr>');
+                    //     $("#tableSearch").append(rowNone);
+                    // }
+                    // else {
+                    //     $("#rowNone").css("display", "none");
+                    // }
+                },
+                error: function (data) {
+                    alert("เกิดข้อผิดพลาด");
+                },
+            });
+        });
+});
+</script>

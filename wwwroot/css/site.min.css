@@ -28,3 +28,44 @@
             display: none
         }
     }
+    #sidebar-wrapper {
+        top: 52px;
+        left: -200px;
+        width: 200px;
+        background-color: #f8f8f8;
+        color: #428bca;
+        position: fixed;
+        height: 100%;
+        z-index: 1;
+        box-shadow: 1px 0px 0px rgba(173, 162, 162, 0.42);
+      }
+      .sidebar-nav {
+        position: absolute;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        list-style: none;
+      }
+      .sidebar-nav li {
+        text-indent: 20px;
+        line-height: 50px;
+      }
+      .sidebar-nav li a {
+        color: #428bca;
+        display: block;
+      }
+      .sidebar-nav li a:hover {
+        background: rgb(247, 4, 4);
+        color: #428bca;
+      }
+      #sidebar-wrapper.sidebar-toggle {
+        transition: all 0.3s ease-out;
+        margin-left: -200px;
+      }
+      @media (min-width: 768px) {
+        #sidebar-wrapper.sidebar-toggle {
+          transition: 0s;
+          left: 200px;
+        }
+      }

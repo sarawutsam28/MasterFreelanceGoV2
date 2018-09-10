@@ -85,6 +85,11 @@
                             </div>
                         </div>
                         <div class="row">
+                                <div class="col-sm-12">
+                                    <p>ประเภทงาน: @ProjectDetails.TypeProject.Name</p>
+                                </div>
+                            </div>
+                        <div class="row">
                             <div class="col-sm-12">
                                 <h3>ความสามารถที่ต้องการ</h3>
                             </div>
@@ -124,6 +129,17 @@
                                 <span class="boxrating">@ProjectDetails.Company.Rating.0</span> @for (int i=0;i
                                 < ProjectDetails.Company.Rating; i++) { <span style="color: red; font-size: 20px;">★</span>
                                     }
+                            </div>
+                        </div><div class="row">
+                            <div class="col-sm-12">
+                                <h4>
+                                    <a asp-controller="Outsider" asp-action="ProfileDetailsCompany" asp-route-id=@ProjectDetails.Company.Company_ID>@ProjectDetails.Company.Company_Name</a>
+                                </h4>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="boxrating">@ProjectDetails.Company.Rating.0</span> @for (int i=0;i
+                                < ProjectDetails.Company.Rating; i++) { <span style="color: red; font-size: 20px;">★</span>
+                                }
                             </div>
                         </div>
                         }

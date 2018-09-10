@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Http;
 
 namespace FreelanceGo_MasterV2.Models
 {
-    public class Skill
+    public class TypeProject
     {
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int Skill_ID { get; set; }
+        public int TypeProject_ID { get; set; }
         public string Name { get; set; }
-        public string Skill_Description { get; set; }
+        public string TypeProjectDescription { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]

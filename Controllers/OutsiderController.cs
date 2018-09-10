@@ -44,6 +44,9 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
            .Reference(b => b.Company)
            .Load();
+            _context.Entry(ProjectDetails)
+           .Reference(b => b.TypeProject)
+           .Load();
             var AuctionList = _context.Auction.Where(a => a.Project_ID == id)
             .Include(x => x.Project)
             .Include(x => x.Freelance).ToList();

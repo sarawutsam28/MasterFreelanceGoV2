@@ -1,0 +1,214 @@
+@{ 
+Layout = "_AdminLayout"; 
+ViewData["Title"] = "จัดการประกาศ"; 
+IEnumerable<Project> ProjectList = ViewData["ProjectList"] as IEnumerable<Project>; 
+}
+<style>
+    .tabelcon {
+        margin: 1em;
+    }
+
+    .tProject {
+        background-color: #ff3b3b;
+        color: white;
+    }
+</style>
+<div>
+    <div class="container" style="margin-left: 10rem; padding-right: 4rem;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 style="margin-left: 3rem;">จัดการประกาศ</h1>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 1rem;">
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input style="width: 40%;" type="text" id="searchString" class="form-control pull-right" placeholder="ไอดีประกาศ">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="buttonSearch">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="tabelcon">
+            <div class="row col-md-12 custyle">
+                <table class="table table-striped " id="tableSearch">
+                    <thead class="tProject">
+                        <tr>
+                            <th>ID</th>
+                            <th class="text-center">ชื่อ/รายละอียด</th>
+                            <th class="text-center">วันที่ประกาศ</th>
+                            <th class="text-center">สถานะหมดเวลา</th>
+                            <th class="text-center">ลบ/กู้คืน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         @foreach (@Project @ProjectLists in @ProjectList) {
+                             <tr class="projectComtroller">
+                        <td class="col-xs-1">
+                            <div class="row">
+                                <div class="col-sm-12 projectName">
+                                    <p>@ProjectLists.Project_ID</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-xs-5">
+                            <div class="row">
+                                <div class="col-sm-12 projectName">
+                                    <a href=/Admin/ProjectDetails/@ProjectLists.Project_ID>
+                                        <h4>@ProjectLists.ProjectName</h4>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12"> @ProjectLists.Description</div>
+                            </div>
+                        </td>
+                        <td class="col-xs-2">
+                            <div class="row">
+                                <div class="col-sm-12 text-center Timelength">@Html.DisplayFor(modelItem => @ProjectLists.Date_Create)</div>
+                            </div>
+                        </td>
+                        <td class="col-xs-2">
+                            <div class="row">
+                                @if (@ProjectLists.ProjectStatus == true) {
+                                <div class="col-sm-12 text-center">
+                                    <ps class=' btn-success btn-xs'>ยังไม่หมดเวลา</ps>
+                                </div>
+                                }else {
+                                <div class="col-sm-12 text-center">
+                                    <ps class=' btn-danger  btn-xs'>หมดเวลา</ps>
+                                </div>
+                                }
+
+                            </div>
+                        </td>
+                        <td class="col-xs-2">
+                            <div class="row text-center">
+                                    @if( @ProjectLists.DelStatus == false)
+                                    {
+                                         <div class="col-sm-12">
+                                            <a href="/Admin/RemoveProject/@ProjectLists.Project_ID" class='projectIDval btn btn-danger btn-xs'>
+                                                <span class="glyphicon glyphicon-edit"></span> ลบ</a>
+                                        </div>
+                                    }
+                                    else
+                                    {       
+                                        <div class="col-sm-12">
+                                            <a href="/Admin/RecoverProject/@ProjectLists.Project_ID" class='projectIDval btn btn-success btn-xs'>
+                                                <span class="glyphicon glyphicon-edit"></span> กู้คืน</a>
+                                        </div>
+                                    }
+                            </div>
+                        </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$().ready(function() {
+    var searchID = 0;
+        $("#searchString").change(function () {
+            searchID = $("#searchString").val();
+            console.log(searchString);
+        });
+        $("#buttonSearch").click(function () {
+            jQuery.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/Admin/searchID",
+                data: {
+                    searchID: searchID,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $(".projectAPI").css("display", "none");
+                    jQuery.each(data, function (i, data) {
+                        $("#tableSearch").find('tbody')
+                        var date = new Date(data.date_Create);
+                        var day = date.getDate();
+                        var month = date.getMonth();
+                        var year = date.getFullYear();
+                        var row1 = $(' <tr class="projectAPI">'+
+                        '<td class="col-xs-1">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12 projectName">'+
+                                    '<p>'+ data.project_ID +'</p>'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-5">'+
+                            '<div class="row">'+
+                               ' <div class="col-sm-12 projectName">'+
+                                    '<a href=/Admin/ProjectDetails/'+data.project_ID+'>'+
+                                        '<h4>'+data.projectName+'</h4>'+
+                                    '</a>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12">' +data.description+ '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-2">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12 text-center Timelength">'+day+'/'+month+'/'+year+'</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-2">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-12 text-center" id="ex'+data.project_ID + '">'+
+                                '</div>'+
+                                '<div class="col-sm-12 text-center" id="ps'+data.project_ID + '">'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td class="col-xs-2">'+
+                            '<div class="row text-center">'+
+                                '<div class="col-sm-12" id="del'+data.project_ID+'">'+
+                                '</div>'+
+                                '<div class="col-sm-12" id="rec'+data.project_ID+'">'+
+                                '</div>'+
+                            '</div>'+
+                        '</td>'+
+                        '</tr>');
+                        $("#tableSearch").append(row1);
+                        if(data.projectStatus == true)
+                        {
+                             $("#ex"+data.project_ID).append("<ps class='btn btn-success btn-xs'>ยังไม่หมดเวลา</ps>");
+                        }else
+                        {
+                            $("#ps"+data.project_ID).append('<ps class="btn btn-danger  btn-xs">หมดเวลา</ps>');
+                        }
+                        if(data.delStatus == false)
+                        {
+                             $("#del"+data.project_ID).append("<a href='/Admin/RemoveProject/"+data.project_ID +"' class='projectIDval btn btn-danger btn-xs'>"+
+                                           "<span class='glyphicon glyphicon-edit'></span> Del</a>");
+                        }else
+                        {
+                           $("#rec"+data.project_ID).append("<a href='/Admin/RecoverProject/"+data.project_ID +"' class='projectIDval btn btn-success btn-xs'>"+
+                                           "<span class='glyphicon glyphicon-edit'></span> กู้คืน</a>");
+                        }
+                        $(".projectComtroller").css("display", "none");
+                    });
+                    // if (data.length == 0) {
+                    //     $(".projectComtroller").css("display", "none");
+                    //     var rowNone = $('<tr id="rowNone"><td></td><td class="text-center"><p>-- ไม่พบประกาศ --</p></td></tr>');
+                    //     $("#tableSearch").append(rowNone);
+                    // }
+                    // else {
+                    //     $("#rowNone").css("display", "none");
+                    // }
+                },
+                error: function (data) {
+                    alert("เกิดข้อผิดพลาด");
+                },
+            });
+        });
+});
+</script>

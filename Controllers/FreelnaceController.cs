@@ -27,37 +27,44 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> SearchProject()
+        public IActionResult SearchProject()
         {
-            var searchString = "โคราช";
-            var Skill = _context.Skill.ToList();
-            ViewData["Skill"] = Skill;
-            var _Project = from m in _context.Project
-                           select m;
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
+            ViewData["TypeProject"] = TypeProject;
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null);
+            ViewData["ProjectList"] = ProjectList;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                _Project = _Project.Where(s => s.ProjectName.Contains(searchString) || s.Description.Contains(searchString));
-            }
-            var _ProjectList = await _Project.ToListAsync();
-            HttpContext.Items[_ProjectList] = _ProjectList;
-
-            ViewData["searchString"] = searchString;
-            ViewData["_Project"] = await _Project.ToListAsync();
             return View();
         }
-        public async Task<IActionResult> SearchString(string searchString)
+        public async Task<IActionResult> SearchString(string searchString, int typeProject)
         {
             var _Project = from m in _context.Project
                            select m;
-
-            if (!String.IsNullOrEmpty(searchString))
+            if (searchString != null)
             {
-                _Project = _Project.Where(s => s.ProjectName.Contains(searchString) || s.Description.Contains(searchString));
+                if (typeProject == 0)
+                {
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        _Project = _Project.Where(s => s.ProjectName.Contains(searchString) || s.Description.Contains(searchString));
+                    }
+                }
+                else
+                {
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        _Project = _Project.Where(s => s.ProjectName.Contains(searchString) || s.Description.Contains(searchString) && s.TypeProject_ID == typeProject);
+                    }
+                }
+            }
+            else
+            {
+                _Project = _Project.Where(s => s.TypeProject_ID == typeProject);
             }
             _Project = _Project.Where(p => p.DelStatus == false && p.Freelance_ID == null && p.ProjectStatus == true);
             ViewData["_Project"] = await _Project.ToListAsync();
             return Json(await _Project.ToListAsync());
+
         }
         public IActionResult ProjectDetails(int id)
         {
@@ -69,6 +76,9 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
            .Reference(b => b.Company)
            .Load();
+            _context.Entry(ProjectDetails)
+            .Reference(b => b.TypeProject)
+            .Load();
             var AuctionList = _context.Auction.Where(a => a.Project_ID == id)
            .Include(x => x.Project)
            .Include(x => x.Freelance).ToList();
@@ -160,7 +170,7 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult UpdateProfileFreelance(int id)
         {
             var UpdateProfileFreelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == id);
-            var Skill = _context.Skill.ToList();
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
             ViewData["Skill"] = Skill;
             ViewData["UpdateProfileFreelance"] = UpdateProfileFreelance;
             return View();

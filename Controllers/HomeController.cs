@@ -28,6 +28,7 @@ namespace FreelanceGo_MasterV2.Controllers
             var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
             var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
             var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var Admin_ID = HttpContext.Session.GetInt32("Admin_ID");
             if (Freelance_ID != null)
             {
                 return RedirectToAction("ProfileFreelance", "Home", new { id = Freelance_ID });
@@ -41,8 +42,12 @@ namespace FreelanceGo_MasterV2.Controllers
             {
                 return RedirectToAction("ProfileCompany", "Home", new { id = Company_ID });
             }
-            var Skill = _context.Skill.ToList();
-            var ProjectList = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null);
+            else if (Admin_ID != null)
+            {
+                return RedirectToAction("Dashboard", "Admin", new { id = Admin_ID });
+            }
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null);
             var ProjectLength = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null).ToArray();
             var FreelanceLength = _context.Freelance.Where(p => p.DelStatus == false).ToArray();
             var EmployerLength = _context.Employer.Where(p => p.DelStatus == false).ToArray();
@@ -60,6 +65,8 @@ namespace FreelanceGo_MasterV2.Controllers
             ViewData["FreelanceLengths"] = FreelanceLengths;
             ViewData["Skill"] = Skill;
             ViewData["ProjectList"] = ProjectList;
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
+            ViewData["TypeProject"] = TypeProject;
             return View();
         }
         public IActionResult About()
@@ -82,7 +89,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult Register()
         {
-            var Skill = _context.Skill.ToList();
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
             ViewData["Skill"] = Skill;
             return View();
         }
@@ -172,6 +179,9 @@ namespace FreelanceGo_MasterV2.Controllers
             _context.Entry(ProjectDetails)
             .Reference(b => b.Employer)
             .Load();
+            _context.Entry(ProjectDetails)
+           .Reference(b => b.TypeProject)
+           .Load();
             HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
             ViewData["ProjectDetails"] = ProjectDetails;
             return View();
@@ -198,8 +208,15 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectPost()
         {
-            var Skill = _context.Skill.ToList();
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            if (Employer_ID == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
             ViewData["Skill"] = Skill;
+            ViewData["TypeProject"] = TypeProject;
             return View();
         }
         public IActionResult UpdateProjectSkill(int[] skillList)
@@ -314,7 +331,7 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult LoginFreelance(Freelance Freelance)
         {
             var loginde = _context.Freelance
-                .Single(f => f.UserName == Freelance.UserName && f.Password == Freelance.Password);
+                .Single(f => f.UserName == Freelance.UserName && f.Password == Freelance.Password && f.DelStatus == false);
             HttpContext.Session.SetInt32("Freelance_ID", loginde.Freelance_ID);
             ViewData["Freelance_ID"] = loginde.Freelance_ID;
             return Json(new { Result = loginde });
@@ -323,7 +340,7 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult LoginEmployer(Employer Employer)
         {
             var loginde = _context.Employer
-                .Single(f => f.UserName == Employer.UserName && f.Password == Employer.Password);
+                .Single(f => f.UserName == Employer.UserName && f.Password == Employer.Password && f.DelStatus == false);
             HttpContext.Session.SetInt32("Employer_ID", loginde.Employer_ID);
             ViewData["Employer_ID"] = loginde.Employer_ID;
             return Json(new { Result = loginde });
@@ -332,29 +349,40 @@ namespace FreelanceGo_MasterV2.Controllers
         public IActionResult LoginCompany(Company Company)
         {
             var loginde = _context.Company
-                .Single(f => f.UserName == Company.UserName && f.Password == Company.Password);
+                .Single(f => f.UserName == Company.UserName && f.Password == Company.Password && f.DelStatus == false);
             HttpContext.Session.SetInt32("Company_ID", loginde.Company_ID);
             ViewData["Company_ID"] = loginde.Company_ID;
             return Json(new { Result = loginde });
         }
         [HttpPost]
-        public async Task<IActionResult> SaveProject(Project Project, int[] skillList)
+        public async Task<IActionResult> SaveProject(Project Project, int[] skillList, Boolean check1, Boolean check2)
         {
             var _Project = new Project
             {
                 Employer_ID = (int)HttpContext.Session.GetInt32("Employer_ID"),
                 ProjectName = Project.ProjectName,
                 Description = Project.Description,
+                TypeProject_ID = Project.TypeProject_ID,
                 Budget = Project.Budget,
                 Timelength = Project.Timelength,
                 StartingDate = Project.StartingDate,
                 EndDate = Project.EndDate,
                 ProjectStatus = true,
+                ProjectAuctionStatus = false,
                 ProjectTimeOut = DateTime.Now.AddDays(15),
                 Date_Create = DateTime.Now,
                 Date_Update = DateTime.Now,
                 DelStatus = false,
             };
+            if (check1)
+            {
+                _Project.StartingDate = DateTime.Now;
+                _Project.ProjectAuctionStatus = true;
+            }
+            if (check2)
+            {
+                _Project.EndDate = DateTime.Now.AddDays(15);
+            }
             _context.Project.Add(_Project);
             await _context.SaveChangesAsync();
             int id = _Project.Project_ID;
@@ -371,7 +399,7 @@ namespace FreelanceGo_MasterV2.Controllers
                 _context.ProjectSkill.Add(_ProjectSkill);
                 _context.SaveChanges();
             }
-            return Json(new { Result = id });
+            return Json(new { _Project });
         }
         public IActionResult UpdateProject(int id)
         {
@@ -389,7 +417,9 @@ namespace FreelanceGo_MasterV2.Controllers
                     DelStatus = d.Skill.DelStatus,
                 })
                 .ToList();
-            var Skill = _context.Skill.ToList();
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
+            var AuctionCount = _context.Auction.Where(a => a.Project_ID == id).Count();
+            ViewData["AuctionCount"] = AuctionCount;
             ViewData["UpdateProject"] = UpdateProject;
             ViewData["Skill"] = Skill;
             ViewData["SkillProject"] = SkillProject;
@@ -615,6 +645,40 @@ namespace FreelanceGo_MasterV2.Controllers
             .Load();
             ViewData["Project"] = Project;
             return View();
+        }
+        public IActionResult TimersPro()
+        {
+            //2018 - 08 - 20 19:10:36.4797097
+            DateTime xxx = new DateTime(2018, 08, 20);
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null).ToArray();
+            foreach (Project ProjectLists in ProjectList)
+            {
+                if (ProjectLists.ProjectTimeOut <= DateTime.Now)
+                {
+                    ProjectLists.ProjectStatus = false;
+                }
+                _context.Update(ProjectLists);
+                _context.SaveChanges();
+            }
+            var ProjectListD = _context.Project.Where(p => p.DelStatus != true).ToArray();
+            var DateTimeNow = DateTime.Now;
+            //var day = day.day(); 
+            foreach (Project ProjectLists in ProjectListD)
+            {
+                if (ProjectLists.ProjectTimeOut <= DateTime.Now)
+                {
+                    ProjectLists.ProjectAuctionStatus = true;
+                }
+                _context.Update(ProjectLists);
+                _context.SaveChanges();
+            }
+            return Json("OK");
+        }
+        public IActionResult dddd()
+        {
+            var ProjectListD = _context.Project.Where(p => p.DelStatus != true).ToArray();
+            DateTime datenow = DateTime.Now;
+            return Json(ProjectListD);
         }
         public IActionResult Error()
         {

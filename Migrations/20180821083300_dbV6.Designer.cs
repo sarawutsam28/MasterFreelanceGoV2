@@ -11,9 +11,10 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    partial class dDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180821083300_dbV6")]
+    partial class dbV6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -336,8 +337,6 @@ namespace FreelanceGoMasterV2.Migrations
 
                     b.Property<int>("Timelength");
 
-                    b.Property<int?>("TypeProject_ID");
-
                     b.HasKey("Project_ID");
 
                     b.HasIndex("Company_ID");
@@ -345,8 +344,6 @@ namespace FreelanceGoMasterV2.Migrations
                     b.HasIndex("Employer_ID");
 
                     b.HasIndex("Freelance_ID");
-
-                    b.HasIndex("TypeProject_ID");
 
                     b.ToTable("Project");
                 });
@@ -393,26 +390,6 @@ namespace FreelanceGoMasterV2.Migrations
                     b.HasKey("Skill_ID");
 
                     b.ToTable("Skill");
-                });
-
-            modelBuilder.Entity("FreelanceGo_MasterV2.Models.TypeProject", b =>
-                {
-                    b.Property<int>("TypeProject_ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date_Create");
-
-                    b.Property<DateTime>("Date_Update");
-
-                    b.Property<bool>("DelStatus");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("TypeProjectDescription");
-
-                    b.HasKey("TypeProject_ID");
-
-                    b.ToTable("TypeProject");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.Auction", b =>
@@ -493,10 +470,6 @@ namespace FreelanceGoMasterV2.Migrations
                     b.HasOne("FreelanceGo_MasterV2.Models.Freelance", "Freelance")
                         .WithMany()
                         .HasForeignKey("Freelance_ID");
-
-                    b.HasOne("FreelanceGo_MasterV2.Models.TypeProject", "TypeProject")
-                        .WithMany()
-                        .HasForeignKey("TypeProject_ID");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.ProjectSkill", b =>

@@ -31,6 +31,9 @@ namespace FreelanceGo_MasterV2.Models
         public string Company_Address { get; set; }
         public string imgName { get; set; }
         public string Company_TaxID { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date_Create { get; set; }
         public DateTime Date_Update { get; set; }
         public bool DelStatus { get; set; }

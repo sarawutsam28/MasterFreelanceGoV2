@@ -38,7 +38,8 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-tasks"></i>
                                             </span>
-                                            <input id="ProjectName" name="ProjectName" value="@UpdateProject.ProjectName" type="text" class="form-control" placeholder="ชื่องาน" /> 
+                                            <input id="ProjectName" name="ProjectName" value="@UpdateProject.ProjectName" type="text" class="form-control" placeholder="ชื่องาน" />
+                                            <input id="AuctionCount" name="AuctionCount" value=@ViewData["AuctionCount"] type="hidden" class="form-control" placeholder="ชื่องาน" />  
                                              <input id="Project_ID" name="Project_ID" value="@UpdateProject.Project_ID" type="hidden" class="form-control" placeholder="ชื่องาน" /> 
                                         </div>
                                     </div>
@@ -146,7 +147,8 @@ $().ready(function () {
         EndDate: null,
         ProjectSkill: [],
     }
-    
+    var AuctionCount = $("#AuctionCount").val();
+        console.log(AuctionCount);
     var Skill = [];
     Project.Project_ID = $("#Project_ID").val();
     Project.ProjectName = $("#ProjectName").val();
@@ -171,6 +173,14 @@ $().ready(function () {
         Project.EndDate = $("#EndDate").val();
         console.log(Project);
     });
+    if(AuctionCount != 0)
+    {
+        $("#ProjectName").prop( "disabled", true );
+        $("#Description").prop( "disabled", true );
+        $("#Budget").prop( "disabled", true );
+        $("#Timelength").prop( "disabled", true );
+        $("#StartingDate").prop( "disabled", true );
+    }
 
     //select2
     $("#skills").select2({

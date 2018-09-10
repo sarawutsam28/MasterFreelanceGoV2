@@ -38,6 +38,7 @@
                 <div class="col-sm-12">
                     <h1>@ProjectDetails.ProjectName</h1>
                     <input type="hidden" id="Project_ID" value=@ProjectDetails.Project_ID />
+                    <input type="hidden" id="ProjectAuctionStatus" value=@ProjectDetails.ProjectAuctionStatus />
                 </div>
             </div>
             <div class="project"> 
@@ -71,6 +72,11 @@
                                 <p>วันที่สิ้นสุดการประมูล: @Html.DisplayFor(modelItem => ProjectDetails.EndDate)</p>
                             </div>
                         </div>
+                        <div class="row">
+                                <div class="col-sm-12">
+                                    <p>ประเภทงาน: @ProjectDetails.TypeProject.Name</p>
+                                </div>
+                            </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <h3>ความสามารถที่ต้องการ</h3>
@@ -157,11 +163,16 @@
                     </div>
                 </div>
                 <hr>
+                <div class="row text-center StartingDateBox"  style="margin-bottom:1rem;">
+                    <div class="col-sm-12">
+                        <h4 style="color:red;">เริ่มประมูลในวันที่ @Html.DisplayFor(modelItem => ProjectDetails.StartingDate)</h4>
+                    </div>
+                </div>
                 <form>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                         <label for="inputEmail4">ราคา</label>
-                        <input type="number" class="form-control" id="Price" placeholder="ราคา">
+                        <input  type="number" class="form-control" id="Price" placeholder="ราคา">
                         </div>
                         <div class="form-group col-md-6">
                         <label for="inputPassword4">ระยะเวลาในการทำงาน/วัน</label>
@@ -184,12 +195,26 @@ $().ready(function() {
     var Project_ID = $("#Project_ID").val();
     var Price = 0;
     var AuctionTime = 0;
+    var ProjectAuctionStatus = true;
+    ProjectAuctionStatus = $("#ProjectAuctionStatus").val();
     $("#Price").change(function() {
         Price = $("#Price").val();
     });
      $("#AuctionTime").change(function() {
         AuctionTime = $("#AuctionTime").val();
     });
+    
+    if(ProjectAuctionStatus == false )
+    {
+        $("#Price").prop('disabled', true);
+        $("#AuctionTime").prop('disabled', true);
+        $("#btnAuctionTime").prop('disabled', true);
+    } else {
+        $(".StartingDateBox").css("display", "none");
+        $("#Price").prop('disabled', false);
+        $("#AuctionTime").prop('disabled', false);
+        $("#btnAuctionTime").prop('disabled', false);
+    }
     jQuery.ajax({
         type: "get",
         dataType: "json",
