@@ -25,6 +25,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult Index()
         {
+            TimersPro();
             var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
             var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
             var Company_ID = HttpContext.Session.GetInt32("Company_ID");
@@ -47,7 +48,72 @@ namespace FreelanceGo_MasterV2.Controllers
                 return RedirectToAction("Dashboard", "Admin", new { id = Admin_ID });
             }
             var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
-            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null);
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null)
+                .Include(p => p.ProjectSkill)
+                    .ThenInclude(a => a.Skill)
+                        .ToList();
+            // foreach (Project ProjectLists in ProjectList)
+            // {
+            //     _context.Entry(ProjectLists)
+            //     .Collection(b => b.ProjectSkill)
+            //     .Load();
+            // }
+            var ProjectLength = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null).ToArray();
+            var FreelanceLength = _context.Freelance.Where(p => p.DelStatus == false).ToArray();
+            var EmployerLength = _context.Employer.Where(p => p.DelStatus == false).ToArray();
+            var CompanyLength = _context.Company.Where(p => p.DelStatus == false).ToArray();
+            var ProjectLengths = 0;
+            var FreelanceLengths = 0;
+            var EmployerLengths = 0;
+            var CompanyLengths = 0;
+            ProjectLengths = ProjectLength.Length;
+            FreelanceLengths = FreelanceLength.Length;
+            EmployerLengths = EmployerLength.Length;
+            CompanyLengths = CompanyLength.Length;
+            ViewData["EmployerLengths"] = EmployerLengths + CompanyLengths;
+            ViewData["ProjectLengths"] = ProjectLengths;
+            ViewData["FreelanceLengths"] = FreelanceLengths;
+            ViewData["Skill"] = Skill;
+            ViewData["ProjectList"] = ProjectList;
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
+            ViewData["TypeProject"] = TypeProject;
+            return View();
+        }
+        public IActionResult Index1()
+        {
+            TimersPro();
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var Admin_ID = HttpContext.Session.GetInt32("Admin_ID");
+            if (Freelance_ID != null)
+            {
+                return RedirectToAction("ProfileFreelance", "Home", new { id = Freelance_ID });
+                //return RedirectToAction(nameof(ProfileFreelance));
+            }
+            else if (Employer_ID != null)
+            {
+                return RedirectToAction("ProfileEmployer", "Home", new { id = Employer_ID });
+            }
+            else if (Company_ID != null)
+            {
+                return RedirectToAction("ProfileCompany", "Home", new { id = Company_ID });
+            }
+            else if (Admin_ID != null)
+            {
+                return RedirectToAction("Dashboard", "Admin", new { id = Admin_ID });
+            }
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null)
+                .Include(p => p.ProjectSkill)
+                    .ThenInclude(a => a.Skill)
+                        .ToList();
+            // foreach (Project ProjectLists in ProjectList)
+            // {
+            //     _context.Entry(ProjectLists)
+            //     .Collection(b => b.ProjectSkill)
+            //     .Load();
+            // }
             var ProjectLength = _context.Project.Where(p => p.ProjectStatus != false && p.DelStatus != true && p.Freelance_ID == null).ToArray();
             var FreelanceLength = _context.Freelance.Where(p => p.DelStatus == false).ToArray();
             var EmployerLength = _context.Employer.Where(p => p.DelStatus == false).ToArray();
@@ -73,6 +139,26 @@ namespace FreelanceGo_MasterV2.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
+            return View();
+        }
+        public IActionResult SearchProject()
+        {
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
+            ViewData["TypeProject"] = TypeProject;
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null);
+            ViewData["ProjectList"] = ProjectList;
+
+            return View();
+        }
+        public IActionResult SearchFreelance()
+        {
+            var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
+            ViewData["Skill"] = Skill;
+            var _Freelance = _context.Freelance.Where(f => f.DelStatus == false)
+            .Include(s => s.FreelanceSkill)
+                .ThenInclude(a => a.Skill)
+            .ToList();
+            ViewData["_Freelance"] = _Freelance;
             return View();
         }
         public IActionResult Logout()
@@ -103,6 +189,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProfileFreelance(int id)
         {
+            TimersPro();
             var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
             if (Freelance_ID == null)
             {
@@ -116,6 +203,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProfileEmployer(int id)
         {
+            TimersPro();
             var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
             if (Employer_ID == null)
             {
@@ -129,6 +217,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProfileDetailsEmployer(int id)
         {
+            TimersPro();
             var ProfileDetailsEmployer = _context.Employer.SingleOrDefault(e => e.Employer_ID == id);
             var ProjectEmployer = _context.EmployerRating.Where(p => p.Employer_ID == id)
             .Include(p => p.Project)
@@ -174,6 +263,7 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectDetails(int id)
         {
+            TimersPro();
             var ProjectDetails = _context.Project.SingleOrDefault(p => p.Project_ID == id);
 
             _context.Entry(ProjectDetails)
@@ -208,14 +298,15 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectPost()
         {
+            TimersPro();
             var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
             if (Employer_ID == null)
             {
                 return RedirectToAction(nameof(Login));
             }
             var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
-            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
             ViewData["Skill"] = Skill;
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
             ViewData["TypeProject"] = TypeProject;
             return View();
         }
@@ -674,11 +765,123 @@ namespace FreelanceGo_MasterV2.Controllers
             }
             return Json("OK");
         }
+        public async Task<IActionResult> SearchFreelanceAPITest(string Name, int[] Skill)
+        {
+            var _Freelance = from m in _context.Freelance
+                             select m;
+            var FreelanceList = new List<FreelanceSkill>();
+            if (Name != null && Skill.Length == 0)
+            {
+                if (!String.IsNullOrEmpty(Name))
+                {
+                    _Freelance = _Freelance.Where(s => s.FullName.Contains(Name) && s.DelStatus == false);
+                }
+            }
+            else if (Name == null && Skill.Length != 0)
+            {
+                if (Skill.Length == 1)
+                {
+                    var FreelanceFromSkill = _context.FreelanceSkill.Where(f => f.Skill_ID == Skill[0])
+               .Include(f => f.Freelance).ToList();
+                    FreelanceList = FreelanceFromSkill;
+                    return Json(new { FreelanceList = FreelanceList });
+                }
+                if (Skill.Length == 2)
+                {
+                    var FreelanceFromSkill = _context.FreelanceSkill.Where(f => f.Skill_ID == Skill[0] | f.Skill_ID == Skill[1])
+               .Include(f => f.Freelance).ToList();
+                    FreelanceList = FreelanceFromSkill;
+                    return Json(new { FreelanceList = FreelanceList });
+                }
+                if (Skill.Length == 3)
+                {
+                    var FreelanceFromSkill = _context.FreelanceSkill.Where(f => f.Skill_ID == Skill[0] | f.Skill_ID == Skill[1] | f.Skill_ID == Skill[2])
+               .Include(f => f.Freelance).ToList();
+                    FreelanceList = FreelanceFromSkill;
+                    return Json(new { FreelanceList = FreelanceList });
+                }
+
+            }
+            else if (Name != null && Skill.Length != 0)
+            {
+                if (Skill.Length == 1)
+                {
+                    var FreelanceFromSkill = _context.FreelanceSkill.Where(f => f.Skill_ID == Skill[0])
+               .Include(f => f.Freelance).ToList();
+                    FreelanceList = FreelanceFromSkill;
+                    return Json(new { FreelanceList = FreelanceList });
+                }
+            }
+            ViewData["_Freelance"] = await _Freelance.ToListAsync();
+            return Json(await _Freelance.ToListAsync());
+        }
+        public IActionResult SearchFreelanceAPI(int[] Skill)
+        {
+            var FreelanceList = new List<Freelance>();
+            if (Skill.Length == 1)
+            {
+                int Skill1 = Skill[0];
+                var FreelanceFromSkill = _context.Freelance
+            .Include(f => f.FreelanceSkill)
+                .ThenInclude(f => f.Skill)
+            .Where(f => f.FreelanceSkill.Any(fs => fs.Skill_ID == Skill1))
+                .ToList();
+                FreelanceList = FreelanceFromSkill;
+            }
+            if (Skill.Length == 2)
+            {
+                int Skill21 = Skill[0];
+                int Skill22 = Skill[1];
+                var FreelanceFromSkill = _context.Freelance
+            .Include(f => f.FreelanceSkill)
+                .ThenInclude(f => f.Skill)
+            .Where(f => f.FreelanceSkill.Any(fs => fs.Skill_ID == Skill21 || fs.Skill_ID == Skill22))
+                .ToList();
+                FreelanceList = FreelanceFromSkill;
+            }
+            if (Skill.Length == 3)
+            {
+                int Skill31 = Skill[0];
+                int Skill32 = Skill[1];
+                int Skill33 = Skill[2];
+                var FreelanceFromSkill = _context.Freelance
+            .Include(f => f.FreelanceSkill)
+                .ThenInclude(f => f.Skill)
+            .Where(f => f.FreelanceSkill.Any(fs => fs.Skill_ID == Skill31 || fs.Skill_ID == Skill32 || fs.Skill_ID == Skill33))
+                .ToList();
+                FreelanceList = FreelanceFromSkill;
+            }
+            return Json(FreelanceList);
+        }
         public IActionResult dddd()
         {
-            var ProjectListD = _context.Project.Where(p => p.DelStatus != true).ToArray();
-            DateTime datenow = DateTime.Now;
-            return Json(ProjectListD);
+            var Freelance = _context.FreelanceSkill.Where(f => f.Skill_ID == 1)
+            .Include(s => s.Freelance)
+            .ToList();
+            var Freelance_ = new Freelance();
+            foreach (var item in Freelance)
+            {
+                Freelance_ = _context.Freelance.SingleOrDefault(f => f.Freelance_ID == item.Freelance.Freelance_ID);
+                _context.Entry(Freelance_)
+                .Collection(b => b.FreelanceSkill)
+                .Load();
+                foreach (var item1 in Freelance_.FreelanceSkill)
+                {
+                    _context.Entry(item1)
+                    .Reference(b => b.Skill)
+                    .Load();
+                }
+            }
+            return Json(Freelance_);
+        }
+        public IActionResult GetFreelance()
+        {
+            var freelance = _context.Freelance
+            .Include(f => f.FreelanceSkill)
+                .ThenInclude(f => f.Skill)
+            .Where(f => f.FreelanceSkill.Any(fs => fs.Skill_ID == 1))
+                .ToList();
+            return Json(freelance);
         }
         public IActionResult Error()
         {

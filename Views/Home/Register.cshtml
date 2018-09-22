@@ -310,11 +310,11 @@
 						console.log(data);
 						console.log(data.result.freelance_ID);
 						localStorage['DataFreelance_ID'] = data.result.freelance_ID;
-						//location.replace("http://localhost:5000/Home/UpdateSkill/");
+						location.replace("http://localhost:5000/Home/Login");
 					},
 					error: function (data) {
 						alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-						//location.replace("http://localhost:5000/Home/Register");
+						location.replace("http://localhost:5000/Home/Register");
 					},
 				});
 				/*jQuery.ajax({
@@ -383,11 +383,11 @@
 					},
 					success: function (data) {
 						console.log(data);
-						//location.replace("http://localhost:5000/Home/Login/");
+						location.replace("http://localhost:5000/Home/Login/");
 					},
 					error: function (data) {
 						alert("กรุณากรอกข้อมูลให้ถูกต้อง");
-						//location.replace("http://localhost:5000/Home/Register");
+						location.replace("http://localhost:5000/Home/Register");
 					},
 				});
 			}
