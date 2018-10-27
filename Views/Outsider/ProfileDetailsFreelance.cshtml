@@ -88,6 +88,12 @@ span.tags {
                                 <dd>
                                     @ProfileDetailsFreelance.TelephoneNumber
                                 </dd> 
+                                <dt class="disadmin">
+                                    เลขประจำตัวประชาชน
+                                </dt>
+                                <dd class="disadmin">
+                                    @ProfileDetailsFreelance.ID_Card
+                                </dd> 
                                  <dt>
                                     Facebook
                                 </dt>
@@ -212,6 +218,11 @@ span.tags {
 
 <script>
 $(document).ready(function () {
+    if (localStorage['Admin_ID'] == null)
+    {
+        $(".disadmin").hide();
+        $(".navbar-right").hide();
+    }
     var Freelnace_ID = $("#Freelnace_ID").val();
      jQuery.ajax({
         type: "get",

@@ -93,10 +93,10 @@ span.tags {
                                 <dd>
                                     @ProfileDetailsCompany.Fax
                                 </dd> 
-                                <dt>
+                                <dt class="disadmin">
                                     เลขผู้เสียภาษีบริษัท
                                 </dt>
-                                <dd>
+                                <dd class="disadmin">
                                     @ProfileDetailsCompany.Company_TaxID
                                 </dd> 
                                  <dt>
@@ -217,5 +217,11 @@ span.tags {
 
 
 <script>
-
+$().ready(function() {
+    if (localStorage['Admin_ID'] == null)
+    {
+        $(".disadmin").hide();
+         $(".navbar-right").hide();
+    }
+});
 </script>

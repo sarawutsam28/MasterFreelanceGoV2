@@ -43,6 +43,8 @@
 
 <script>
 	$(document).ready(function () {
+        localStorage.clear();
+        console.log(localStorage['Admin_ID']);
         var username = "";
         var password = "";
 		$("#username").change(function() {

@@ -105,7 +105,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <h4>
-                                    <a>@ProjectDetails.Employer.FullName</a>
+                                    <a href="/Outsider/ProfileDetailsEmployer/@ProjectDetails.Employer.Employer_ID">@ProjectDetails.Employer.FullName</a>
                                 </h4>
                             </div>
                             <div class="col-sm-12">
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <h4>
-                                    <a >@ProjectDetails.Company.Company_Name</a>
+                                    <a  href="/Outsider/ProfileDetailsCompany/@ProjectDetails.Company.Company_ID">@ProjectDetails.Company.Company_Name</a>
                                 </h4>
                             </div>
                             <div class="col-sm-12">
@@ -160,7 +160,7 @@
                                         } else { @foreach (Auction Auctions in AuctionList) {
                                         <tr class="odd" style="height:5rem;">
                                             <td class="col-xs-4">
-                                                <a>@Auctions.Freelance.FullName</a>
+                                                <a  href="/Outsider/ProfileDetailsFreelance/@Auctions.Freelance_ID">@Auctions.Freelance.FullName</a>
                                             </td>
                                             <td class="col-xs-3 text-center">@for (int i=0;i
                                                 < Auctions.Freelance.Rating; i++) { <span style="color: red;">★</span>

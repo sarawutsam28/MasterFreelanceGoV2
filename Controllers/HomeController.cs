@@ -391,6 +391,7 @@ namespace FreelanceGo_MasterV2.Controllers
                 Password = Freelance.Password,
                 FullName = Freelance.FullName,
                 TelephoneNumber = Freelance.TelephoneNumber,
+                ID_Card = Freelance.ID_Card,
                 Email = Freelance.Email,
                 Facebook = Freelance.Facebook,
                 Line = Freelance.Line,

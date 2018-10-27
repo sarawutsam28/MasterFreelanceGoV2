@@ -159,35 +159,38 @@
             <div class="row freelance">
                  @foreach (Freelance FreelanceLists in FreelanceList) 
                 {
-                   <div class="col-sm-3 freelancecon">
-                        <div class="card">
-                            <div class="box">
-                                <div class="img">
-                                    <img  src="~/images/@FreelanceLists.ImgName" >
-                                </div>
-                                <h2>@FreelanceLists.FullName<br>
-                                 @foreach (var FreelanceSkills in FreelanceLists.FreelanceSkill) 
-                                 {
-                                     <span class="skill">@FreelanceSkills.Skill.Name</span>
-                                 }
-                                <div class="reting">
-                                @if (FreelanceLists.Rating == 0)
-                                {
-                                     @for (int i=0;i< 5; i++)
+                    <a href="/Outsider/ProfileDetailsFreelance/@FreelanceLists.Freelance_ID">
+                        <div class="col-sm-3 freelancecon">
+                            <div class="card">
+                                <div class="box">
+                                    <div class="img">
+                                        <img  src="~/images/@FreelanceLists.ImgName" >
+                                    </div>
+                                    <h2>@FreelanceLists.FullName<br>
+                                    @foreach (var FreelanceSkills in FreelanceLists.FreelanceSkill) 
                                     {
-                                        <span style="color: #ccc; font-size: 30px;">★</span>
+                                        <span class="skill">@FreelanceSkills.Skill.Name</span>
                                     }
-                                }else
-                                {
-                                    @for (int i=0;i< FreelanceLists.Rating; i++)
-                                {
-                                    <span style="color: red; font-size: 30px;">★</span>
-                                }
-                                }
+                                    <div class="reting">
+                                    @if (FreelanceLists.Rating == 0)
+                                    {
+                                        @for (int i=0;i< 5; i++)
+                                        {
+                                            <span style="color: #ccc; font-size: 30px;">★</span>
+                                        }
+                                    }else
+                                    {
+                                        @for (int i=0;i< FreelanceLists.Rating; i++)
+                                    {
+                                        <span style="color: red; font-size: 30px;">★</span>
+                                    }
+                                    }
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                   
                 }
             </div>
         </div>
