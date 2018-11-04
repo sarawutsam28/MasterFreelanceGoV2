@@ -29,8 +29,8 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectPost()
         {
-            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
-            if (Employer_ID == null)
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            if (Company_ID == null)
             {
                 return RedirectToAction("Login", "Home");
             }

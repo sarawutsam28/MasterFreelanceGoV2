@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models;
-@{ Layout = "_NewLayuot"; ViewData["Title"] = "ProjectDetails"; }
+@{ Layout = "_FreelnaceLayout"; ViewData["Title"] = "ProjectDetails"; }
 
 
 @{  
@@ -53,10 +53,10 @@
                     <div class="col-sm-8">
                         <h3>รายละเอียด</h3>
                     </div>
-                    <div class="col-sm-4">
+                    <!-- <div class="col-sm-4">
                          <a asp-controller="Home" asp-action="Rating" asp-route-id=@ProjectDetails.Project_ID> <button type="button" style="background-color: #5cb85c; color: white; margin-right: 3rem; margin-top:3rem; width: 25rem; height:4rem" class="btn pull-right">
                           <i class="fas fa-genderless"></i> สิ้นสุดการทำงาน</button></a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h4><a asp-controller="Freelnace" asp-action="ProfileDetailsFreelance" asp-route-id=@ProjectDetails.Freelance.Freelance_ID>@ProjectDetails.Freelance.FullName</a></h4>
+                        <h4><a asp-controller="Outsider" asp-action="ProfileDetailsFreelance" asp-route-id=@ProjectDetails.Freelance.Freelance_ID>@ProjectDetails.Freelance.FullName</a></h4>
                     </div>
                     <div class="col-sm-12">
                         <span class="boxrating">@ProjectDetails.Freelance.Rating.0</span> @for (int i=0;i
