@@ -141,12 +141,23 @@ namespace FreelanceGo_MasterV2.Controllers
 
             return View();
         }
-        public IActionResult SearchProject()
+        public IActionResult SearchProjects(int id)
+        {
+            var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
+            ViewData["TypeProject"] = TypeProject;
+            var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null && p.TypeProject_ID == id);
+            ViewData["ProjectList"] = ProjectList;
+
+            return View();
+        }
+        public IActionResult SearchProject(int id)
         {
             var TypeProject = _context.TypeProject.Where(s => s.DelStatus == false).ToList();
             ViewData["TypeProject"] = TypeProject;
             var ProjectList = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null);
             ViewData["ProjectList"] = ProjectList;
+            var ProjectListbyID = _context.Project.Where(p => p.ProjectStatus == true && p.DelStatus != true && p.Freelance_ID == null && p.TypeProject_ID == id);
+            ViewData["ProjectListbyID"] = ProjectList;
 
             return View();
         }

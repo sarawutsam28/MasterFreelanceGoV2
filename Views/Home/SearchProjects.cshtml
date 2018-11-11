@@ -1,5 +1,5 @@
 @using FreelanceGo_MasterV2.Models; 
-@{ Layout = "_FreelnaceLayout"; 
+@{ 
 ViewData["Title"] = "Search"; } 
 @{ 
    IEnumerable<Project> ProjectList = ViewData["ProjectList"] as IEnumerable<Project>; 
@@ -112,7 +112,7 @@ ViewData["Title"] = "Search"; }
                                                 </tr>
                                             </thead>
                                             <tbody class="points_table_scrollbar">
-                                                @foreach (@Project @ProjectLists in @ProjectList) {
+                                                 @foreach (@Project @ProjectLists in @ProjectList) {
                                                 <tr class="projectComtroller">
                                                     <td class="col-xs-5">
                                                         <div class="row">

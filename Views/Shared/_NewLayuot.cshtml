@@ -35,7 +35,106 @@
 
 
 </head>
+<style>
+    #circle {
+    position: absolute;
+    top: 1.6rem;
+    left: 2.5rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 100%;
+    background: #ec5151;
+    }
+    .notifications {
+   min-width:320px; 
+  }
+  
+  .notifications-wrapper {
+     overflow:auto;
+      max-height:250px;
+    }
+.menu-title {
+    color: #ffffff;
+    font-size: 13px;
+    display: inline-block;
+    font-weight: bold;
+}
+ 
+.glyphicon-circle-arrow-right {
+      margin-left:10px;     
+   }
+  
+   
+ .notification-heading, .notification-footer  {
+  padding:2px 10px;
+       }
+      
+        
+.dropdown-menu.divider {
+  margin:5px 0;          
+  }
 
+.item-title {
+    font-size: 1.3rem;
+    color: #000;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+
+.notifications a.content {
+    text-decoration: none;
+    display: block;
+    color:#000;
+}
+.notification-item {
+    position: relative;
+    padding: 10px;
+    padding-left: 70px;
+    padding-bottom: 0px;
+}
+.notification-item img {
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 5px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+ul.dropdown-menu.notifications .notifications-wrapper a.content {
+    padding: 0px !important;
+    background: rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid #d1d1d1;
+}
+ul.dropdown-menu.notifications .notifications-wrapper a.content:hover {
+    color: #000;
+    background: rgba(0, 0, 0, 0.1);
+}
+.login-nav ul.nav.navbar-nav.navbar-right li a {
+    display: block;
+}
+.notification-heading {
+    background: #000;.notifications a.content {
+    text-decoration: none;
+    display: block;
+}
+    padding: 3px 10px;
+}
+ul.dropdown-menu.notifications {
+    padding: 0px;
+}
+.dropdown .glyphicon-bell {  
+    vertical-align: middle;
+}
+.dropdown{
+    list-style:none;
+}
+</style>
 <body>
     <div class="container" >
         <nav class="navbar navbar-default navbar-fixed-top" style="box-shadow: 0px 2px 6px rgba(50, 50, 50, 0.42); ">
@@ -58,6 +157,55 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right" style="margin-top: 10px;">
                     <li>
+                            <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                            <i class="fas fa-bell"style="font-size: 1.5em;"></i>
+                            <span id="circle"></span>
+                            </a>
+                            <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
+                                <div class="notification-heading text-center"><h4 class="menu-title">เเจ้งเตือน</h4>
+                                </div> 
+                            <div class="notifications-wrapper"> 
+                                <a class="content" href="#"> 
+                                <div class="notification-item">
+                                <img src="http://www.leapcms.com/images/100pixels1.gif">
+                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
+                                    <p class="item-info">Mr hassan has followed you!</p>
+                                </div>  
+                                </a>
+
+                                <a class="content" href="#">
+                                <div class="notification-item">
+                                <img src="http://www.leapcms.com/images/100pixels1.gif">
+                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
+                                    <p class="item-info">Marketing 101, Video Assignment</p>
+                                </div>
+                                </a> 
+                                <a class="content" href="#"> 
+                                <div class="notification-item">
+                                <img src="http://www.leapcms.com/images/100pixels1.gif">
+                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
+                                    <p class="item-info">Mr hassan has followed you!</p>
+                                </div>  
+                                </a> 
+                                <a class="content" href="#"> 
+                                <div class="notification-item">
+                                <img src="http://www.leapcms.com/images/100pixels1.gif">
+                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
+                                    <p class="item-info">Mr hassan has followed you!</p>
+                                </div>  
+                                </a> 
+                                <a class="content" href="#"> 
+                                <div class="notification-item">
+                                <img src="http://www.leapcms.com/images/100pixels1.gif">
+                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
+                                    <p class="item-info">Mr hassan has followed you!</p>
+                                </div>  
+                                </a>
+                            </div> 
+                            </ul>
+                            
+                    </li>
+                     <li>
                         <a asp-controller="Home" asp-action="SearchFreelance">
                             <i class="fas fa-search"></i> ค้นหาฟรีแลนซ์</a>
                     </li>
@@ -85,3 +233,7 @@
 </script> -->
 
 </html>
+<script>
+$().ready(function() {
+});
+</script>

@@ -114,6 +114,7 @@ IEnumerable<Project> ProjectList = ViewData["ProjectList"] as IEnumerable<Projec
 <script>
 $().ready(function() {
     var searchID = 0;
+    var searchString = "";
         $("#searchString").change(function () {
             searchID = $("#searchString").val();
             console.log(searchString);
