@@ -1,5 +1,22 @@
 @using FreelanceGo_MasterV2.Models; 
-@{ Layout = "_Layout"; ViewData["Title"] = "ProjectDetails"; } 
+@{ Layout = "_Layout"; ViewData["Title"] = "ProjectDetails";
+    if (ViewData["NavStatus"] == "Employer" )
+    {
+        Layout = "_NewLayuot";
+    }
+    if (ViewData["NavStatus"] == "Company" )
+    {
+        Layout = "_CompanyLayout";
+    }
+    if (ViewData["NavStatus"] == "Freelance" )
+    {
+        Layout = "_FreelnaceLayout";
+    }
+    if (ViewData["NavStatus"] == "Admin_ID" )
+    {
+        Layout = "_AdminLayout";
+    }
+ } 
 @{ var ProjectDetails = ViewData["ProjectDetails"] as Project; 
  IEnumerable <Auction> AuctionList = ViewData["AuctionList"] as IEnumerable<Auction>; }
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">

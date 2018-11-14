@@ -1,5 +1,14 @@
 @using FreelanceGo_MasterV2.Models; 
-@{ViewData["Title"] = "SearchFreelance"; } 
+@{ViewData["Title"] = "SearchFreelance"; 
+if (ViewData["NavStatus"] == "Employer" )
+{
+    Layout = "_NewLayuot";
+}
+if (ViewData["NavStatus"] == "Company" )
+{
+    Layout = "_CompanyLayout";
+}
+} 
 @{ 
    IEnumerable<Skill> Skills = ViewData["Skill"] as IEnumerable<Skill>; 
    IEnumerable<Freelance> FreelanceList = ViewData["_Freelance"] as IEnumerable<Freelance>; 
@@ -152,7 +161,7 @@
         <div class="bassform">   
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 id="TextVal"><i class="far fa-handshake"></i> ฟรีแลนซ์</h3>
+                    <h3 id="TextVal"><i class="far fa-handshake"></i> ฟรีแลนซ์ @ViewData["NavStatus"] </h3>
                 </div>
             </div>
             <hr>

@@ -157,50 +157,15 @@ ul.dropdown-menu.notifications {
                 </div>
                 <ul class="nav navbar-nav navbar-right" style="margin-top: 10px;">
                     <li>
-                            <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                            <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" >
                             <i class="fas fa-bell"style="font-size: 1.5em;"></i>
                             <span id="circle"></span>
                             </a>
                             <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
                                 <div class="notification-heading text-center"><h4 class="menu-title">เเจ้งเตือน</h4>
                                 </div> 
-                            <div class="notifications-wrapper"> 
-                                <a class="content" href="#"> 
-                                <div class="notification-item">
-                                <img src="http://www.leapcms.com/images/100pixels1.gif">
-                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
-                                    <p class="item-info">Mr hassan has followed you!</p>
-                                </div>  
-                                </a>
-
-                                <a class="content" href="#">
-                                <div class="notification-item">
-                                <img src="http://www.leapcms.com/images/100pixels1.gif">
-                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
-                                    <p class="item-info">Marketing 101, Video Assignment</p>
-                                </div>
-                                </a> 
-                                <a class="content" href="#"> 
-                                <div class="notification-item">
-                                <img src="http://www.leapcms.com/images/100pixels1.gif">
-                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
-                                    <p class="item-info">Mr hassan has followed you!</p>
-                                </div>  
-                                </a> 
-                                <a class="content" href="#"> 
-                                <div class="notification-item">
-                                <img src="http://www.leapcms.com/images/100pixels1.gif">
-                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
-                                    <p class="item-info">Mr hassan has followed you!</p>
-                                </div>  
-                                </a> 
-                                <a class="content" href="#"> 
-                                <div class="notification-item">
-                                <img src="http://www.leapcms.com/images/100pixels1.gif">
-                                    <h4 class="item-title">Evaluation Deadline  <small> 1 day ago</small></h4>
-                                    <p class="item-info">Mr hassan has followed you!</p>
-                                </div>  
-                                </a>
+                            <div class="notifications-wrapper NotificationEmployer"> 
+                                
                             </div> 
                             </ul>
                             
@@ -235,5 +200,62 @@ ul.dropdown-menu.notifications {
 </html>
 <script>
 $().ready(function() {
+    $("#circle").css("display", "none");
+    $("#dLabel").click(function() {
+        $.ajax({
+        url: 'http://localhost:5000/Home/NotificationChRead',
+        type: 'GET',
+        success: function(data){ 
+            console.log(data);
+            $("#circle").css("display", "none");
+        },
+        error: function(data) {
+            alert('woops!'); //or whatever
+        }
+        });
+    });
+    $.ajax({
+    url: 'http://localhost:5000/Home/NotificationEmployer',
+    type: 'GET',
+    success: function(data){ 
+        console.log(data);
+        jQuery.each(data, function (i, data) {
+            if (data.readStatus == false)
+            {
+                $("#circle").css("display", "block");
+            }
+            var date = new Date(data.date_Create);
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            var html = "";
+                if(data.notificationCode == "01") 
+                {
+                    html += '<a class="content" href="/Home/ProjectDetails/'+data.project_ID+'"> ';
+                }
+                if(data.notificationCode == "02") 
+                {
+                    html += '<a class="content" href="/Home/HistoryProjectDetails/'+data.project_ID+'"> ';
+                }
+                html += '<div class="notification-item">';
+                html += '<img src="/images/'+data.freelance.imgName+'">';
+                html += '<h4 class="item-title">'+data.freelance.fullName+'<small> ' + day + '/' + month + '/' + year + '</small></h4>';
+                if(data.notificationCode == "01") 
+                {
+                     html += '<p class="item-info">'+data.freelance.fullName+' ได้ประมูลงานของคุณ!</p>';
+                }
+                 if(data.notificationCode == "02") 
+                {
+                     html += '<p class="item-info">'+data.freelance.fullName+' ได้ให้เรทติ้งการจ้างงานของคุณ!</p>';
+                }
+                html += '</div> ';
+                html += '</a>';
+        $(".NotificationEmployer").append(html);       
+        });
+    },
+    error: function(data) {
+        alert('woops!'); //or whatever
+    }
+    });
 });
 </script>

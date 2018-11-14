@@ -29,6 +29,26 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProjectDetails(int id)
         {
+            var Employer_IDs = HttpContext.Session.GetInt32("Employer_ID");
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Admin_ID = HttpContext.Session.GetInt32("Admin_ID");
+            if (Employer_IDs != null)
+            {
+                ViewData["NavStatus"] = "Employer";
+            }
+            if (Company_ID != null)
+            {
+                ViewData["NavStatus"] = "Company";
+            }
+            if (Freelance_ID != null)
+            {
+                ViewData["NavStatus"] = "Freelance";
+            }
+            if (Admin_ID != null)
+            {
+                ViewData["NavStatus"] = "Admin_ID";
+            }
             var Employer_ID = HttpContext.Session.GetInt32("Freelance_ID");
             if (Employer_ID != null)
             {
@@ -56,6 +76,26 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProfileDetailsEmployer(int id)
         {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Admin_ID = HttpContext.Session.GetInt32("Admin_ID");
+            if (Employer_ID != null)
+            {
+                ViewData["NavStatus"] = "Employer";
+            }
+            if (Company_ID != null)
+            {
+                ViewData["NavStatus"] = "Company";
+            }
+            if (Freelance_ID != null)
+            {
+                ViewData["NavStatus"] = "Freelance";
+            }
+            if (Admin_ID != null)
+            {
+                ViewData["NavStatus"] = "Admin_ID";
+            }
             var ProfileDetailsEmployer = _context.Employer.SingleOrDefault(e => e.Employer_ID == id);
             var ProjectEmployer = _context.EmployerRating.Where(p => p.Employer_ID == id)
             .Include(p => p.Project)
@@ -67,6 +107,26 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProfileDetailsCompany(int id)
         {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Admin_ID = HttpContext.Session.GetInt32("Admin_ID");
+            if (Employer_ID != null)
+            {
+                ViewData["NavStatus"] = "Employer";
+            }
+            if (Company_ID != null)
+            {
+                ViewData["NavStatus"] = "Company";
+            }
+            if (Freelance_ID != null)
+            {
+                ViewData["NavStatus"] = "Freelance";
+            }
+            if (Admin_ID != null)
+            {
+                ViewData["NavStatus"] = "Admin_ID";
+            }
             var ProfileDetailsCompany = _context.Company.SingleOrDefault(e => e.Company_ID == id);
             var ProjectEmployer = _context.EmployerRating.Where(p => p.Company_ID == id)
             .Include(p => p.Project)
@@ -78,6 +138,26 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult ProfileDetailsFreelance(int id)
         {
+            var Employer_IDs = HttpContext.Session.GetInt32("Employer_ID");
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Admin_ID = HttpContext.Session.GetInt32("Admin_ID");
+            if (Employer_IDs != null)
+            {
+                ViewData["NavStatus"] = "Employer";
+            }
+            if (Company_ID != null)
+            {
+                ViewData["NavStatus"] = "Company";
+            }
+            if (Freelance_ID != null)
+            {
+                ViewData["NavStatus"] = "Freelance";
+            }
+            if (Admin_ID != null)
+            {
+                ViewData["NavStatus"] = "Admin_ID";
+            }
             var ProfileDetailsFreelance = _context.Freelance.SingleOrDefault(e => e.Freelance_ID == id);
             var ProjectFreelance = _context.FreelanceRating.Where(p => p.Employer_ID == id)
             .Include(p => p.Project)

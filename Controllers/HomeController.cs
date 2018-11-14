@@ -163,6 +163,16 @@ namespace FreelanceGo_MasterV2.Controllers
         }
         public IActionResult SearchFreelance()
         {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var Company_ID = HttpContext.Session.GetInt32("Company_ID");
+            if (Employer_ID != null)
+            {
+                ViewData["NavStatus"] = "Employer";
+            }
+            if (Company_ID != null)
+            {
+                ViewData["NavStatus"] = "Company";
+            }
             var Skill = _context.Skill.Where(s => s.DelStatus == false).ToList();
             ViewData["Skill"] = Skill;
             var _Freelance = _context.Freelance.Where(f => f.DelStatus == false)
@@ -222,9 +232,33 @@ namespace FreelanceGo_MasterV2.Controllers
             }
             var ProfileEmployer = _context.Employer.SingleOrDefault(e => e.Employer_ID == id);
             var ProjectEmployer = _context.Project.Where(p => p.Employer_ID == id && p.DelStatus == false);
+            var Notification = _context.Notification.Where(n => n.Employer_ID == id);
             ViewData["ProfileEmployer"] = ProfileEmployer;
             ViewData["ProjectEmployer"] = ProjectEmployer;
+            ViewData["Notification"] = Notification;
             return View();
+        }
+        public IActionResult NotificationEmployer(int id)
+        {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var Notification = _context.Notification.Where(n => n.Employer_ID == Employer_ID && n.NotificationCode != "03" && n.NotificationCode != "04")
+                .Include(Freelance => Freelance.Freelance)
+                .OrderByDescending(d => d.Date_Create)
+                .ToList();
+
+            return Json(Notification);
+        }
+        public IActionResult NotificationChRead()
+        {
+            var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
+            var Notification = _context.Notification.Where(n => n.Employer_ID == Employer_ID && n.NotificationCode != "03" && n.NotificationCode != "04").ToList();
+            foreach (var Notifications in Notification)
+            {
+                Notifications.ReadStatus = true;
+                _context.Update(Notifications);
+                _context.SaveChanges();
+            }
+            return Json("OK");
         }
         public IActionResult ProfileDetailsEmployer(int id)
         {
@@ -693,6 +727,18 @@ namespace FreelanceGo_MasterV2.Controllers
             _ProjectAcceptFreelance.Freelance_ID = id;
             _ProjectAcceptFreelance.ProjectPrice = ProjectPrice;
             _ProjectAcceptFreelance.ProjectTimelength = ProjectTimelength;
+            var Notification = new Notification
+            {
+                Project_ID = _ProjectAcceptFreelance.Project_ID,
+                Company_ID = _ProjectAcceptFreelance.Company_ID,
+                Employer_ID = _ProjectAcceptFreelance.Employer_ID,
+                Freelance_ID = id,
+                NotificationCode = "03",
+                ReadStatus = false,
+                Date_Create = DateTime.Now,
+                DelStatus = false,
+            };
+            _context.Notification.Add(Notification);
             _context.Update(_ProjectAcceptFreelance);
             _context.SaveChanges();
             return RedirectToAction("ProfileEmployer", new { id = Employer_ID });
@@ -715,6 +761,18 @@ namespace FreelanceGo_MasterV2.Controllers
             var Employer_ID = HttpContext.Session.GetInt32("Employer_ID");
             FreelanceRating.Employer_ID = Employer_ID;
             FreelanceRating.Date_Create = DateTime.Now;
+            var Notification = new Notification
+            {
+                Project_ID = FreelanceRating.Project_ID,
+                Company_ID = _Project.Company_ID,
+                Employer_ID = _Project.Employer_ID,
+                Freelance_ID = _Project.Freelance_ID,
+                NotificationCode = "04",
+                ReadStatus = false,
+                Date_Create = DateTime.Now,
+                DelStatus = false,
+            };
+            _context.Notification.Add(Notification);
             _context.Update(_Project);
             _context.FreelanceRating.Add(FreelanceRating);
             await _context.SaveChangesAsync();
@@ -894,6 +952,11 @@ namespace FreelanceGo_MasterV2.Controllers
             .Where(f => f.FreelanceSkill.Any(fs => fs.Skill_ID == 1))
                 .ToList();
             return Json(freelance);
+        }
+        public IActionResult GetProjectFreelance(int id)
+        {
+            var project = _context.Project.SingleOrDefault(p => p.Project_ID == id);
+            return Json(project);
         }
         public IActionResult Error()
         {

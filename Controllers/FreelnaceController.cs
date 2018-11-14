@@ -98,9 +98,22 @@ namespace FreelanceGo_MasterV2.Controllers
                 AuctionTime = Auction.AuctionTime,
                 Date_Create = DateTime.Now,
             };
+            var Project = _context.Project.SingleOrDefault(p => p.Project_ID == Auction.Project_ID);
+            var Notification = new Notification
+            {
+                Project_ID = Auction.Project_ID,
+                Company_ID = Project.Company_ID,
+                Employer_ID = Project.Employer_ID,
+                Freelance_ID = Freelance_ID,
+                NotificationCode = "01",
+                ReadStatus = false,
+                Date_Create = DateTime.Now,
+                DelStatus = false,
+            };
             _context.Auction.Add(_Auction);
+            _context.Notification.Add(Notification);
             _context.SaveChanges();
-            return Json(new { Result = _Auction });
+            return Json(new { Result = Notification });
         }
         public IActionResult GetProjectAuction(int id)
         {
@@ -285,7 +298,19 @@ namespace FreelanceGo_MasterV2.Controllers
             var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
             EmployerRating.Freelance_ID = Freelance_ID;
             EmployerRating.Date_Create = DateTime.Now;
+            var Notification = new Notification
+            {
+                Project_ID = EmployerRating.Project_ID,
+                Company_ID = _Project.Company_ID,
+                Employer_ID = _Project.Employer_ID,
+                Freelance_ID = Freelance_ID,
+                NotificationCode = "02",
+                ReadStatus = false,
+                Date_Create = DateTime.Now,
+                DelStatus = false,
+            };
             _context.Update(_Project);
+            _context.Notification.Add(Notification);
             _context.EmployerRating.Add(EmployerRating);
             await _context.SaveChangesAsync();
             //updateRating
@@ -337,6 +362,29 @@ namespace FreelanceGo_MasterV2.Controllers
             HttpContext.Session.SetInt32("ProjectAcceptFreelanceId", id);
             ViewData["ProjectDetails"] = ProjectDetails;
             return View();
+        }
+        public IActionResult NotificationFreelance(int id)
+        {
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Notification = _context.Notification.Where(n => n.Freelance_ID == Freelance_ID && n.NotificationCode != "01" && n.NotificationCode != "02")
+                .Include(Employer => Employer.Employer)
+                .Include(Company => Company.Company)
+                .OrderByDescending(d => d.Date_Create)
+                .ToList();
+
+            return Json(Notification);
+        }
+        public IActionResult NotificationChRead()
+        {
+            var Freelance_ID = HttpContext.Session.GetInt32("Freelance_ID");
+            var Notification = _context.Notification.Where(n => n.Freelance_ID == Freelance_ID && n.NotificationCode != "01" && n.NotificationCode != "02").ToList();
+            foreach (var Notifications in Notification)
+            {
+                Notifications.ReadStatus = true;
+                _context.Update(Notifications);
+                _context.SaveChanges();
+            }
+            return Json("OK");
         }
         public IActionResult Error()
         {

@@ -1,5 +1,22 @@
 @using FreelanceGo_MasterV2.Models;
-@{ ViewData["Title"] = "ProfileDetailsEmployer"; }
+@{ ViewData["Title"] = "ProfileDetailsEmployer"; 
+    if (ViewData["NavStatus"] == "Employer" )
+    {
+        Layout = "_NewLayuot";
+    }
+    if (ViewData["NavStatus"] == "Company" )
+    {
+        Layout = "_CompanyLayout";
+    }
+    if (ViewData["NavStatus"] == "Freelance" )
+    {
+        Layout = "_FreelnaceLayout";
+    }
+    if (ViewData["NavStatus"] == "Admin_ID" )
+    {
+        Layout = "_AdminLayout";
+    }
+}
 
 
 @{  
@@ -212,10 +229,10 @@ span.tags {
 
 <script>
 $().ready(function() {
-    if (localStorage['Admin_ID'] == null)
-    {
-        $(".disadmin").hide();
-         $(".navbar-right").hide();
-    }
+    // if (localStorage['Admin_ID'] == null)
+    // {
+    //     $(".disadmin").hide();
+    //      $(".navbar-right").hide();
+    // }
 });
 </script>

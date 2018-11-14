@@ -5,6 +5,7 @@
 @{  
    var ProfileEmployer = ViewData["ProfileEmployer"] as Employer; 
    IEnumerable<Project> ProjectEmployers = ViewData["ProjectEmployer"] as IEnumerable<Project>; 
+   IEnumerable<Notification> NotificationList = ViewData["Notification"] as IEnumerable<Notification>; 
 }
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -383,6 +384,7 @@
 		</div>
 	</div>
 </div>
+
 
 <script>
     $().ready(function() {

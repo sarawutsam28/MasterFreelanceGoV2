@@ -11,9 +11,10 @@ using System;
 namespace FreelanceGoMasterV2.Migrations
 {
     [DbContext(typeof(dDbContext))]
-    partial class dDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181111035820_NotificationV2")]
+    partial class NotificationV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,10 +308,10 @@ namespace FreelanceGoMasterV2.Migrations
                     b.Property<int?>("Freelance_ID")
                         .IsRequired();
 
-                    b.Property<string>("NotificationCode")
-                        .IsRequired();
+                    b.Property<int>("NotificationCode");
 
-                    b.Property<int?>("Project_ID");
+                    b.Property<string>("NotificationText")
+                        .IsRequired();
 
                     b.Property<bool>("ReadStatus");
 
@@ -321,8 +322,6 @@ namespace FreelanceGoMasterV2.Migrations
                     b.HasIndex("Employer_ID");
 
                     b.HasIndex("Freelance_ID");
-
-                    b.HasIndex("Project_ID");
 
                     b.ToTable("Notification");
                 });
@@ -530,10 +529,6 @@ namespace FreelanceGoMasterV2.Migrations
                         .WithMany()
                         .HasForeignKey("Freelance_ID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FreelanceGo_MasterV2.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("Project_ID");
                 });
 
             modelBuilder.Entity("FreelanceGo_MasterV2.Models.Project", b =>

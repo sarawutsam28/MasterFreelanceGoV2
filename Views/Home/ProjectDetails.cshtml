@@ -179,7 +179,7 @@
 
 <script>
 $().ready(function() {
-        var Project_ID = $("#Project_ID").val();
+     var Project_ID = $("#Project_ID").val();
         jQuery.ajax({
         type: "get",
         dataType: "json",
@@ -197,11 +197,24 @@ $().ready(function() {
                                     '<td class="col-xs-2"><a href="/Freelnace/ProfileDetailsFreelance/'+data.freelance_ID+'">'+data.fullName+'</a></td>'+
                                     '<td class="col-xs-3 text-center">'+ data.price +' บาท</td>'+
                                     '<td class="col-xs-3 text-center">'+ data.auctionTime +' วัน</td>'+
-                                    '<td class="col-xs-1 text-center"><a href="/Home/AcceptFreelance?id='+data.freelance_ID+'&ProjectPrice='+data.price+'&ProjectTimelength='+data.auctionTime+'" class="btn btn-xs btn-success pull-right"><i class="fas fa-check"></i></a>'+
+                                    '<td class="col-xs-1 text-center AcceptFreelance"><a href="/Home/AcceptFreelance?id='+data.freelance_ID+'&ProjectPrice='+data.price+'&ProjectTimelength='+data.auctionTime+'" class="btn btn-xs btn-success pull-right"><i class="fas fa-check"></i></a>'+
                             '</tr>');
                $("#AuctionTable").append(row1);
             });
             }
+             $.ajax({
+                url: '/Home/GetProjectFreelance/'+Project_ID,
+                type: 'GET',
+                success: function(data){ 
+                    console.log(data);
+                    if (data.freelance_ID != null) {
+                        $(".AcceptFreelance").css("display", "none");
+                    }
+                },
+                error: function(data) {
+                    alert('woops!'); //or whatever
+                }
+            });
         },
         error: function (data) {
             alert("กรอกข้อมูลไม่ถูกต้อง");
@@ -222,5 +235,6 @@ $().ready(function() {
             alert("กรอกข้อมูลไม่ถูกต้อง");
         },
         }); //end ajax
+       
 });
 </script>
